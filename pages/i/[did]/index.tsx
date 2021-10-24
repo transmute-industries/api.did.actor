@@ -10,14 +10,13 @@ import IconButton from "@mui/material/IconButton";
 
 import InputAdornment from "@mui/material/InputAdornment";
 
-import SendIcon from "@mui/icons-material/Send";
-
-import { encryptTo } from "../../../io/encrypt";
+import { issueTo } from "../../../io/issue";
 
 import axios from "axios";
 import { useRouter } from "next/router";
 import { DIDAsTextField } from "../../../components/did-as-textfield";
-
+import CreateIcon from "@mui/icons-material/Create";
+import { defaultMnemonic } from "../../../core/defaultMnemonic";
 export async function getServerSideProps(context: any) {
   return {
     props: {
@@ -26,15 +25,13 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const Encrypt: NextPage = (props: any) => {
+const Issue: NextPage = (props: any) => {
   const router = useRouter();
   const did: any = props.did;
   const title = did ? did.substr(0, 9) + "..." + did.substr(-4) : "unknown";
-  const [message, setMessage] = React.useState(
-    "the quieter you become the more you are able to hear"
-  );
+  const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
+  const [subject, setSubject] = React.useState("did:example:123");
 
-  const [loading, setLoading] = React.useState(true);
   const [resolution, setResolution]: any = React.useState(null);
   React.useEffect(() => {
     if (did) {
@@ -46,17 +43,14 @@ const Encrypt: NextPage = (props: any) => {
         });
 
         const resultData = res.data as any;
-
         setResolution(resultData);
-        setLoading(false);
       })();
     }
   }, [did]);
 
-  const handleSendMessage = async () => {
-    const jwe = await encryptTo(resolution.didDocument, { message });
-
-    router.push("/d/" + jwe);
+  const handleIssue = async () => {
+    const vc = await issueTo(resolution.didDocument, { subject }, mnemonic);
+    router.push("/v/" + vc);
   };
 
   return (
@@ -108,27 +102,38 @@ const Encrypt: NextPage = (props: any) => {
 
                       <DIDAsTextField
                         did={resolution.didDocument.id}
-                        label="Message Recipient"
+                        label="Issuer"
                         style={{ marginTop: "16px" }}
                       />
                     </Box>
 
                     <TextField
-                      label="Message Content"
+                      label="Subject"
                       multiline
-                      value={message}
+                      value={subject}
                       onChange={(event) => {
-                        setMessage(event.target.value);
+                        setSubject(event.target.value);
                       }}
+                      fullWidth
+                    />
+
+                    <TextField
+                      label="Mnemonic for Issuer"
+                      multiline
+                      value={mnemonic}
+                      onChange={(event) => {
+                        setMnemonic(event.target.value);
+                      }}
+                      style={{ marginBottom: "32px", marginTop: "32px" }}
                       fullWidth
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
                             <IconButton
-                              aria-label="encrypt message"
-                              onClick={handleSendMessage}
+                              aria-label="issue credential"
+                              onClick={handleIssue}
                             >
-                              <SendIcon />
+                              <CreateIcon />
                             </IconButton>
                           </InputAdornment>
                         ),
@@ -145,4 +150,4 @@ const Encrypt: NextPage = (props: any) => {
   );
 };
 
-export default Encrypt;
+export default Issue;

@@ -1,7 +1,6 @@
 import React from "react";
 import { yellow } from "@mui/material/colors";
-import { Typography, TextField } from "@mui/material";
-import { updateCanvas } from "../core/updateCanvas";
+import { Typography, TextField, Button } from "@mui/material";
 
 import IconButton from "@mui/material/IconButton";
 
@@ -11,24 +10,22 @@ import MemoryIcon from "@mui/icons-material/Memory";
 import * as bip39 from "bip39";
 import * as hdkey from "hdkey";
 import { defaultMnemonic } from "../core/defaultMnemonic";
-export const DIDMEME_BIP44_COIN_TYPE = "42";
+export const DID_KEY_BIP44_COIN_TYPE = "0";
 import { generators } from "../core/generators";
 import WarningIcon from "@mui/icons-material/Warning";
-export const MemeCaption = ({ file, setConfig }: any) => {
-  const [caption, setCaption] = React.useState("did meme");
+import { useRouter } from "next/router";
+
+export const CreateDidForm = () => {
+  const router = useRouter();
+  const [config, setConfig]: any = React.useState(null);
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
   const [key, setKey] = React.useState("");
-
-  const handleTextChange = (text: string) => {
-    updateCanvas(file, text);
-    setCaption(text);
-  };
 
   const handleUpdateKey = React.useCallback(
     async (mnemonic: string) => {
       const seed = await bip39.mnemonicToSeed(mnemonic);
       const root = hdkey.fromMasterSeed(seed);
-      const hdPath = `m/44'/${DIDMEME_BIP44_COIN_TYPE}'/0'/0/0`;
+      const hdPath = `m/44'/${DID_KEY_BIP44_COIN_TYPE}'/0'/0/0`;
       const addrNode = root.derive(hdPath);
 
       const res = await generators.ed25519(addrNode._privateKey);
@@ -47,38 +44,24 @@ export const MemeCaption = ({ file, setConfig }: any) => {
 
   React.useEffect(() => {
     if (key === "") {
-      updateCanvas(file, caption);
       handleUpdateKey(mnemonic);
     }
     if (mnemonic === "") {
       handleGenerateMnemonic();
     }
-  }, [key, file, caption, handleGenerateMnemonic, handleUpdateKey, mnemonic]);
+  }, [key, handleGenerateMnemonic, handleUpdateKey, mnemonic]);
 
-  if (file === null) {
-    return <>Loading...</>;
-  }
+  const handleCreate = () => {
+    router.push("/" + config.key);
+  };
 
   return (
     <div style={{ maxWidth: "512px", margin: "auto" }}>
-      <canvas id="meme-canvas" />
-      <Typography variant={"caption"}>{file.path}</Typography>
-      <TextField
-        style={{ marginTop: "32px" }}
-        label="Caption"
-        value={caption}
-        fullWidth
-        onChange={(event: any) => {
-          handleTextChange(event.target.value);
-        }}
-      />
-
       <TextField
         label="Controller"
-        value={key.substring(0, 16) + "..."}
+        value={key.substring(0, 32) + "..."}
         disabled
         fullWidth
-        style={{ marginTop: "32px" }}
       />
 
       <TextField
@@ -96,7 +79,7 @@ export const MemeCaption = ({ file, setConfig }: any) => {
           >
             <WarningIcon color={"warning"} />
             <Typography style={{ marginLeft: "9px", color: yellow["700"] }}>
-              Anyone knowing this phrase controls this meme.
+              Anyone knowing this phrase controls this identifier.
             </Typography>
           </div>
         }
@@ -116,6 +99,14 @@ export const MemeCaption = ({ file, setConfig }: any) => {
           ),
         }}
       />
+
+      <Button
+        sx={{ marginTop: "32px" }}
+        variant={"contained"}
+        onClick={handleCreate}
+      >
+        Create
+      </Button>
     </div>
   );
 };

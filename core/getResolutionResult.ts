@@ -1,6 +1,6 @@
-import { resolve } from "./resolve";
+import { resolvers } from "./resolvers";
 export const getResolutionResult = async (did: string) => {
-  const { didDocument, didDocumentMetadata } = await resolve(did);
+  const { didDocument, didDocumentMetadata } = await resolvers.ed25519(did);
   const didUrlComponents = did.split(":");
   return {
     didDocument,

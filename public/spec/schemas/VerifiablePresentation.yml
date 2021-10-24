@@ -14,7 +14,7 @@ example:
         "https://w3id.org/security/suites/jws-2020/v1",
       ],
     "type": ["VerifiablePresentation"],
-    "holder": "did:meme:1zgsqltm43euwf6rhs2gf2gp9hp879j47hua2sy5l2lv26vu44r2es2gcjlk7j",
+    "holder": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
     "verifiableCredential":
       [
         {
@@ -25,14 +25,14 @@ example:
             ],
           "id": "urn:uuid:07aa969e-b40d-4c1b-ab46-ded252003ded",
           "type": ["VerifiableCredential"],
-          "issuer": "did:meme:1zgsqltm43euwf6rhs2gf2gp9hp879j47hua2sy5l2lv26vu44r2es2gcjlk7j",
+          "issuer": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
           "issuanceDate": "2010-01-01T19:73:24Z",
-          "credentialSubject": "did:meme:1zgsqltm43euwf6rhs2gf2gp9hp879j47hua2sy5l2lv26vu44r2es2gcjlk7j",
+          "credentialSubject": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
           "proof":
             {
               "type": "JsonWebSignature2020",
               "created": "2021-10-23T15:54:28Z",
-              "verificationMethod": "did:meme:1zgsqltm43euwf6rhs2gf2gp9hp879j47hua2sy5l2lv26vu44r2es2gcjlk7j#z6MkqUq7v7uhfBL9W6kGTKhfGDkWbZzA2JNbqJvVH11dZfuz",
+              "verificationMethod": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MkqUq7v7uhfBL9W6kGTKhfGDkWbZzA2JNbqJvVH11dZfuz",
               "proofPurpose": "assertionMethod",
               "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..bUihRoflvMgyTszwcm1J-U860Gb6860508hruKIv3op2iLfK08_tBEkyvFu0d0r1VUkoPGJx88VvJJHwaSztCA",
             },
@@ -42,7 +42,7 @@ example:
       {
         "type": "JsonWebSignature2020",
         "created": "2021-10-23T16:42:12Z",
-        "verificationMethod": "did:meme:1zgsqltm43euwf6rhs2gf2gp9hp879j47hua2sy5l2lv26vu44r2es2gcjlk7j#z6MkqUq7v7uhfBL9W6kGTKhfGDkWbZzA2JNbqJvVH11dZfuz",
+        "verificationMethod": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MkqUq7v7uhfBL9W6kGTKhfGDkWbZzA2JNbqJvVH11dZfuz",
         "proofPurpose": "authentication",
         "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
         "domain": "string",

@@ -1,13 +1,13 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: DID Meme API
-  description: Identifier and Credentials APIs for Memes.
+  title: DID Actor API
+  description: Identifier and Credentials APIs for DID.
   license:
     name: Apache.20
   contact:
     name: API Support
-    url: https://github.com/OR13/didme.me
+    url: https://github.com/transmute-industries/api.did.actor
 servers:
   - url: http://localhost:3000
   - url: https://api.did.actor

@@ -70,7 +70,7 @@ export const Drawer = () => {
         <ListItem
           button
           component={Link}
-          href="https://github.com/OR13/didme.me"
+          href="https://github.com/transmute-industries/api.did.actor"
         >
           <ListItemIcon>
             <CodeIcon />

@@ -2,17 +2,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { AppPage } from "../../components/app-page";
 import React from "react";
-import { Box, TextField, Grid } from "@mui/material";
-
-import IconButton from "@mui/material/IconButton";
+import { Box, Grid } from "@mui/material";
 import { useRouter } from "next/router";
-
-import InputAdornment from "@mui/material/InputAdornment";
-
 import { ResolutionResult } from "../../components/did-resolution-result";
-import LaunchIcon from "@mui/icons-material/Launch";
-
-import MemoryIcon from "@mui/icons-material/Memory";
 import { DIDAsTextField } from "../../components/did-as-textfield";
 export async function getServerSideProps(context: any) {
   return {
@@ -31,10 +23,6 @@ const Resolve: NextPage = (props: any) => {
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta
-          property="og:image"
-          content={`https://didmeme.vercel.app/api/image/${did}`}
-        />
       </Head>
       <AppPage>
         <Grid

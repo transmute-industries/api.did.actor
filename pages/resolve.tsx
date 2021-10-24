@@ -11,14 +11,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useRouter } from "next/router";
-import { ipfsGateway } from "../core/ipfs";
-
-import { GateWaySelect } from "../components/gateway-select";
 
 const Resolve: NextPage = () => {
   const router = useRouter();
   const [did, setDid] = React.useState(
-    "did:meme:1zgsqltm43euwf6rhs2gf2gp9hp879j47hua2sy5l2lv26vu44r2es2gcjlk7j"
+    "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn"
   );
 
   const handleResolve = () => {
@@ -28,11 +25,8 @@ const Resolve: NextPage = () => {
   return (
     <>
       <Head>
-        <title>did:meme</title>
-        <meta
-          name="description"
-          content="Decentralized identifiers hidden in memes"
-        />
+        <title>did actor</title>
+        <meta name="description" content="Decentralized identifiers api" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppPage>
@@ -65,7 +59,6 @@ const Resolve: NextPage = () => {
               ),
             }}
           />
-          <GateWaySelect />
         </Box>
       </AppPage>
     </>

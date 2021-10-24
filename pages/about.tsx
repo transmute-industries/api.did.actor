@@ -9,11 +9,8 @@ const About: NextPage = () => {
   return (
     <>
       <Head>
-        <title>did:meme</title>
-        <meta
-          name="description"
-          content="Decentralized identifiers hidden in memes"
-        />
+        <title>did actor</title>
+        <meta name="description" content="Decentralized identifiers api" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppPage>
@@ -45,7 +42,7 @@ const About: NextPage = () => {
                   />
                 </a>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <a
                   href="https://ipfs.io"
                   target="_blank"
@@ -58,8 +55,8 @@ const About: NextPage = () => {
                     height={51}
                   />
                 </a>
-              </Grid>
-              <Grid item>
+              </Grid> */}
+              {/* <Grid item>
                 <a
                   href="https://infura.io/"
                   target="_blank"
@@ -72,7 +69,7 @@ const About: NextPage = () => {
                     height={51}
                   />
                 </a>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <a
                   href="https://mui.com/"

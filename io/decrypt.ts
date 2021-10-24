@@ -1,13 +1,11 @@
 import { generators } from "../core/generators";
 import * as bip39 from "bip39";
 import * as hdkey from "hdkey";
-export const DIDMEME_BIP44_COIN_TYPE = "42";
+export const DID_KEY_BIP44_COIN_TYPE = "0";
 
 import { X25519KeyPair } from "@transmute/x25519-key-pair";
 
 import { JWE } from "@transmute/jose-ld";
-
-import base64url from "base64url";
 
 import pako from "pako";
 
@@ -28,7 +26,7 @@ export const decryptWith = async (message: string, mnemonic: string) => {
   const cipher = new JWE.Cipher(X25519KeyPair);
   const seed = await bip39.mnemonicToSeed(mnemonic);
   const root = hdkey.fromMasterSeed(seed);
-  const hdPath = `m/44'/${DIDMEME_BIP44_COIN_TYPE}'/0'/0/0`;
+  const hdPath = `m/44'/${DID_KEY_BIP44_COIN_TYPE}'/0'/0/0`;
   const addrNode = root.derive(hdPath);
 
   const { keys } = await generators.ed25519(addrNode._privateKey);

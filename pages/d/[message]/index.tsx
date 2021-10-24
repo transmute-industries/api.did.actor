@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import { decryptWith, getRecipient } from "../../../io/decrypt";
-import { DIDAsImage } from "../../../components/did-as-image";
+
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 
 import { DIDAsTextField } from "../../../components/did-as-textfield";
@@ -26,7 +26,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const Wall: NextPage = (props: any) => {
+const Decrypt: NextPage = (props: any) => {
   const message: any = props.message;
   const recipient: any = props.recipient;
   const title = "decrypt:..." + message.substr(-4);
@@ -49,10 +49,6 @@ const Wall: NextPage = (props: any) => {
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta
-          property="og:image"
-          content={`https://didmeme.vercel.app/api/image/${recipient.controller}`}
-        />
       </Head>
       <AppPage>
         <Grid
@@ -74,7 +70,6 @@ const Wall: NextPage = (props: any) => {
               >
                 {recipient && (
                   <div>
-                    <DIDAsImage did={recipient.controller} />
                     <DIDAsTextField
                       label="Message Recipient"
                       did={recipient.controller}
@@ -124,4 +119,4 @@ const Wall: NextPage = (props: any) => {
   );
 };
 
-export default Wall;
+export default Decrypt;

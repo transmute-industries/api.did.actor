@@ -6,6 +6,7 @@ export const verifyCredential = async ({
   format,
 }: any) => {
   const suite = await getSuite();
+  console.log(verifiableCredential);
   const result = await verifiable.credential.verify({
     credential: verifiableCredential,
     suite,
