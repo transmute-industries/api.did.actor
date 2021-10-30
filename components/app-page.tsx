@@ -4,6 +4,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import MuiDrawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
+
+import { AppBar, IconButton, Typography } from "@mui/material";
+
+import MenuIcon from "@mui/icons-material/Menu";
+
 import { Drawer } from "./drawer";
 
 import { useRouter } from "next/router";
@@ -21,8 +26,9 @@ export const AppPage = ({ children }: any) => {
   return (
     <Box sx={{ display: "flex", flexGrow: 1 }}>
       <CssBaseline />
-      {/* <AppBar
+      <AppBar
         position="fixed"
+        color={"primary"}
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
@@ -47,10 +53,10 @@ export const AppPage = ({ children }: any) => {
               router.push("/");
             }}
           >
-            did meme
+            did actor
           </Typography>
         </Toolbar>
-      </AppBar> */}
+      </AppBar>
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}

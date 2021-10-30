@@ -15,17 +15,22 @@ tags:
   - name: Identifiers
   - name: Credentials
   - name: Presentations
+  - name: Ciphers
 paths:
   /{did}:
     $ref: "./resources/did.yml"
-  /credentials/issue:
+  /api/credentials/issue:
     $ref: "./resources/credential-issuer.yml"
-  /credentials/verify:
+  /api/credentials/verify:
     $ref: "./resources/credential-verifier.yml"
-  /presentations/prove:
+  /api/presentations/prove:
     $ref: "./resources/presentation-prover.yml"
-  /presentations/verify:
+  /api/presentations/verify:
     $ref: "./resources/presentation-verifier.yml"
+  /api/ciphers/encrypt:
+    $ref: "./resources/cipher-encrypt.yml"
+  /api/ciphers/decrypt:
+    $ref: "./resources/cipher-decrypt.yml"
 components:
   parameters:
     $ref: "./parameters/_index.yml"

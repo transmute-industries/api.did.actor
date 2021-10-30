@@ -5,7 +5,7 @@ post:
   tags:
     - Presentations
   parameters:
-    - $ref: "../parameters/header/vpFormat.yml"
+    # - $ref: "../parameters/header/vpFormat.yml"
     - $ref: "../parameters/header/mnemonic.yml"
   requestBody:
     description: Parameters for creating the presentation.

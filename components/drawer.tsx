@@ -7,16 +7,18 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
-
+import ListSubheader from "@mui/material/ListSubheader";
 import CodeIcon from "@mui/icons-material/Code";
 import AddIcon from "@mui/icons-material/Add";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 import SearchIcon from "@mui/icons-material/Search";
 import ApiIcon from "@mui/icons-material/Api";
-
+import BiotechIcon from "@mui/icons-material/Biotech";
 import { useRouter } from "next/router";
+import CreateIcon from "@mui/icons-material/Create";
 
+import ContactMailIcon from "@mui/icons-material/ContactMail";
 export const Drawer = () => {
   const router = useRouter();
 
@@ -24,7 +26,9 @@ export const Drawer = () => {
     <div>
       <Toolbar />
       <Divider />
-      <List>
+      <List
+        subheader={<ListSubheader component="div">Identifiers</ListSubheader>}
+      >
         <ListItem
           button
           selected={router.pathname === "/"}
@@ -51,6 +55,64 @@ export const Drawer = () => {
             <SearchIcon />
           </ListItemIcon>
           <ListItemText primary={"Resolve"} />
+        </ListItem>
+      </List>
+      <Divider />
+      <List
+        subheader={<ListSubheader component="div">Credentials</ListSubheader>}
+      >
+        <ListItem
+          button
+          selected={router.pathname === "/issue"}
+          onClick={() => {
+            router.push("/issue");
+          }}
+        >
+          <ListItemIcon>
+            <CreateIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Create"} />
+        </ListItem>
+        <ListItem
+          button
+          selected={router.pathname === "/credentials/verify"}
+          onClick={() => {
+            router.push("/credentials/verify");
+          }}
+        >
+          <ListItemIcon>
+            <BiotechIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Verify"} />
+        </ListItem>
+      </List>
+      <Divider />
+      <List
+        subheader={<ListSubheader component="div">Presentations</ListSubheader>}
+      >
+        <ListItem
+          button
+          selected={router.pathname === "/present"}
+          onClick={() => {
+            router.push("/present");
+          }}
+        >
+          <ListItemIcon>
+            <ContactMailIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Create"} />
+        </ListItem>
+        <ListItem
+          button
+          selected={router.pathname === "/presentations/verify"}
+          onClick={() => {
+            router.push("/presentations/verify");
+          }}
+        >
+          <ListItemIcon>
+            <BiotechIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Verify"} />
         </ListItem>
       </List>
       <Divider />

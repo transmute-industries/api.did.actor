@@ -1,17 +1,18 @@
-import { verifiable } from "@transmute/vc.js";
 import { getSuite } from "./getSuite";
 import { documentLoader } from "../core/documentLoader";
+import vc from "@digitalbazaar/vc";
+
 export const verifyCredential = async ({
   verifiableCredential,
-  format,
-}: any) => {
+}: // format,
+any) => {
   const suite = await getSuite();
-  console.log(verifiableCredential);
-  const result = await verifiable.credential.verify({
+
+  const verification = await vc.verifyCredential({
     credential: verifiableCredential,
     suite,
     documentLoader,
-    format: [format],
   });
-  return result;
+
+  return verification;
 };

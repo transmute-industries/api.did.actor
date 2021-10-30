@@ -3,22 +3,17 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { AppPage } from "../../../components/app-page";
 import React from "react";
-import { TextField, Grid, Button } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Box } from "@mui/material";
 
-import IconButton from "@mui/material/IconButton";
+import { expand } from "../../../io/expand";
 
-import InputAdornment from "@mui/material/InputAdornment";
+import { verifyCredential } from "../../../vc-api";
+import { verifyPresentation } from "../../../vc-api";
 
-import { verify } from "../../../io/verify";
+import { CredentialPreview } from "../../../components/credential-preview";
+import { PresentationPreview } from "../../../components/presentation-preview";
 
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-
-import { DIDAsTextField } from "../../../components/did-as-textfield";
-
-import { defaultMnemonic } from "../../../core/defaultMnemonic";
-
-import BiotechIcon from "@mui/icons-material/Biotech";
 export async function getServerSideProps(context: any) {
   return {
     props: {
@@ -31,20 +26,7 @@ export async function getServerSideProps(context: any) {
 const Verify: NextPage = (props: any) => {
   const message: any = props.message;
   const title = "verify:..." + message.substr(-4);
-
-  const handleVerifyMessage = async () => {
-    try {
-      const { vc, issuer } = await verify(message);
-
-      setIssuer(issuer);
-    } catch (e) {
-      console.error(e);
-      alert("verification failed.");
-    }
-  };
-
-  const [issuer, setIssuer] = React.useState("");
-  const [plaintext, setPlaintext] = React.useState("");
+  const expanded = expand(message);
 
   return (
     <>
@@ -70,23 +52,18 @@ const Verify: NextPage = (props: any) => {
                   flexGrow: 1,
                 }}
               >
-                {issuer && (
-                  <DIDAsTextField
-                    label="Message Recipient"
-                    did={issuer}
-                    style={{ marginTop: "32px" }}
+                {expanded.type === "VerifiablePresentation" ||
+                expanded.type.includes("VerifiablePresentation") ? (
+                  <PresentationPreview
+                    presentation={expanded}
+                    verifyPresentation={verifyPresentation}
+                  />
+                ) : (
+                  <CredentialPreview
+                    credential={expanded}
+                    verifyCredential={verifyCredential}
                   />
                 )}
-
-                <Button
-                  style={{ marginLeft: "8px" }}
-                  onClick={handleVerifyMessage}
-                  variant="contained"
-                  color={"secondary"}
-                  endIcon={<BiotechIcon />}
-                >
-                  Verify
-                </Button>
               </Box>
             </div>
           </Grid>

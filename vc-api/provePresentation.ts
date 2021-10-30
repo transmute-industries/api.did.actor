@@ -1,20 +1,25 @@
-import { verifiable } from "@transmute/vc.js";
+// import { verifiable } from "@transmute/vc.js";
 import { getPresentationSuite } from "./getPresentationSuite";
 import { documentLoader } from "../core/documentLoader";
+
+import vc from "@digitalbazaar/vc";
+
 export const provePresentation = async ({
   presentation,
   options,
   mnemonic,
-  format,
-}: any) => {
+}: // format,
+any) => {
   const suite = await getPresentationSuite({ presentation, mnemonic });
-  const result = await verifiable.presentation.create({
+  const result = await vc.signPresentation({
     presentation,
-    domain: options.domain,
+    domain:
+      options.domain === "" || options.domain === undefined
+        ? undefined
+        : options.domain,
     challenge: options.challenge,
     suite,
     documentLoader,
-    format: [format],
   });
-  return result.items[0];
+  return result;
 };

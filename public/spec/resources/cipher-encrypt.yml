@@ -1,21 +1,25 @@
 post:
-  summary: Create
-  operationId: issueCredential
-  description: Issue a credential
+  summary: Encrypt
+  operationId: encryptMessage
+  description: Encrypt a message
   tags:
-    - Credentials
+    - Ciphers
   parameters:
-    # - $ref: "../parameters/header/vcFormat.yml"
     - $ref: "../parameters/header/mnemonic.yml"
   requestBody:
-    description: Parameters for verifying the credential.
+    description: Parameters for encrypting the message.
     content:
       application/json:
         schema:
           type: object
           properties:
-            credential:
-              $ref: "../schemas/Credential.yml"
+            recipient:
+              type: string
+              example: did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn
+            message:
+              type: object
+              example: { hello: "world" }
+              additionaProperties: true
 
   responses:
     "200":

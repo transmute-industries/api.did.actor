@@ -1,24 +1,17 @@
 export const DID_KEY_BIP44_COIN_TYPE = "0";
 
-import pako from "pako";
-
-const expand = (message: string) => {
-  const expanded = pako.inflate(Buffer.from(message, "base64"));
-  return JSON.parse(Buffer.from(expanded).toString());
-};
-
 import { verifyCredential } from "../vc-api/verifyCredential";
-export const verify = async (message: string) => {
-  const expandedMessage = expand(message);
+export const verify = async (verifiableCredential: any) => {
   const format = "vc";
   const res = await verifyCredential({
-    verifiableCredential: expandedMessage,
+    verifiableCredential,
     format,
   });
-  console.log(res);
   return {
-    vc: expandedMessage,
-    issuer: "did:example:123",
-    // issuer: expandedMessage.issuer.id || expandedMessage.issuer,
+    verified: res.verified,
+    issuer: verifiableCredential.issuer.id || verifiableCredential.issuer,
+    subject:
+      verifiableCredential.credentialSubject.id ||
+      verifiableCredential.credentialSubject,
   };
 };
