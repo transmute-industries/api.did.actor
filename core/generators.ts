@@ -5,14 +5,19 @@ import crypto from "crypto";
 
 export const generators = {
   ed25519: async (seed: Uint8Array) => {
-    return ed25519.generate({
-      secureRandom: () => {
-        if (seed) {
-          return seed;
-        }
-        const random = crypto.randomBytes(32);
-        return random;
+    return ed25519.generate(
+      {
+        secureRandom: () => {
+          if (seed) {
+            return seed;
+          }
+          const random = crypto.randomBytes(32);
+          return random;
+        },
       },
-    });
+      {
+        accept: "application/did+ld+json",
+      }
+    );
   },
 };

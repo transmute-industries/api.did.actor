@@ -4,6 +4,9 @@ import * as ed25519 from "@transmute/did-key-ed25519";
 
 export const resolvers = {
   ed25519: async (did: string) => {
-    return ed25519.resolve(did, { accept: "application/did+json" });
+    const res = await ed25519.resolve(did.split("#")[0], {
+      accept: "application/did+ld+json",
+    });
+    return res;
   },
 };

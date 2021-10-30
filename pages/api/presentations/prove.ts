@@ -19,7 +19,6 @@ export default async function handler(
       mnemonic,
       format,
     });
-    console.log("here....", verifiablePresentation);
     res.status(200).json(verifiablePresentation);
   } catch (e) {
     res.status(500).json({ message: (e as any).message });

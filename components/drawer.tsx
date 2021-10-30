@@ -17,6 +17,8 @@ import ApiIcon from "@mui/icons-material/Api";
 import BiotechIcon from "@mui/icons-material/Biotech";
 import { useRouter } from "next/router";
 import CreateIcon from "@mui/icons-material/Create";
+import LockIcon from "@mui/icons-material/Lock";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 export const Drawer = () => {
@@ -115,6 +117,34 @@ export const Drawer = () => {
           <ListItemText primary={"Verify"} />
         </ListItem>
       </List>
+
+      <List subheader={<ListSubheader component="div">Ciphers</ListSubheader>}>
+        <ListItem
+          button
+          selected={router.pathname === "/encrypt"}
+          onClick={() => {
+            router.push("/encrypt");
+          }}
+        >
+          <ListItemIcon>
+            <LockIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Encrypt"} />
+        </ListItem>
+        <ListItem
+          button
+          selected={router.pathname === "/decrypt"}
+          onClick={() => {
+            router.push("/decrypt");
+          }}
+        >
+          <ListItemIcon>
+            <LockOpenIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Decrypt"} />
+        </ListItem>
+      </List>
+      <Divider />
       <Divider />
       <List>
         <ListItem

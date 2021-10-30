@@ -2,28 +2,21 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { AppPage } from "../components/app-page";
 import React from "react";
-
 import { Box } from "@mui/material";
-
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-const JsonCredentialIssuer = dynamic(
-  () => import("../components/json-credential-issuer"),
+import dynamic from "next/dynamic";
+const JsonMessageEncrypter = dynamic(
+  () => import("../components/json-message-encrypter"),
   {
     ssr: false,
   }
 );
 
-const Issue: NextPage = () => {
+const Encrypt: NextPage = () => {
   const router = useRouter();
-  const example = {
-    "@context": ["https://www.w3.org/2018/credentials/v1"],
-    id: "urn:uuid:07aa969e-b40d-4c1b-ab46-ded252003ded",
-    type: ["VerifiableCredential"],
-    issuer: "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
-    issuanceDate: "2010-01-01T19:23:24Z",
-    credentialSubject: { id: router.query.subject || "did:example:123" },
-  };
+  const recipient =
+    router.query.subject ||
+    "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn";
   return (
     <>
       <Head>
@@ -42,11 +35,16 @@ const Issue: NextPage = () => {
             flexGrow: 1,
           }}
         >
-          <JsonCredentialIssuer value={example} />
+          <JsonMessageEncrypter
+            value={{
+              message: "the quieter you become the more you are able to hear",
+            }}
+            recipient={recipient}
+          />
         </Box>
       </AppPage>
     </>
   );
 };
 
-export default Issue;
+export default Encrypt;

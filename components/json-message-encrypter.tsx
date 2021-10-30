@@ -9,47 +9,32 @@ import { TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useRouter } from "next/router";
-import { defaultMnemonic } from "../core/defaultMnemonic";
-import { compact } from "../core/compact";
+
 import CreateIcon from "@mui/icons-material/Create";
-import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
-import { issueCredential } from "../vc-api/issueCredential";
-const JsonCredentialIssuer = ({ value }: any) => {
+import { encryptTo } from "../core/encrypt";
+
+const JsonMessageEncrypter = ({ value, recipient }: any) => {
   const router = useRouter();
   const [text, setText] = React.useState(JSON.stringify(value, null, 2));
+
+  const [messageRecipient, setMessageRecipient] = React.useState(recipient);
+
+  const handleEncrypt = async () => {
+    const message = await encryptTo(messageRecipient, JSON.parse(text));
+    router.push("/d/" + message);
+  };
+
   const handleChange = (newText: any) => {
     setText(newText);
-  };
-
-  const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
-
-  const handleMnemonicChange = async (newMnemonic: string) => {
-    setMnemonic(newMnemonic);
-    try {
-      const [assertionMethod] = await getKeysForMnemonic(newMnemonic);
-      const credential = JSON.parse(text);
-      credential.issuer = assertionMethod.controller;
-      setText(JSON.stringify(credential, null, 2));
-    } catch (e) {
-      console.error(e);
-      //
-    }
-  };
-  const handleIssue = async () => {
-    const vc = await issueCredential({
-      credential: JSON.parse(text),
-      mnemonic,
-    });
-    router.push("/v/" + compact(vc));
   };
   return (
     <>
       <TextField
-        label="Mnemonic for Issuer"
+        label="Message Recipient"
         multiline
-        value={mnemonic}
+        value={messageRecipient}
         onChange={(event) => {
-          handleMnemonicChange(event.target.value);
+          setMessageRecipient(event.target.value);
         }}
         style={{ marginBottom: "32px", marginTop: "32px" }}
         fullWidth
@@ -57,9 +42,9 @@ const JsonCredentialIssuer = ({ value }: any) => {
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
-                aria-label="issue credential"
-                onClick={handleIssue}
+                aria-label="encrypt for recipient"
                 color={"primary"}
+                onClick={handleEncrypt}
               >
                 <CreateIcon />
               </IconButton>
@@ -67,6 +52,7 @@ const JsonCredentialIssuer = ({ value }: any) => {
           ),
         }}
       />
+
       <AceEditor
         mode="json"
         theme="pastel_on_dark"
@@ -80,4 +66,4 @@ const JsonCredentialIssuer = ({ value }: any) => {
   );
 };
 
-export default JsonCredentialIssuer;
+export default JsonMessageEncrypter;

@@ -3,18 +3,19 @@ import React from "react";
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/mode-json";
-import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-pastel_on_dark";
 
 import { TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useRouter } from "next/router";
 import { defaultMnemonic } from "../core/defaultMnemonic";
-import { compact } from "../io/compact";
 import CreateIcon from "@mui/icons-material/Create";
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
 import { provePresentation } from "../vc-api/provePresentation";
+import { v4 as uuidv4 } from "uuid";
 
+import { compact } from "../core/compact";
 const JsonPresentationHolder = ({ value }: any) => {
   const router = useRouter();
   const [text, setText] = React.useState(JSON.stringify(value, null, 2));
@@ -22,7 +23,7 @@ const JsonPresentationHolder = ({ value }: any) => {
     setText(newText);
   };
   const [domain, setDomain] = React.useState("");
-  const [challenge, setChallenge] = React.useState("");
+  const [challenge, setChallenge] = React.useState(uuidv4());
 
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
 
@@ -44,8 +45,8 @@ const JsonPresentationHolder = ({ value }: any) => {
       options: { domain, challenge },
       mnemonic,
     });
-    console.log(JSON.stringify(vp));
-    // router.push("/v/" + compact(vp));
+    // console.log(JSON.stringify(vp));
+    router.push("/v/" + compact(vp));
   };
   return (
     <>
@@ -61,7 +62,11 @@ const JsonPresentationHolder = ({ value }: any) => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton aria-label="sign presentation" onClick={handleIssue}>
+              <IconButton
+                aria-label="sign presentation"
+                onClick={handleIssue}
+                color={"primary"}
+              >
                 <CreateIcon />
               </IconButton>
             </InputAdornment>
@@ -95,9 +100,10 @@ const JsonPresentationHolder = ({ value }: any) => {
 
       <AceEditor
         mode="json"
-        theme="github"
+        theme="pastel_on_dark"
         style={{ width: "100%" }}
         onChange={handleChange}
+        wrapEnabled={true}
         value={text}
         editorProps={{ $blockScrolling: true, useWorker: false }}
       />

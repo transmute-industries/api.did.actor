@@ -3,7 +3,7 @@ import React from "react";
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/mode-json";
-import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-pastel_on_dark";
 import { Button } from "@mui/material";
 
 const copyToClipboard = (content: string) => {
@@ -29,7 +29,8 @@ const JsonViewReadOnly = ({ value }: any) => {
       </Button>
       <AceEditor
         mode="json"
-        theme="github"
+        theme="pastel_on_dark"
+        wrapEnabled={true}
         readOnly={true}
         value={JSON.stringify(value, null, 2)}
         editorProps={{ $blockScrolling: true, useWorker: false }}

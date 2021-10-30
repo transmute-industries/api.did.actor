@@ -10,13 +10,22 @@ import IconButton from "@mui/material/IconButton";
 
 import InputAdornment from "@mui/material/InputAdornment";
 
-import { decryptWith, getRecipient } from "../../../io/decrypt";
+import { decryptWith, getRecipient } from "../../../core/decrypt";
 
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 
 import { DIDAsTextField } from "../../../components/did-as-textfield";
 
 import { defaultMnemonic } from "../../../core/defaultMnemonic";
+
+import dynamic from "next/dynamic";
+const JsonViewReadOnly = dynamic(
+  () => import("../../../components/json-view-read-only"),
+  {
+    ssr: false,
+  }
+);
+
 export async function getServerSideProps(context: any) {
   return {
     props: {
@@ -34,7 +43,7 @@ const Decrypt: NextPage = (props: any) => {
   const handleDecryptMessage = async () => {
     try {
       const plaintext = await decryptWith(message, mnemonic);
-      setPlaintext(plaintext.message);
+      setPlaintext(plaintext);
     } catch (e) {
       alert("decryption failed.");
     }
@@ -89,6 +98,7 @@ const Decrypt: NextPage = (props: any) => {
                         endAdornment: (
                           <InputAdornment position="end">
                             <IconButton
+                              color={"primary"}
                               aria-label="decrypt message"
                               onClick={handleDecryptMessage}
                             >
@@ -101,15 +111,7 @@ const Decrypt: NextPage = (props: any) => {
                   </div>
                 )}
 
-                {plaintext && (
-                  <TextField
-                    label="Decrypted Message Content"
-                    multiline
-                    value={plaintext}
-                    fullWidth
-                    disabled={true}
-                  />
-                )}
+                {plaintext && <JsonViewReadOnly value={plaintext} />}
               </Box>
             </div>
           </Grid>

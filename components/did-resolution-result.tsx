@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
-import { CircularProgress, Typography, Box, Button } from "@mui/material";
+import { CircularProgress, Typography, Box, Button, Grid } from "@mui/material";
 
 import { useRouter } from "next/router";
 import SendIcon from "@mui/icons-material/Send";
@@ -28,8 +28,7 @@ export const ResolutionResult = ({ did }: any) => {
       <Box style={{ display: "flex", flexGrow: 1, flexDirection: "row" }}>
         <CircularProgress />
         <Typography style={{ marginLeft: "16px", marginTop: "8px" }}>
-          Resolving DID... due to IPFS being decentralized this may take
-          minutes.
+          Resolving DID...
         </Typography>
       </Box>
     );
@@ -43,39 +42,48 @@ export const ResolutionResult = ({ did }: any) => {
     <>
       <div>
         <div>
-          <Button
-            onClick={() => {
-              router.push("/api/" + resolution.didDocument.id);
-            }}
-            variant="outlined"
-            color={"secondary"}
-            endIcon={<SourceIcon />}
-          >
-            View Source
-          </Button>
-          <Button
-            style={{ marginLeft: "8px" }}
-            onClick={() => {
-              router.push("/e/" + resolution.didDocument.id);
-            }}
-            variant="contained"
-            color={"secondary"}
-            endIcon={<SendIcon />}
-          >
-            Encrypt
-          </Button>
+          <Grid container spacing={4}>
+            <Grid item>
+              <Button
+                onClick={() => {
+                  router.push("/api/" + resolution.didDocument.id);
+                }}
+                variant="outlined"
+                color={"primary"}
+                endIcon={<SourceIcon />}
+              >
+                View Source
+              </Button>
+            </Grid>
 
-          <Button
-            style={{ marginLeft: "8px" }}
-            onClick={() => {
-              router.push("/i/" + resolution.didDocument.id);
-            }}
-            variant="contained"
-            color={"secondary"}
-            endIcon={<CreateIcon />}
-          >
-            Issue
-          </Button>
+            <Grid item>
+              <Button
+                onClick={() => {
+                  router.push(
+                    "/encrypt?recipient=" + resolution.didDocument.id
+                  );
+                }}
+                variant="outlined"
+                color={"secondary"}
+                endIcon={<SendIcon />}
+              >
+                Encrypt
+              </Button>
+            </Grid>
+
+            <Grid item>
+              <Button
+                onClick={() => {
+                  router.push("/issue?subject=" + resolution.didDocument.id);
+                }}
+                variant="outlined"
+                color={"secondary"}
+                endIcon={<CreateIcon />}
+              >
+                Issue
+              </Button>
+            </Grid>
+          </Grid>
         </div>
       </div>
     </>

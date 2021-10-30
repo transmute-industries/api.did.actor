@@ -6,7 +6,7 @@ import React from "react";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/material";
 
-import { expand } from "../../../io/expand";
+import { expand } from "../../../core/expand";
 
 import { verifyCredential } from "../../../vc-api";
 import { verifyPresentation } from "../../../vc-api";

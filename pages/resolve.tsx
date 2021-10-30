@@ -52,7 +52,11 @@ const Resolve: NextPage = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton aria-label="Resolve DID" onClick={handleResolve}>
+                  <IconButton
+                    aria-label="Resolve DID"
+                    onClick={handleResolve}
+                    color={"primary"}
+                  >
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>

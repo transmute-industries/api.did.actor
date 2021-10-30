@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type VerifiableCredential = any;
-import { encryptTo } from "../../../io/encrypt";
+import { encryptTo } from "../../../core/encrypt";
 import { resolvers } from "../../../core/resolvers";
 export default async function handler(
   req: NextApiRequest,

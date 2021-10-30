@@ -2,15 +2,12 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { AppPage } from "../../components/app-page";
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 import dynamic from "next/dynamic";
-const JsonEditor = dynamic(
-  () => import("../../components/json-credential-verifier"),
-  {
-    ssr: false,
-  }
-);
+const JsonVerifier = dynamic(() => import("../../components/json-verifier"), {
+  ssr: false,
+});
 
 const example = {
   "@context": ["https://www.w3.org/2018/credentials/v1"],
@@ -47,8 +44,7 @@ const Verify: NextPage = () => {
             flexGrow: 1,
           }}
         >
-          <Typography gutterBottom>Verify a Credential</Typography>
-          <JsonEditor value={example} />
+          <JsonVerifier value={example} />
         </Box>
       </AppPage>
     </>

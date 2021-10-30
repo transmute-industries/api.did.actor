@@ -70,7 +70,7 @@ export const CreateDidForm = () => {
         style={{ marginTop: "32px" }}
         label="Controller Mnemonic"
         helperText={
-          <div
+          <span
             style={{
               display: "flex",
               flexDirection: "row",
@@ -78,10 +78,13 @@ export const CreateDidForm = () => {
             }}
           >
             <WarningIcon color={"warning"} />
-            <Typography style={{ marginLeft: "9px", color: yellow["700"] }}>
+            <Typography
+              style={{ marginLeft: "9px", color: yellow["700"] }}
+              component={"span"}
+            >
               Anyone knowing this phrase controls this identifier.
             </Typography>
-          </div>
+          </span>
         }
         multiline
         value={mnemonic}
@@ -102,7 +105,8 @@ export const CreateDidForm = () => {
 
       <Button
         sx={{ marginTop: "32px" }}
-        variant={"contained"}
+        variant={"outlined"}
+        color={"primary"}
         onClick={handleCreate}
       >
         Create
