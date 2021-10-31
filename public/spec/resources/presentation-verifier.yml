@@ -18,11 +18,9 @@ post:
             options:
               type: object
               properties:
-                domain:
-                  type: string
                 challenge:
                   type: string
-                  example: "1f44d55f-f161-4938-a659-f8026467f126"
+                  example: "e42ab41a-06c3-45f5-878a-b27928aab8bd"
 
   responses:
     "200":
