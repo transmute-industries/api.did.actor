@@ -57,6 +57,24 @@ export const CredentialPreview = ({ credential, verifyCredential }: any) => {
     }
   }, [handleVerifyMessage, status]);
 
+  function isValidHttpUrl(data: string) {
+    let url;
+
+    try {
+      url = new URL(data);
+    } catch (_) {
+      return false;
+    }
+
+    return url.protocol === "http:" || url.protocol === "https:";
+  }
+
+  let contextToShow = credential["@context"][credential["@context"].length - 1];
+  if (!isValidHttpUrl(contextToShow)) {
+    contextToShow = credential["@context"][0];
+  }
+  let typeToShow = credential["type"][credential["type"].length - 1];
+
   return (
     <>
       <AppBar position="relative" color={"transparent"}>
@@ -64,10 +82,10 @@ export const CredentialPreview = ({ credential, verifyCredential }: any) => {
           <AvatarSpinner status={status} />
           <div style={{ flexGrow: 1, marginLeft: "24px" }}>
             <Typography component="div">
-              {credential.name || _.startCase(credential.type)}
+              {credential.name || _.startCase(typeToShow)}
             </Typography>
-            <Link href={credential["@context"][0]} style={{ fontSize: ".8em" }}>
-              {credential["@context"][0]}
+            <Link href={contextToShow} style={{ fontSize: ".8em" }}>
+              {contextToShow}
             </Link>
           </div>
           <Button

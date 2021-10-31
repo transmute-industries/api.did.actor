@@ -11,7 +11,6 @@ export const documentLoader = async (iri: string) => {
       const { didDocument }: any = await resolvers.ed25519(iri);
 
       if (iri === didDocument.id) {
-        console.log(iri, didDocument);
         return { document: didDocument };
       }
 
@@ -20,8 +19,6 @@ export const documentLoader = async (iri: string) => {
           return vm.id === iri;
         }
       );
-
-      console.log("hey!", JSON.stringify(verificationMethod, null, 2));
 
       return {
         document: {

@@ -13,7 +13,7 @@ const theme = createTheme({
     mode: "dark",
     primary: {
       light: primary[50],
-      main: primary["A400"],
+      main: primary["A100"],
     },
     secondary: {
       light: secondary[50],
