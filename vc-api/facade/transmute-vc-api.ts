@@ -5,7 +5,7 @@ import {
 
 export { Ed25519VerificationKey2018, Ed25519Signature2018 };
 import { verifiable } from "@transmute/vc.js";
-import { checkStatus } from "vc-revocation-list";
+import { checkStatus } from "@transmute/vc-status-rl-2020";
 
 import { getCredentialSuite } from "../getCredentialSuite";
 import { getPresentationSuite } from "../getPresentationSuite";
