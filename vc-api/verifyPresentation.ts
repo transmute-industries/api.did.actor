@@ -2,7 +2,7 @@ import { getSuite } from "./getSuite";
 import { documentLoader } from "../core/documentLoader";
 
 import vc from "@digitalbazaar/vc";
-
+import { checkStatus } from "vc-revocation-list";
 export const verifyPresentation = async ({
   verifiablePresentation,
   options,
@@ -14,6 +14,7 @@ any) => {
     domain: options.domain,
     challenge: options.challenge,
     suite,
+    checkStatus,
     documentLoader,
   });
   return result;

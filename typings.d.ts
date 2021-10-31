@@ -3,6 +3,7 @@ declare module "bs58";
 declare module "pako";
 
 declare module "uuid";
+declare module "vc-revocation-list";
 
 declare module "@digitalbazaar/vc";
 declare module "@digitalbazaar/ed25519-verification-key-2018";
