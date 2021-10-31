@@ -3,6 +3,8 @@ import { resolvers } from "./resolvers";
 import { contexts } from "./contexts";
 import { documents } from "./documents";
 
+import { DOCUMENT_LOADER_TYPE } from "../vc-api";
+
 export const documentLoader = async (iri: string) => {
   if (iri) {
     if (contexts[iri]) {
@@ -15,22 +17,27 @@ export const documentLoader = async (iri: string) => {
     if (iri.startsWith("did:key:z6M")) {
       const { didDocument }: any = await resolvers.ed25519(iri);
 
-      if (iri === didDocument.id) {
+      if (DOCUMENT_LOADER_TYPE === "resolver") {
         return { document: didDocument };
       }
 
-      const verificationMethod = didDocument.verificationMethod.find(
-        (vm: any) => {
-          return vm.id === iri;
+      if (DOCUMENT_LOADER_TYPE === "dereferencer") {
+        if (iri === didDocument.id) {
+          return { document: didDocument };
         }
-      );
+        const verificationMethod = didDocument.verificationMethod.find(
+          (vm: any) => {
+            return vm.id === iri;
+          }
+        );
 
-      return {
-        document: {
-          "@context": didDocument["@context"],
-          ...verificationMethod,
-        },
-      };
+        return {
+          document: {
+            "@context": didDocument["@context"],
+            ...verificationMethod,
+          },
+        };
+      }
     }
   }
 
