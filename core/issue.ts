@@ -1,4 +1,4 @@
-import { issueCredential } from "../vc-api/issueCredential";
+import { issueCredential } from "../vc-api";
 
 import { compact } from "./compact";
 

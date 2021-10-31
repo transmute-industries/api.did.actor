@@ -13,7 +13,7 @@ import { defaultMnemonic } from "../core/defaultMnemonic";
 import { compact } from "../core/compact";
 import CreateIcon from "@mui/icons-material/Create";
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
-import { issueCredential } from "../vc-api/issueCredential";
+import { issueCredential } from "../vc-api";
 const JsonCredentialIssuer = ({ value }: any) => {
   const router = useRouter();
   const [text, setText] = React.useState(JSON.stringify(value, null, 2));
