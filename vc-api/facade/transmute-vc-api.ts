@@ -31,7 +31,7 @@ export const provePresentation = async ({
   mnemonic,
 }: any) => {
   const suite = await getPresentationSuite({ presentation, mnemonic });
-  const result = await verifiable.presentation.create({
+  const { items } = await verifiable.presentation.create({
     presentation,
     domain:
       options.domain === "" || options.domain === undefined
@@ -42,7 +42,7 @@ export const provePresentation = async ({
     format: ["vp"],
     documentLoader,
   });
-  return result;
+  return items[0];
 };
 
 export const verifyCredential = async ({ verifiableCredential }: any) => {
