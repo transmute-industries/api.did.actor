@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { defaultMnemonic } from "../core/defaultMnemonic";
 import CreateIcon from "@mui/icons-material/Create";
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
-import { provePresentation } from "../vc-api/provePresentation";
+import { provePresentation } from "../vc-api";
 import { v4 as uuidv4 } from "uuid";
 
 import { compact } from "../core/compact";

@@ -19,8 +19,11 @@
     "@mui/styles": "^5.0.2",
     "@transmute/credentials-context": "^0.7.0-unstable.12",
     "@transmute/did-key-ed25519": "^0.3.0-unstable.4",
+    "@transmute/ed25519-signature-2018": "^0.7.0-unstable.19",
     "@transmute/jose-ld": "^0.7.0-unstable.9",
     "@transmute/jsonld-document-loader": "^0.2.0",
+    "@transmute/vc-status-rl-2020": "^0.7.0-unstable.19",
+    "@transmute/vc.js": "^0.7.0-unstable.19",
     "@transmute/x25519-key-pair": "^0.7.0-unstable.9",
     "ace-builds": "^1.4.13",
     "axios": "^0.23.0",
@@ -36,7 +39,9 @@
     "react-ace": "^9.5.0",
     "react-dom": "17.0.2",
     "react-tsparticles": "^1.36.0",
-    "uuid": "^8.3.2"
+    "security-context": "^4.0.0",
+    "uuid": "^8.3.2",
+    "vc-revocation-list": "^3.0.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.176",

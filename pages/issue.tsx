@@ -17,11 +17,20 @@ const JsonCredentialIssuer = dynamic(
 const Issue: NextPage = () => {
   const router = useRouter();
   const example = {
-    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://w3id.org/vc-revocation-list-2020/v1",
+    ],
     id: "urn:uuid:07aa969e-b40d-4c1b-ab46-ded252003ded",
     type: ["VerifiableCredential"],
     issuer: "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
     issuanceDate: "2010-01-01T19:23:24Z",
+    credentialStatus: {
+      id: "https://api.did.actor/revocation-lists/1.json#0",
+      type: "RevocationList2020Status",
+      revocationListIndex: 0,
+      revocationListCredential: "https://api.did.actor/revocation-lists/1.json",
+    },
     credentialSubject: { id: router.query.subject || "did:example:123" },
   };
   return (

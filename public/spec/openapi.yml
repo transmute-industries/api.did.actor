@@ -9,8 +9,9 @@ info:
     name: API Support
     url: https://github.com/transmute-industries/api.did.actor
 servers:
-  - url: http://localhost:3000
   - url: https://api.did.actor
+  - url: http://localhost:3000
+
 tags:
   - name: Identifiers
   - name: Credentials

@@ -25,51 +25,9 @@ const About: NextPage = () => {
               variant={"h5"}
               style={{ marginTop: "16px", marginBottom: "32px" }}
             >
-              Powered By
+              Built with
             </Typography>
             <Grid container spacing={8}>
-              <Grid item>
-                <a
-                  href="https://vercel.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image
-                    src="/vercel.svg"
-                    alt="Vercel Logo"
-                    width={128}
-                    height={51}
-                  />
-                </a>
-              </Grid>
-              {/* <Grid item>
-                <a
-                  href="https://ipfs.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image
-                    src="/ipfs.png"
-                    alt="IPFS Logo"
-                    width={128}
-                    height={51}
-                  />
-                </a>
-              </Grid> */}
-              {/* <Grid item>
-                <a
-                  href="https://infura.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image
-                    src="/infura.svg"
-                    alt="Infura Logo"
-                    width={128}
-                    height={51}
-                  />
-                </a>
-              </Grid> */}
               <Grid item>
                 <a
                   href="https://mui.com/"
@@ -77,13 +35,14 @@ const About: NextPage = () => {
                   rel="noopener noreferrer"
                 >
                   <Image
-                    src="/mui.svg"
+                    src="/material-ui.svg"
                     alt="Material UI Logo"
-                    width={128}
-                    height={51}
+                    width={64}
+                    height={64}
                   />
                 </a>
               </Grid>
+
               <Grid item>
                 <a
                   href="https://nextjs.org/"
@@ -91,8 +50,23 @@ const About: NextPage = () => {
                   rel="noopener noreferrer"
                 >
                   <Image
-                    src="/next.svg"
+                    src="/nextjs-white-logo.svg"
                     alt="Next.js Logo"
+                    width={128}
+                    height={51}
+                  />
+                </a>
+              </Grid>
+
+              <Grid item>
+                <a
+                  href="https://vercel.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Image
+                    src="/vercel-logotype-light.svg"
+                    alt="Vercel Logo"
                     width={128}
                     height={51}
                   />
@@ -106,7 +80,7 @@ const About: NextPage = () => {
                   rel="noopener noreferrer"
                 >
                   <Image
-                    src="/transmute.svg"
+                    src="/transmute-white.svg"
                     alt="Transmute Logo"
                     width={128}
                     height={51}

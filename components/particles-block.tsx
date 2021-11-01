@@ -1,13 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import * as React from "react";
-import { lighten } from "@mui/material/styles";
-import { lightBlue } from "@mui/material/colors";
+
 import Particles from "react-tsparticles";
 
 import { Box } from "@mui/material";
-const drawerWidth = 240;
+
+import { indigo } from "@mui/material/colors";
+
+// const primary = purple["A100"];
+const secondary = indigo["A100"];
+
 export const ParticlesBlock = ({ sx, children }: any) => {
-  const graphColor = lighten(lightBlue["500"], 0.7);
+  const nodeColor = secondary;
+  const edgeColor = nodeColor;
 
   const options = {
     particles: {
@@ -19,10 +24,13 @@ export const ParticlesBlock = ({ sx, children }: any) => {
         },
       },
       color: {
-        value: graphColor,
+        value: nodeColor,
       },
       shape: {
-        type: "circle",
+        type: "polygon",
+        polygon: {
+          nb_sides: 6,
+        },
       },
       opacity: {
         value: 0.5,
@@ -47,20 +55,20 @@ export const ParticlesBlock = ({ sx, children }: any) => {
       line_linked: {
         enable: true,
         distance: 100,
-        color: graphColor,
-        opacity: 0.4,
-        width: 2,
+        color: edgeColor,
+        opacity: 0.2,
+        width: 1,
       },
       move: {
         enable: true,
-        speed: 0.75,
-        direction: "none  ",
+        speed: 0.2,
+        direction: "bottom",
         random: false,
         straight: false,
         out_mode: "out",
         bounce: false,
         attract: {
-          enable: true,
+          enable: false,
           rotateX: 200,
           rotateY: 200,
         },
