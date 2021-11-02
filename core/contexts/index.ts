@@ -8,6 +8,8 @@ import x25519v1 from "./x25519-v1.json";
 import secv2 from "./sec-v2.json";
 import secv1 from "./sec-v1.json";
 
+import tracev1 from "./trace-v1.json";
+
 export const contexts: any = {
   "https://www.w3.org/2018/credentials/v1": credsv1,
   "https://www.w3.org/ns/did/v1": didsv1,
@@ -18,4 +20,6 @@ export const contexts: any = {
 
   "https://w3id.org/security/v2": secv2,
   "https://w3id.org/security/v1": secv1,
+
+  "https://w3id.org/traceability/v1": tracev1,
 };

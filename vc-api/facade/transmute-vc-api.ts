@@ -54,6 +54,7 @@ export const verifyCredential = async ({ verifiableCredential }: any) => {
     format: ["vc"],
     documentLoader,
   });
+  console.log(verification);
   return verification;
 };
 
