@@ -1,0 +1,26 @@
+{
+  "@context": "https://identity.foundation/.well-known/contexts/did-configuration-v0.2.jsonld",
+  "linked_dids": [
+    {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://identity.foundation/.well-known/contexts/did-configuration-v0.2.jsonld"
+      ],
+      "issuer": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+      "issuanceDate": "2020-12-04T08:56:37-06:00",
+      "expirationDate": "2035-12-04T08:56:37-06:00",
+      "type": ["VerifiableCredential", "DomainLinkageCredential"],
+      "credentialSubject": {
+        "id": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+        "origin": "https://api.did.actor"
+      },
+      "proof": {
+        "type": "Ed25519Signature2018",
+        "created": "2021-11-03T17:29:16Z",
+        "verificationMethod": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+        "proofPurpose": "assertionMethod",
+        "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..qGPHEwtLKMQfHqhf1miZ-sYkiBAuRbGmIsrv-1bw-hHwGMx0ISLxUKmBMau5ZBV44IVaY2l0mlwtGxSR5wAzCQ"
+      }
+    }
+  ]
+}

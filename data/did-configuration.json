@@ -1,0 +1,4 @@
+{
+  "@context": "https://identity.foundation/.well-known/contexts/did-configuration-v0.2.jsonld",
+  "linked_dids": []
+}
