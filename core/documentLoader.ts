@@ -41,6 +41,11 @@ export const documentLoader = async (iri: string) => {
     }
   }
 
+  if (iri.startsWith("http")) {
+    const document: any = await resolvers.http(iri);
+    return { document };
+  }
+
   const message = "Unsupported iri: " + iri;
   console.warn(message);
   throw new Error(message);
