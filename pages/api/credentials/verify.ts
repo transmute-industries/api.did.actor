@@ -10,7 +10,8 @@ export default async function handler(
   res: NextApiResponse<VerifiableCredential>
 ) {
   try {
-    const result = await verifyCredential(req.body);
+    const format = req.headers["vc-format"];
+    const result = await verifyCredential(req.body, format);
 
     res.status(200).json(result);
   } catch (e) {

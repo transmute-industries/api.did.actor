@@ -6,6 +6,7 @@ export const getCredentialSuite = async ({
   credential,
   mnemonic,
   hdpath,
+  proofType,
 }: any) => {
   const issuer = credential.issuer.id || credential.issuer;
   const { didDocument } = await resolvers.ed25519(issuer);
@@ -15,6 +16,6 @@ export const getCredentialSuite = async ({
     throw new Error("mnemonic is not for issuer");
   }
   //   we are exploiting the known structure of did:key here...
-  const suite = await getSuite(keys[0]);
+  const suite = await getSuite(keys[0], proofType);
   return suite;
 };
