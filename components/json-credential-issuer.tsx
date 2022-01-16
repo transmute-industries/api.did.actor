@@ -91,6 +91,7 @@ const JsonCredentialIssuer = ({ value }: any) => {
           ),
         }}
       />
+      {/* // TODO: vc-jwt bug in browser prevents this from working. */}
       {/* <CredentialFormatToggle
         advancedConfiguration={advancedConfiguration}
         setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
