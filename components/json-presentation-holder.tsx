@@ -44,6 +44,9 @@ const JsonPresentationHolder = ({ value }: any) => {
       presentation: JSON.parse(text),
       options: { domain, challenge },
       mnemonic,
+      hdpath: `m/44'/0'/0'/0/0`,
+      proofType: "Ed25519Signature2018",
+      format: "vp",
     });
     // console.log(JSON.stringify(vp));
     router.push("/v/" + compact(vp));

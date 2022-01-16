@@ -5,7 +5,10 @@ import {
   JsonWebSignature,
 } from "./facade";
 
-export const getSuite = async (key: any, proofType: string) => {
+export const getSuite = async (
+  key: any,
+  proofType: string = "Ed25519Signature2018"
+) => {
   if (proofType === "Ed25519Signature2018") {
     return new Ed25519Signature2018({
       key: await Ed25519VerificationKey2018.from(key),
@@ -17,5 +20,5 @@ export const getSuite = async (key: any, proofType: string) => {
       key: await JsonWebKey.from(key),
     });
   }
-  throw new Error("Unsupported proof typee: " + proofType);
+  throw new Error("Unsupported proof type: " + proofType);
 };

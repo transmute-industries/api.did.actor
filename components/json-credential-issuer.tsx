@@ -14,6 +14,9 @@ import { compact } from "../core/compact";
 import CreateIcon from "@mui/icons-material/Create";
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
 import { issueCredential } from "../vc-api";
+
+// import CredentialFormatToggle from "./credential-format-toggle";
+
 const JsonCredentialIssuer = ({ value }: any) => {
   const router = useRouter();
   const [text, setText] = React.useState(JSON.stringify(value, null, 2));
@@ -22,24 +25,45 @@ const JsonCredentialIssuer = ({ value }: any) => {
   };
 
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
+  const [advancedConfiguration, setAdvancedConfiguration] = React.useState({
+    hdpath: `m/44'/0'/0'/0/0`,
+    format: "vc",
+    suite: "Ed25519Signature2018",
+  });
 
-  const handleMnemonicChange = async (newMnemonic: string) => {
-    setMnemonic(newMnemonic);
+  const handleUpdateToAdvancedConfiguration = (newState: any) => {
+    setAdvancedConfiguration(newState);
+    if (newState.hdpath !== advancedConfiguration.hdpath) {
+      handleUpdateIssuer(mnemonic, newState.hdpath);
+    }
+  };
+
+  const handleUpdateIssuer = async (mnemonic: string, path: string) => {
     try {
-      const [assertionMethod] = await getKeysForMnemonic(newMnemonic);
+      const [assertionMethod] = await getKeysForMnemonic(mnemonic, path);
       const credential = JSON.parse(text);
       credential.issuer = assertionMethod.controller;
       setText(JSON.stringify(credential, null, 2));
     } catch (e) {
-      console.error(e);
+      // console.error(e);
       //
     }
   };
+
+  const handleMnemonicChange = async (newMnemonic: string) => {
+    setMnemonic(newMnemonic);
+    handleUpdateIssuer(newMnemonic, advancedConfiguration.hdpath);
+  };
   const handleIssue = async () => {
+    // TODO: vc-jwt bug in browser prevents this from working.
     const vc = await issueCredential({
       credential: JSON.parse(text),
       mnemonic,
+      hdpath: advancedConfiguration.hdpath,
+      proofType: advancedConfiguration.suite,
+      format: advancedConfiguration.format,
     });
+    // console.log(vc);
     router.push("/v/" + compact(vc));
   };
   return (
@@ -67,6 +91,10 @@ const JsonCredentialIssuer = ({ value }: any) => {
           ),
         }}
       />
+      {/* <CredentialFormatToggle
+        advancedConfiguration={advancedConfiguration}
+        setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
+      /> */}
       <AceEditor
         mode="json"
         theme="pastel_on_dark"
