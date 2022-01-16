@@ -10,7 +10,7 @@ export default async function handler(
 ) {
   const { message } = req.body;
   const { mnemonic, hdpath } = req.headers;
-  const result = await decryptWith(message, mnemonic as any, hdpath);
+  const result = await decryptWith(message, mnemonic as any, hdpath as any);
 
   try {
     res.status(200).json(result);

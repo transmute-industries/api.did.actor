@@ -4,6 +4,8 @@
 
 This API is for testing digital bazaar libraries exposed over http.
 
+There are a lot of security issues with the approach taken here, most of them are for the sake of exposing functionality for testing purposes. This API should not be used outside of a testing / demonstration context.
+
 > The Decentralized Identifiers (DIDs) are a new type of globally unique identifier designed to enable individuals and organizations to generate our own identifiers using systems we trust, and to prove control of those identifiers (authenticate) using cryptographic proofs.
 
 - [W3C DID Core Spec](https://www.w3.org/TR/did-core/)
