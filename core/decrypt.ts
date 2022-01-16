@@ -22,12 +22,15 @@ export const getRecipient = (message: string) => {
   };
 };
 
-export const decryptWith = async (message: string, mnemonic: string) => {
+export const decryptWith = async (
+  message: string,
+  mnemonic: string,
+  hdpath: string = `m/44'/${DID_KEY_BIP44_COIN_TYPE}'/0'/0/0`
+) => {
   const cipher = new JWE.Cipher(X25519KeyPair);
   const seed = await bip39.mnemonicToSeed(mnemonic);
   const root = hdkey.fromMasterSeed(seed);
-  const hdPath = `m/44'/${DID_KEY_BIP44_COIN_TYPE}'/0'/0/0`;
-  const addrNode = root.derive(hdPath);
+  const addrNode = root.derive(hdpath);
 
   const { keys } = await generators.ed25519(addrNode._privateKey);
   const keyAgreementKey = keys[1];

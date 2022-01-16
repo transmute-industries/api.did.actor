@@ -9,8 +9,8 @@ export default async function handler(
   res: NextApiResponse<VerifiableCredential>
 ) {
   const { message } = req.body;
-  const { mnemonic } = req.headers;
-  const result = await decryptWith(message, mnemonic as any);
+  const { mnemonic, hdpath } = req.headers;
+  const result = await decryptWith(message, mnemonic as any, hdpath);
 
   try {
     res.status(200).json(result);

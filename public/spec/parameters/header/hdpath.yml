@@ -1,0 +1,8 @@
+name: hdpath
+in: header
+required: false
+description: A path used to derive a key from a mnemonic
+# default is BTC
+example: "m/44'/0'/0'/0/0"
+schema:
+  type: string

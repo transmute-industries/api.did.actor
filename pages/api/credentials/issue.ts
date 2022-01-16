@@ -10,12 +10,13 @@ export default async function handler(
   res: NextApiResponse<VerifiableCredential>
 ) {
   const { credential } = req.body;
-  const { mnemonic } = req.headers;
+  const { mnemonic, hdpath } = req.headers;
   const format = req.headers["vc-format"];
   try {
     const verifiableCredential = await issueCredential({
       credential,
       mnemonic,
+      hdpath,
       format,
     });
     res.status(200).json(verifiableCredential);

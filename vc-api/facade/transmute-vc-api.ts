@@ -16,8 +16,12 @@ import { JsonWebSignature } from "@transmute/json-web-signature";
 
 export const suite = [new Ed25519Signature2018(), new JsonWebSignature()];
 
-export const issueCredential = async ({ credential, mnemonic }: any) => {
-  const suite = await getCredentialSuite({ credential, mnemonic });
+export const issueCredential = async ({
+  credential,
+  mnemonic,
+  hdpath,
+}: any) => {
+  const suite = await getCredentialSuite({ credential, mnemonic, hdpath });
   const { items } = await verifiable.credential.create({
     credential,
     suite,
@@ -31,8 +35,9 @@ export const provePresentation = async ({
   presentation,
   options,
   mnemonic,
+  hdpath,
 }: any) => {
-  const suite = await getPresentationSuite({ presentation, mnemonic });
+  const suite = await getPresentationSuite({ presentation, mnemonic, hdpath });
   const { items } = await verifiable.presentation.create({
     presentation,
     domain:

@@ -4,8 +4,6 @@ post:
   description: Encrypt a message
   tags:
     - Ciphers
-  parameters:
-    - $ref: "../parameters/header/mnemonic.yml"
   requestBody:
     description: Parameters for encrypting the message.
     content:
