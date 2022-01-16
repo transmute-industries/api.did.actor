@@ -25,8 +25,8 @@ export const CreateDidForm = () => {
     async (mnemonic: string) => {
       const seed = await bip39.mnemonicToSeed(mnemonic);
       const root = hdkey.fromMasterSeed(seed);
-      const hdPath = `m/44'/${DID_KEY_BIP44_COIN_TYPE}'/0'/0/0`;
-      const addrNode = root.derive(hdPath);
+      const hdpath = `m/44'/${DID_KEY_BIP44_COIN_TYPE}'/0'/0/0`;
+      const addrNode = root.derive(hdpath);
 
       const res = await generators.ed25519(addrNode._privateKey);
       setKey(res.didDocument.id);

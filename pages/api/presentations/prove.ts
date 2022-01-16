@@ -10,13 +10,17 @@ export default async function handler(
   res: NextApiResponse<VerifiablePresentation>
 ) {
   const { presentation, options } = req.body;
-  const { mnemonic } = req.headers;
+  const { mnemonic, hdpath } = req.headers;
   const format = req.headers["vp-format"];
+  const proofType =
+    req.headers["linked-data-suite-proof-type"] || "Ed25519Signature2018";
   try {
     const verifiablePresentation = await provePresentation({
       presentation,
       options,
       mnemonic,
+      hdpath,
+      proofType,
       format,
     });
     res.status(200).json(verifiablePresentation);

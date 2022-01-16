@@ -34,9 +34,7 @@ export const CredentialPreview = ({ credential, verifyCredential }: any) => {
             verified: res.verified,
             issuer:
               verifiableCredential.issuer.id || verifiableCredential.issuer,
-            subject:
-              verifiableCredential.credentialSubject.id ||
-              verifiableCredential.credentialSubject,
+            subject: verifiableCredential.credentialSubject.id || "No Subject",
           };
         };
         const { verified, issuer, subject } = await help(credential);
@@ -106,7 +104,7 @@ export const CredentialPreview = ({ credential, verifyCredential }: any) => {
             />
           )}
 
-          {subject && (
+          {subject && subject !== "No Subject" && (
             <DIDAsTextField
               label="Credential Subject"
               did={subject}

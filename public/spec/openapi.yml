@@ -28,6 +28,10 @@ paths:
     $ref: "./resources/presentation-prover.yml"
   /api/presentations/verify:
     $ref: "./resources/presentation-verifier.yml"
+  /api/presentations/available:
+    $ref: "./resources/presentation-available.yml"
+  /api/presentations/submissions:
+    $ref: "./resources/presentation-submissions.yml"
   /api/ciphers/encrypt:
     $ref: "./resources/cipher-encrypt.yml"
   /api/ciphers/decrypt:

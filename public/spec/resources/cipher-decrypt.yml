@@ -6,6 +6,7 @@ post:
     - Ciphers
   parameters:
     - $ref: "../parameters/header/mnemonic.yml"
+    - $ref: "../parameters/header/hdpath.yml"
   requestBody:
     description: Parameters for decrypting the message.
     content:

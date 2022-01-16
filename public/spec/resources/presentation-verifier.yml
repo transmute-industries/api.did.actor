@@ -4,8 +4,8 @@ post:
   description: Verify a presentation
   tags:
     - Presentations
-  # parameters:
-  #   - $ref: "../parameters/header/vpFormat.yml"
+  parameters:
+    - $ref: "../parameters/header/vpFormat.yml"
   requestBody:
     description: Parameters for verifying the presentation.
     content:

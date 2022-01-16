@@ -4,6 +4,7 @@ import { Ed25519VerificationKey2018 } from "@digitalbazaar/ed25519-verification-
 import { Ed25519Signature2018 } from "@digitalbazaar/ed25519-signature-2018";
 import vc from "@digitalbazaar/vc";
 import { checkStatus } from "vc-revocation-list";
+import { JsonWebSignature } from "@transmute/json-web-signature";
 
 import { getCredentialSuite } from "../getCredentialSuite";
 import { getPresentationSuite } from "../getPresentationSuite";
@@ -13,6 +14,8 @@ import { getSuite } from "../getSuite";
 export const DOCUMENT_LOADER_TYPE = "dereferencer";
 
 export { Ed25519VerificationKey2018, Ed25519Signature2018 };
+
+export const suite = [new Ed25519Signature2018(), new JsonWebSignature()];
 
 export const issueCredential = async ({ credential, mnemonic }: any) => {
   const suite = await getCredentialSuite({ credential, mnemonic });
@@ -40,7 +43,6 @@ export const provePresentation = async ({
 };
 
 export const verifyCredential = async ({ verifiableCredential }: any) => {
-  const suite = await getSuite();
   const verification = await vc.verifyCredential({
     credential: verifiableCredential,
     suite,
@@ -54,7 +56,6 @@ export const verifyPresentation = async ({
   verifiablePresentation,
   options,
 }: any) => {
-  const suite = await getSuite();
   const result = await vc.verify({
     presentation: verifiablePresentation,
     domain: options.domain,

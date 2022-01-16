@@ -10,13 +10,15 @@ export default async function handler(
   res: NextApiResponse<VerificationResult>
 ) {
   const { verifiablePresentation, options } = req.body;
-  const format = req.headers["vp-format"];
+  const format = req.headers["vp-format"] || "vp";
   try {
-    const result = await verifyPresentation({
-      verifiablePresentation,
-      options,
-      format,
-    });
+    const result = await verifyPresentation(
+      {
+        verifiablePresentation,
+        options,
+      },
+      format
+    );
     res.status(200).json(result);
   } catch (e) {
     res.status(500).json({ message: (e as any).message });
