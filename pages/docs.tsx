@@ -22,19 +22,19 @@ const ApidDocs: NextPage = (props: any) => {
           type="module"
           src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"
         ></script>
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
-        />
+        ></link>
         <link
           href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap"
           rel="stylesheet"
         />
-
         <link
-          href="https://fonts.googleapis.com/css2?family=Lato:wght@500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap"
           rel="stylesheet"
         />
       </Head>
