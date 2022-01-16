@@ -21,6 +21,7 @@
     "@transmute/did-key-ed25519": "^0.3.0-unstable.4",
     "@transmute/ed25519-signature-2018": "^0.7.0-unstable.22",
     "@transmute/jose-ld": "^0.7.0-unstable.9",
+    "@transmute/json-web-signature": "^0.7.0-unstable.35",
     "@transmute/vc-status-rl-2020": "^0.7.0-unstable.19",
     "@transmute/vc.js": "^0.7.0-unstable.22",
     "@transmute/x25519-key-pair": "^0.7.0-unstable.9",

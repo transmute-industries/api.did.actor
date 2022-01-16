@@ -10,9 +10,11 @@ import { checkStatus } from "@transmute/vc-status-rl-2020";
 import { getCredentialSuite } from "../getCredentialSuite";
 import { getPresentationSuite } from "../getPresentationSuite";
 import { documentLoader } from "../../core/documentLoader";
-import { getSuite } from "../getSuite";
 
 export const DOCUMENT_LOADER_TYPE = "resolver";
+import { JsonWebSignature } from "@transmute/json-web-signature";
+
+export const suite = [new Ed25519Signature2018(), new JsonWebSignature()];
 
 export const issueCredential = async ({ credential, mnemonic }: any) => {
   const suite = await getCredentialSuite({ credential, mnemonic });
@@ -46,7 +48,6 @@ export const provePresentation = async ({
 };
 
 export const verifyCredential = async ({ verifiableCredential }: any) => {
-  const suite = await getSuite();
   const verification = await verifiable.credential.verify({
     credential: verifiableCredential,
     suite,
@@ -62,7 +63,6 @@ export const verifyPresentation = async ({
   verifiablePresentation,
   options,
 }: any) => {
-  const suite = await getSuite();
   const result = await verifiable.presentation.verify({
     presentation: verifiablePresentation,
     domain: options.domain,
