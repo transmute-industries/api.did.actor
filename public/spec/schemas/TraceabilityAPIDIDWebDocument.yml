@@ -30,14 +30,14 @@ example:
         "https://www.w3.org/ns/did/v1",
         { "@vocab": "https://www.w3.org/ns/did/#" },
       ],
-    "id": "did:web:localhost%3A3000:api",
+    "id": "did:web:api.did.actor:api",
     "alsoKnownAs": ["did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn"],
     "services":
       [
         {
-          "id": "did:web:localhost%3A3000:api#traceability-api",
+          "id": "did:web:api.did.actor:api#traceability-api",
           "type": "TraceabilityAPI",
-          "serviceEndpoint": "http://localhost:3000/api",
+          "serviceEndpoint": "https://api.did.actor/api",
         },
       ],
   }
