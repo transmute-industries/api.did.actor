@@ -2,6 +2,7 @@ name: did
 in: path
 required: true
 description: A decentralized identifier
-example: "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn"
+# example: "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn"
+example: "did:web:did.actor:alice"
 schema:
   type: string
