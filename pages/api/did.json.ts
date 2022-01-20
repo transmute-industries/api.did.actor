@@ -15,6 +15,7 @@ export default async function handler(
 ) {
   const protocol = req.headers.host?.includes("localhost") ? "http" : "https";
   const endpoint = `${protocol}://${req.headers.host}/api/did.json`;
+  const vcApiBaseURl = endpoint.replace("/did.json", "");
   const did = DIDWeb.convertEndpointToDid(endpoint);
 
   const didDocument = {
@@ -23,12 +24,21 @@ export default async function handler(
       { "@vocab": "https://www.w3.org/ns/did/#" },
     ],
     id: did,
-    alsoKnownAs: ["did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn"],
+    alsoKnownAs: [
+      vcApiBaseURl,
+      "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+    ],
+    assertionMethod: [
+      "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+    ],
+    authentication: [
+      "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+    ],
     services: [
       {
         id: `${did}#traceability-api`,
         type: "TraceabilityAPI", // Todo: define this service type in the trace-vocab.
-        serviceEndpoint: endpoint.replace("/did.json", ""),
+        serviceEndpoint: vcApiBaseURl,
       },
     ],
   };
