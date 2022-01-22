@@ -14,6 +14,12 @@ export const documentLoader = async (iri: string) => {
     if (documents[iri]) {
       return { document: documents[iri] };
     }
+
+    if (iri.startsWith("did:web:")) {
+      const didDocument = await resolvers["did:web"](iri);
+      return { document: didDocument };
+    }
+
     if (iri.startsWith("did:key:z6M")) {
       const { didDocument }: any = await resolvers.ed25519(iri);
 

@@ -1,6 +1,15 @@
 import { resolvers } from "./resolvers";
 export const getResolutionResult = async (did: string) => {
-  const { didDocument, didDocumentMetadata } = await resolvers.ed25519(did);
+  let didDocument: any = {};
+  let didDocumentMetadata: any = {};
+  if (did.startsWith("did:key")) {
+    ({ didDocument, didDocumentMetadata } = await resolvers.ed25519(did));
+  }
+
+  if (did.startsWith("did:web")) {
+    didDocument = await resolvers["did:web"](did);
+  }
+
   const didUrlComponents = did.split(":");
   return {
     didDocument,
