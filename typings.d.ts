@@ -14,3 +14,5 @@ declare namespace JSX {
     "rapi-doc": any;
   }
 }
+
+declare var window: any;
