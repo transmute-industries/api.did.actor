@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import type { NextPage } from "next";
 import Head from "next/head";
 import { AppPage } from "../components/app-page";
