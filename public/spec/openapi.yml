@@ -28,8 +28,8 @@ paths:
     $ref: "./resources/credential-issuer.yml"
   /api/credentials/verify:
     $ref: "./resources/credential-verifier.yml"
-  /revocation-lists/{revocation-list-file}:
-    $ref: "./resources/revocation-list.yml"
+  /credentials/{credential-id}:
+    $ref: "./resources/credential.yml"
 
   /api/presentations/prove:
     $ref: "./resources/presentation-prover.yml"
