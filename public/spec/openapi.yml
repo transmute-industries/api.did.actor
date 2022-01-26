@@ -23,10 +23,14 @@ paths:
     $ref: "./resources/traceability-api-did-web.yml"
   /{did}:
     $ref: "./resources/did.yml"
+
   /api/credentials/issue:
     $ref: "./resources/credential-issuer.yml"
   /api/credentials/verify:
     $ref: "./resources/credential-verifier.yml"
+  /revocation-lists/{revocation-list-file}:
+    $ref: "./resources/revocation-list.yml"
+
   /api/presentations/prove:
     $ref: "./resources/presentation-prover.yml"
   /api/presentations/verify:
@@ -35,6 +39,7 @@ paths:
     $ref: "./resources/presentation-available.yml"
   /api/presentations/submissions:
     $ref: "./resources/presentation-submissions.yml"
+
   /api/ciphers/encrypt:
     $ref: "./resources/cipher-encrypt.yml"
   /api/ciphers/decrypt:

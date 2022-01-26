@@ -1,0 +1,7 @@
+name: revocation-list-file
+in: path
+required: true
+description: A verifiable credential revocation list file
+example: "1.json"
+schema:
+  type: string

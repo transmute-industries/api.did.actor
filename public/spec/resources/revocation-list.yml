@@ -1,0 +1,18 @@
+# "revocationListCredential": "https://api.did.actor/revocation-lists/1.json"
+get:
+  summary: Get Revocation List
+  operationId: getRevocationList
+  description: Get a verifiable credential revocation list
+  tags:
+    - Credentials
+  parameters:
+    - $ref: "../parameters/path/revocation-list-file.yml"
+  responses:
+    "200":
+      description: Expected response to a valid request
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/RevocationListCredential.yml"
+    default:
+      $ref: "../responses/UnexpectedError.yml"
