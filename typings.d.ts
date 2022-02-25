@@ -1,7 +1,7 @@
 declare module "hdkey";
 declare module "bs58";
 declare module "pako";
-
+declare module "cors";
 declare module "uuid";
 declare module "vc-revocation-list";
 
@@ -14,3 +14,5 @@ declare namespace JSX {
     "rapi-doc": any;
   }
 }
+
+declare var window: any;
