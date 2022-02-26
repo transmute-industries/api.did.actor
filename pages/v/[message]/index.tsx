@@ -9,6 +9,7 @@ import { Box } from "@mui/material";
 import { expand } from "../../../core/expand";
 
 import MessagePayloadPreview from "../../../components/message-payload-preview";
+
 export async function getServerSideProps(context: any) {
   return {
     props: {

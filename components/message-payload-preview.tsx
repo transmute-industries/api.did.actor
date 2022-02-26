@@ -45,6 +45,7 @@ const MessagePayloadPreview = ({ payload }: any) => {
       </>
     );
   }
+  return <>Malformed Data</>;
 };
 
 export default MessagePayloadPreview;
