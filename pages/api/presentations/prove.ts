@@ -11,9 +11,8 @@ export default async function handler(
 ) {
   const { presentation, options } = req.body;
   const { mnemonic, hdpath } = req.headers;
-  const format = req.headers["vp-format"];
-  const proofType =
-    req.headers["linked-data-suite-proof-type"] || "Ed25519Signature2018";
+  const proofType = options.type || "Ed25519Signature2018";
+  const format = options.type === "jwt_vp" ? "vp-jwt" : "vp";
   try {
     const verifiablePresentation = await provePresentation({
       presentation,
