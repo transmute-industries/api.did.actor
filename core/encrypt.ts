@@ -5,7 +5,7 @@ import { JWE } from "@transmute/jose-ld";
 import { compact } from "./compact";
 import { resolvers } from "../core/resolvers";
 export const encryptTo = async (recipient: string, document: any) => {
-  const { didDocument } = await resolvers.ed25519(recipient);
+  const { didDocument } = await resolvers.resolve(recipient);
   const keyAgreementKey = didDocument.verificationMethod[1];
   const cipher = new JWE.Cipher(X25519KeyPair);
   const recipients = [

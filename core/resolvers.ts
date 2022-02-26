@@ -14,9 +14,9 @@ export const resolvers = {
     });
     return resp.data;
   },
-  resolve: async (did: string) => {
+  resolve: async (did: string): Promise<{ didDocument: any }> => {
     if (did.startsWith("did:key")) {
-      const { didDocument } = await didKey.resolve(did, {
+      const { didDocument } = await didKey.resolve(did.split("#")[0], {
         accept: "application/did+json",
       });
       return { didDocument };
@@ -25,5 +25,6 @@ export const resolvers = {
       const didDocument = await DIDWeb.resolve(did);
       return { didDocument };
     }
+    throw new Error("Unsupported did method");
   },
 };

@@ -9,7 +9,7 @@ export const getCredentialSuite = async ({
   proofType,
 }: any) => {
   const issuer = credential.issuer.id || credential.issuer;
-  const { didDocument } = await resolvers.ed25519(issuer);
+  const { didDocument } = await resolvers.resolve(issuer);
   const keys = await getKeysForMnemonic(mnemonic, hdpath);
 
   if (didDocument.verificationMethod[0].id !== keys[0].id) {
