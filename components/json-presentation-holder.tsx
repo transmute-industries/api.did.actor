@@ -16,23 +16,42 @@ import { provePresentation } from "../vc-api";
 import { v4 as uuidv4 } from "uuid";
 
 import { compact } from "../core/compact";
+
+import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
+
 const JsonPresentationHolder = ({ value }: any) => {
   const router = useRouter();
   const [text, setText] = React.useState(JSON.stringify(value, null, 2));
   const handleChange = (newText: any) => {
     setText(newText);
   };
-  const [domain, setDomain] = React.useState("");
-  const [challenge, setChallenge] = React.useState(uuidv4());
 
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
 
-  const handleMnemonicChange = async (newMnemonic: string) => {
+  const [keyType, setKeyType] = React.useState("ed25519");
+  const [proofType, setProofType] = React.useState("Ed25519Signature2018");
+  const [domain, setDomain] = React.useState("");
+  const [challenge, setChallenge] = React.useState(uuidv4());
+
+  const handleKeyTypeChange = (_e: any, newKeyType: string) => {
+    setProofType(
+      newKeyType === "ed25519" ? "Ed25519Signature2018" : "JsonWebSignature2020"
+    );
+    setKeyType(newKeyType);
+    handleMnemonicChange(newKeyType, mnemonic);
+  };
+
+  const handleMnemonicChange = async (keyType: string, newMnemonic: string) => {
     setMnemonic(newMnemonic);
     try {
-      const [assertionMethod] = await getKeysForMnemonic(newMnemonic);
+      const [assertionMethod] = await getKeysForMnemonic(keyType, newMnemonic);
       const presentation = JSON.parse(text);
-      presentation.holder = assertionMethod.controller;
+      if (presentation.holder.id) {
+        presentation.holder.id = assertionMethod.controller;
+      } else {
+        presentation.holder = assertionMethod.controller;
+      }
+
       setText(JSON.stringify(presentation, null, 2));
     } catch (e) {
       console.error(e);
@@ -44,8 +63,9 @@ const JsonPresentationHolder = ({ value }: any) => {
       presentation: JSON.parse(text),
       options: { domain, challenge },
       mnemonic,
+      keyType,
       hdpath: `m/44'/0'/0'/0/0`,
-      proofType: "Ed25519Signature2018",
+      proofType,
       format: "vp",
     });
     // console.log(JSON.stringify(vp));
@@ -53,12 +73,16 @@ const JsonPresentationHolder = ({ value }: any) => {
   };
   return (
     <>
+      <KeyTypeRadionButtonGroup
+        keyType={keyType}
+        handleKeyTypeChange={handleKeyTypeChange}
+      />
       <TextField
         label="Mnemonic for Holder"
         multiline
         value={mnemonic}
         onChange={(event) => {
-          handleMnemonicChange(event.target.value);
+          handleMnemonicChange(keyType, event.target.value);
         }}
         style={{ marginBottom: "32px", marginTop: "32px" }}
         fullWidth

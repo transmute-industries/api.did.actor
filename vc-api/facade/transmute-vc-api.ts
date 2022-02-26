@@ -54,6 +54,7 @@ export const provePresentation = async ({
   presentation,
   options,
   mnemonic,
+  keyType,
   hdpath,
   proofType,
   format,
@@ -61,6 +62,7 @@ export const provePresentation = async ({
   const suite = await getPresentationSuite({
     presentation,
     mnemonic,
+    keyType,
     hdpath,
     proofType,
   });
