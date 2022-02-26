@@ -12,7 +12,8 @@ export default async function handler(
   try {
     const options = {
       ...req.body,
-      format: req.headers["vc-format"] || "vc",
+      format:
+        typeof req.body.verifiableCredential === "string" ? "vc-jwt" : "vc",
     };
     const result = await verifyCredential(options);
     res.status(200).json(result);

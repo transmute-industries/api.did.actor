@@ -11,7 +11,10 @@ export default async function handler(
 ) {
   const { credential, options } = req.body;
   const { mnemonic, hdpath } = req.headers;
-  const proofType = options.type || "Ed25519Signature2018";
+  const proofType =
+    options.type === "jwt_vc"
+      ? "JsonWebSignature2020"
+      : options.type || "Ed25519Signature2018";
   const format = options.type === "jwt_vc" ? "vc-jwt" : "vc";
   try {
     const verifiableCredential = await issueCredential({

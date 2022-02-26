@@ -22,9 +22,10 @@ post:
                 type:
                   type: string
                   enum:
-                    ["Ed25519Signature2018", "JsonWebSignature2020", "jwt_vc"]
+                    ["Ed25519Signature2018", "JsonWebSignature2020", "jwt_vp"]
                 domain:
                   type: string
+                  example: "jobs.example"
                 challenge:
                   type: string
                   example: "1f44d55f-f161-4938-a659-f8026467f126"

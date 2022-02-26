@@ -28,7 +28,7 @@ export const issueCredential = async ({
   const suite = await getCredentialSuite({
     credential,
     mnemonic,
-    keyType,
+    keyType: keyType || "ed25519",
     hdpath,
     proofType,
   });
@@ -67,7 +67,7 @@ export const provePresentation = async ({
   const suite = await getPresentationSuite({
     presentation,
     mnemonic,
-    keyType,
+    keyType: keyType || "ed25519",
     hdpath,
     proofType,
   });

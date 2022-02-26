@@ -10,9 +10,10 @@ export default async function handler(
   res: NextApiResponse<VerificationResult>
 ) {
   try {
+    const { verifiablePresentation } = req.body;
     const options = {
       ...req.body,
-      format: req.headers["vp-format"] || "vp",
+      format: typeof verifiablePresentation === "string" ? "vp-jwt" : "vp",
     };
     const result = await verifyPresentation(options);
     res.status(200).json(result);
