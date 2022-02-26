@@ -20,6 +20,7 @@ export const DOCUMENT_LOADER_TYPE = "resolver";
 export const issueCredential = async ({
   credential,
   mnemonic,
+  keyType,
   hdpath,
   proofType,
   format,
@@ -27,6 +28,7 @@ export const issueCredential = async ({
   const suite = await getCredentialSuite({
     credential,
     mnemonic,
+    keyType,
     hdpath,
     proofType,
   });

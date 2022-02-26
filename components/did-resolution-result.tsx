@@ -54,7 +54,7 @@ export const ResolutionResult = ({ did }: any) => {
             color={"secondary"}
             endIcon={<CreateIcon />}
           >
-            Issue From
+            Issue To
           </Button>
         </Grid>
       );
