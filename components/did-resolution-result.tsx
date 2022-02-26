@@ -61,7 +61,11 @@ export const ResolutionResult = ({ did }: any) => {
     }
 
     // supports encryption
-    if (didDocument.verificationMethod && didDocument.keyAgreement.length) {
+    if (
+      didDocument.verificationMethod &&
+      didDocument.keyAgreement.length &&
+      !resolution.didDocument.id.startsWith("did:key:zQ3") // don't offer encryption to secp256k1 keys
+    ) {
       buttons.push(
         <Grid item>
           <Button

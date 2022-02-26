@@ -16,8 +16,13 @@ const JsonVerifier = ({ value }: any) => {
     setText(newText);
   };
   const handleVerify = () => {
-    const vc = compact(JSON.parse(text));
-    router.push("/v/" + vc);
+    let messageParam: any = text;
+    try {
+      messageParam = compact(JSON.parse(text));
+    } catch (e) {
+      //
+    }
+    router.push("/v/" + messageParam);
   };
   return (
     <>

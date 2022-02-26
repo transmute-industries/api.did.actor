@@ -8,11 +8,7 @@ import { Box } from "@mui/material";
 
 import { expand } from "../../../core/expand";
 
-import { verifyCredential } from "../../../vc-api";
-import { verifyPresentation } from "../../../vc-api";
-
-import { CredentialPreview } from "../../../components/credential-preview";
-import { PresentationPreview } from "../../../components/presentation-preview";
+import MessagePayloadPreview from "../../../components/message-payload-preview";
 
 export async function getServerSideProps(context: any) {
   return {
@@ -26,7 +22,7 @@ export async function getServerSideProps(context: any) {
 const Verify: NextPage = (props: any) => {
   const message: any = props.message;
   const title = "verify:..." + message.substr(-4);
-  const expanded = expand(message);
+  const payload = message.includes(".") ? message : expand(message);
 
   return (
     <>
@@ -52,18 +48,7 @@ const Verify: NextPage = (props: any) => {
                   flexGrow: 1,
                 }}
               >
-                {expanded.type === "VerifiablePresentation" ||
-                expanded.type.includes("VerifiablePresentation") ? (
-                  <PresentationPreview
-                    presentation={expanded}
-                    verifyPresentation={verifyPresentation}
-                  />
-                ) : (
-                  <CredentialPreview
-                    credential={expanded}
-                    verifyCredential={verifyCredential}
-                  />
-                )}
+                <MessagePayloadPreview payload={payload} />
               </Box>
             </div>
           </Grid>

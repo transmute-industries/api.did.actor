@@ -18,30 +18,40 @@ export const DID_KEY_BIP44_COIN_TYPE = "0";
 import { defaultMnemonic } from "../core/defaultMnemonic";
 import { generators } from "../core/generators";
 import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
-
+import AdvancedKeyType from "./advanced-key-type";
 export const CreateDidForm = () => {
   const router = useRouter();
   const [config, setConfig]: any = React.useState(null);
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
-  const [keyType, setKeyType] = React.useState("ed25519");
   const [key, setKey] = React.useState("");
 
-  const handleKeyTypeChange = (_e: any, newKeyType: string) => {
-    setKeyType(newKeyType);
-    handleUpdateKey(newKeyType, mnemonic);
+  const [advancedConfiguration, setAdvancedConfiguration] = React.useState({
+    hdpath: `m/44'/0'/0'/0/0`,
+    keyType: "ed25519",
+  });
+
+  const handleUpdateToAdvancedConfiguration = (newState: any) => {
+    setAdvancedConfiguration(newState);
+    if (
+      newState.keyType !== advancedConfiguration.keyType ||
+      newState.hdpath !== advancedConfiguration.hdpath
+    ) {
+      handleUpdateKey(newState.keyType, mnemonic, newState.hdpath);
+    }
   };
 
   const handleUpdateKey = React.useCallback(
-    async (keyType: string, mnemonic: string) => {
-      const seed = await bip39.mnemonicToSeed(mnemonic);
-      const root = hdkey.fromMasterSeed(seed);
-      const hdpath = `m/44'/${DID_KEY_BIP44_COIN_TYPE}'/0'/0/0`;
-      const addrNode = root.derive(hdpath);
-
-      const res = await generators.didKey(keyType, addrNode._privateKey);
-      setKey(res.didDocument.id);
-
-      setConfig({ key: res.didDocument.id, mnemonic });
+    async (keyType: string, mnemonic: string, hdpath: string) => {
+      try {
+        const seed = await bip39.mnemonicToSeed(mnemonic);
+        const root = hdkey.fromMasterSeed(seed);
+        const addrNode = root.derive(hdpath);
+        const res = await generators.didKey(keyType, addrNode._privateKey);
+        setKey(res.didDocument.id);
+        setConfig({ key: res.didDocument.id, mnemonic });
+      } catch (e) {
+        console.error(e);
+      }
     },
     [setKey, setConfig]
   );
@@ -49,17 +59,31 @@ export const CreateDidForm = () => {
   const handleGenerateMnemonic = React.useCallback(async () => {
     const m = bip39.generateMnemonic();
     setMnemonic(m);
-    handleUpdateKey(keyType, m);
-  }, [keyType, handleUpdateKey]);
+    handleUpdateKey(
+      advancedConfiguration.keyType,
+      m,
+      advancedConfiguration.hdpath
+    );
+  }, [advancedConfiguration, handleUpdateKey]);
 
   React.useEffect(() => {
     if (key === "") {
-      handleUpdateKey(keyType, mnemonic);
+      handleUpdateKey(
+        advancedConfiguration.keyType,
+        mnemonic,
+        advancedConfiguration.hdpath
+      );
     }
     if (mnemonic === "") {
       handleGenerateMnemonic();
     }
-  }, [key, keyType, handleGenerateMnemonic, handleUpdateKey, mnemonic]);
+  }, [
+    advancedConfiguration,
+    key,
+    handleGenerateMnemonic,
+    handleUpdateKey,
+    mnemonic,
+  ]);
 
   const handleCreate = () => {
     router.push("/" + config.key);
@@ -67,16 +91,17 @@ export const CreateDidForm = () => {
 
   return (
     <div style={{ maxWidth: "512px", margin: "auto" }}>
-      <KeyTypeRadionButtonGroup
-        keyType={keyType}
-        handleKeyTypeChange={handleKeyTypeChange}
-      />
       <TextField
-        sx={{ mt: 2 }}
+        sx={{ mt: 2, mb: 2 }}
         label="Controller"
         value={key.substring(0, 32) + "..."}
         disabled
         fullWidth
+      />
+
+      <AdvancedKeyType
+        advancedConfiguration={advancedConfiguration}
+        setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
       />
 
       <TextField

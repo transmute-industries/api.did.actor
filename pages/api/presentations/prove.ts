@@ -11,8 +11,14 @@ export default async function handler(
 ) {
   const { presentation, options } = req.body;
   const { mnemonic, hdpath } = req.headers;
-  const proofType = options.type || "Ed25519Signature2018";
+
   const format = options.type === "jwt_vp" ? "vp-jwt" : "vp";
+
+  const proofType =
+    format === "vp-jwt"
+      ? "JsonWebSignature2020"
+      : options.type || "Ed25519Signature2018";
+
   try {
     const verifiablePresentation = await provePresentation({
       presentation,

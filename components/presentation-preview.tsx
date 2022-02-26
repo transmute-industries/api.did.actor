@@ -7,8 +7,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import _ from "lodash";
+import Grid from "@mui/material/Grid";
 import BiotechIcon from "@mui/icons-material/Biotech";
+import Chip from "@mui/material/Chip";
+import GavelIcon from "@mui/icons-material/Gavel";
 
+import { amber } from "@mui/material/colors";
 import { DIDAsTextField } from "./did-as-textfield";
 import Accordion from "./accordion";
 import dynamic from "next/dynamic";
@@ -20,8 +24,18 @@ export const PresentationPreview = ({
   presentation,
   verifyPresentation,
 }: any) => {
+  const isJwt = typeof presentation === "string";
   const [status, setStatus]: any = React.useState(null);
   const [holder, setHolder] = React.useState("");
+
+  let presentationContent = presentation;
+  let parsedJwtPayload: any;
+  if (isJwt) {
+    parsedJwtPayload = JSON.parse(
+      Buffer.from(presentation.split(".")[1], "base64").toString()
+    );
+    presentationContent = parsedJwtPayload.vp;
+  }
 
   const handleVerifyMessage = React.useCallback(() => {
     setStatus("pending");
@@ -30,16 +44,22 @@ export const PresentationPreview = ({
         const help = async (verifiablePresentation: any) => {
           const res = await verifyPresentation({
             verifiablePresentation,
-            // format,
+            format: isJwt ? "vp-jwt" : "vp",
             options: {
-              challenge: verifiablePresentation.proof.challenge,
-              domain: verifiablePresentation.proof.domain,
+              challenge: isJwt
+                ? parsedJwtPayload.nonce
+                : verifiablePresentation.proof.challenge,
+              domain: isJwt
+                ? parsedJwtPayload.aud
+                : verifiablePresentation.proof.domain,
             },
           });
           return {
             verified: res.verified,
-            holder:
-              verifiablePresentation.holder.id || verifiablePresentation.holder,
+            holder: isJwt
+              ? presentationContent.holder.id || presentationContent.holder
+              : verifiablePresentation.holder.id ||
+                verifiablePresentation.holder,
           };
         };
         const { verified, holder } = await help(presentation);
@@ -51,7 +71,15 @@ export const PresentationPreview = ({
         alert("verification failed.");
       }
     }, 1 * 1000);
-  }, [setStatus, setHolder, verifyPresentation, presentation]);
+  }, [
+    isJwt,
+    presentationContent,
+    parsedJwtPayload,
+    setStatus,
+    setHolder,
+    verifyPresentation,
+    presentation,
+  ]);
 
   React.useEffect(() => {
     if (status === null) {
@@ -59,20 +87,37 @@ export const PresentationPreview = ({
     }
   }, [handleVerifyMessage, status]);
 
+  function isValidHttpUrl(data: string) {
+    let url;
+
+    try {
+      url = new URL(data);
+    } catch (_) {
+      return false;
+    }
+
+    return url.protocol === "http:" || url.protocol === "https:";
+  }
+
+  let contextToShow =
+    presentationContent["@context"][presentationContent["@context"].length - 1];
+  if (!isValidHttpUrl(contextToShow)) {
+    contextToShow = presentationContent["@context"][0];
+  }
+  let typeToShow =
+    presentationContent["type"][presentationContent["type"].length - 1];
+
   return (
     <>
       <AppBar position="relative" color={"transparent"}>
-        <Toolbar sx={{ marginBottom: "32px", marginTop: "32px" }}>
+        <Toolbar sx={{ marginTop: "32px" }}>
           <AvatarSpinner status={status} />
           <div style={{ flexGrow: 1, marginLeft: "24px" }}>
             <Typography component="div">
-              {presentation.name || _.startCase(presentation.type)}
+              {presentation.name || typeToShow}
             </Typography>
-            <Link
-              href={presentation["@context"][0]}
-              style={{ fontSize: ".8em" }}
-            >
-              {presentation["@context"][0]}
+            <Link href={contextToShow} style={{ fontSize: ".8em" }}>
+              {contextToShow}
             </Link>
           </div>
           <Button
@@ -84,19 +129,36 @@ export const PresentationPreview = ({
             Verify
           </Button>
         </Toolbar>
-        <div style={{ padding: "32px" }}>
-          {holder && (
-            <DIDAsTextField
-              label="Presentation Holder"
-              did={holder}
-              style={{ marginBottom: "32px" }}
-            />
-          )}
 
-          <Accordion
-            title={"Details"}
-            content={<JsonViewReadOnly value={presentation} />}
-          />
+        <div style={{ padding: "32px" }}>
+          <Grid container spacing={2}>
+            {isJwt && (
+              <Grid item>
+                <Chip
+                  label="IANA Registry Compliant"
+                  onClick={() => {
+                    window.open(
+                      "https://www.iana.org/assignments/jose/jose.xhtml"
+                    );
+                  }}
+                  onDelete={() => {}}
+                  deleteIcon={<GavelIcon style={{ color: amber["500"] }} />}
+                />
+              </Grid>
+            )}
+            {holder && (
+              <Grid item xs={12}>
+                <DIDAsTextField label="Presentation Holder" did={holder} />
+              </Grid>
+            )}
+
+            <Grid item xs={12}>
+              <Accordion
+                title={"Details"}
+                content={<JsonViewReadOnly value={presentationContent} />}
+              />
+            </Grid>
+          </Grid>
         </div>
       </AppBar>
     </>

@@ -17,9 +17,10 @@ import { compact } from "../core/compact";
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
 import { issueCredential } from "../vc-api";
 
-// import CredentialFormatToggle from "./credential-format-toggle";
+import AdvancedKeyType from "./advanced-key-type";
 
-import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
+import AdvancedSuiteOptions from "./advanced-suite-options";
+
 const JsonCredentialIssuer = ({ value }: any) => {
   const router = useRouter();
   const [text, setText] = React.useState(JSON.stringify(value, null, 2));
@@ -29,19 +30,6 @@ const JsonCredentialIssuer = ({ value }: any) => {
 
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
 
-  const handleKeyTypeChange = (_e: any, newKeyType: string) => {
-    const newState = {
-      ...advancedConfiguration,
-      keyType: newKeyType,
-      suite:
-        newKeyType === "ed25519"
-          ? "Ed25519Signature2018"
-          : "JsonWebSignature2020",
-    };
-
-    handleUpdateToAdvancedConfiguration(newState);
-  };
-
   const [advancedConfiguration, setAdvancedConfiguration] = React.useState({
     hdpath: `m/44'/0'/0'/0/0`,
     keyType: "ed25519",
@@ -50,12 +38,28 @@ const JsonCredentialIssuer = ({ value }: any) => {
   });
 
   const handleUpdateToAdvancedConfiguration = (newState: any) => {
-    setAdvancedConfiguration(newState);
+    const updateAdvancedConfig = {
+      ...newState,
+    };
+
+    if (newState.format === "vc-jwt") {
+      updateAdvancedConfig.suite = "JsonWebSignature2020";
+    }
+
+    if (newState.keyType === "secp256k1") {
+      updateAdvancedConfig.suite = "JsonWebSignature2020";
+    }
+
+    setAdvancedConfiguration(updateAdvancedConfig);
     if (
-      newState.keyType !== advancedConfiguration.keyType ||
-      newState.hdpath !== advancedConfiguration.hdpath
+      updateAdvancedConfig.keyType !== advancedConfiguration.keyType ||
+      updateAdvancedConfig.hdpath !== advancedConfiguration.hdpath
     ) {
-      handleUpdateIssuer(newState.keyType, mnemonic, newState.hdpath);
+      handleUpdateIssuer(
+        updateAdvancedConfig.keyType,
+        mnemonic,
+        updateAdvancedConfig.hdpath
+      );
     }
   };
 
@@ -79,8 +83,16 @@ const JsonCredentialIssuer = ({ value }: any) => {
       }
 
       if (assertionMethod.controller.startsWith("did:key:zQ3")) {
+        credential["@context"] = [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://w3id.org/security/suites/jws-2020/v1",
+        ];
         delete credential.credentialStatus;
       } else {
+        credential["@context"] = [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://w3id.org/vc-revocation-list-2020/v1",
+        ];
         credential.credentialStatus = {
           id: "https://api.did.actor/revocation-lists/1.json#0",
           type: "RevocationList2020Status",
@@ -114,15 +126,12 @@ const JsonCredentialIssuer = ({ value }: any) => {
       proofType: advancedConfiguration.suite,
       format: advancedConfiguration.format,
     });
-    // console.log(vc);
-    router.push("/v/" + compact(vc));
+
+    const pathParam = vc.issuer ? compact(vc) : vc;
+    router.push("/v/" + pathParam);
   };
   return (
     <>
-      <KeyTypeRadionButtonGroup
-        keyType={advancedConfiguration.keyType}
-        handleKeyTypeChange={handleKeyTypeChange}
-      />
       <TextField
         label="Mnemonic for Issuer"
         multiline
@@ -147,11 +156,19 @@ const JsonCredentialIssuer = ({ value }: any) => {
         }}
       />
 
-      {/* // TODO: vc-jwt bug in browser prevents this from working. */}
-      {/* <CredentialFormatToggle
+      <div style={{ marginBottom: "16px" }}>
+        <AdvancedKeyType
+          advancedConfiguration={advancedConfiguration}
+          setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
+        />
+      </div>
+
+      <AdvancedSuiteOptions
+        type={"VerifiableCredential"}
+        keyType={advancedConfiguration.keyType}
         advancedConfiguration={advancedConfiguration}
         setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
-      /> */}
+      />
       <AceEditor
         mode="json"
         theme="pastel_on_dark"

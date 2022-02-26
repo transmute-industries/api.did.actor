@@ -9,16 +9,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VerificationResult>
 ) {
-  const { verifiablePresentation, options } = req.body;
-  const format = req.headers["vp-format"] || "vp";
   try {
-    const result = await verifyPresentation(
-      {
-        verifiablePresentation,
-        options,
-      },
-      format
-    );
+    const { verifiablePresentation } = req.body;
+    const options = {
+      ...req.body,
+      format: typeof verifiablePresentation === "string" ? "vp-jwt" : "vp",
+    };
+    const result = await verifyPresentation(options);
     res.status(200).json(result);
   } catch (e) {
     res.status(500).json({ message: (e as any).message });
