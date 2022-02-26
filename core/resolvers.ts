@@ -1,20 +1,8 @@
-import * as ed25519 from "@transmute/did-key-ed25519";
-// import * as bls12381 from "@transmute/did-key-bls12381";
-// import * as secp256k1 from "@transmute/did-key-secp256k1";
-
+import * as didKey from "@transmute/did-key.js";
 import axios from "axios";
-
 import DIDWeb from "./DIDWeb";
+
 export const resolvers = {
-  ed25519: async (did: string) => {
-    const res = await ed25519.resolve(did.split("#")[0], {
-      accept: "application/did+ld+json",
-    });
-    return res;
-  },
-  "did:web": async (did: string) => {
-    return DIDWeb.resolve(did);
-  },
   http: async (url: string) => {
     const resp = await axios({
       method: "get",
@@ -25,5 +13,17 @@ export const resolvers = {
       },
     });
     return resp.data;
+  },
+  resolve: async (did: string) => {
+    if (did.startsWith("did:key")) {
+      const { didDocument } = await didKey.resolve(did, {
+        accept: "application/did+json",
+      });
+      return { didDocument };
+    }
+    if (did.startsWith("did:web")) {
+      const didDocument = await DIDWeb.resolve(did);
+      return { didDocument };
+    }
   },
 };

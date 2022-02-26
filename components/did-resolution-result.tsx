@@ -6,6 +6,8 @@ import { CircularProgress, Typography, Box, Button, Grid } from "@mui/material";
 import { useRouter } from "next/router";
 import SendIcon from "@mui/icons-material/Send";
 import SourceIcon from "@mui/icons-material/Source";
+
+import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import { resolvers } from "../core/resolvers";
 
 import CreateIcon from "@mui/icons-material/Create";
@@ -17,7 +19,7 @@ export const ResolutionResult = ({ did }: any) => {
   React.useEffect(() => {
     if (did) {
       (async () => {
-        const resolutionData = await resolvers.ed25519(did);
+        const resolutionData = await resolvers.resolve(did);
         setResolution(resolutionData);
         setLoading(false);
       })();
@@ -38,6 +40,69 @@ export const ResolutionResult = ({ did }: any) => {
     return <div>Resolution failed for {did}</div>;
   }
 
+  const didDocumentToButtons = (didDocument: any) => {
+    const buttons = [];
+    // supports credential issuance
+    if (didDocument.verificationMethod && didDocument.assertionMethod.length) {
+      buttons.push(
+        <Grid item>
+          <Button
+            onClick={() => {
+              router.push("/issue?subject=" + resolution.didDocument.id);
+            }}
+            variant="outlined"
+            color={"secondary"}
+            endIcon={<CreateIcon />}
+          >
+            Issue From
+          </Button>
+        </Grid>
+      );
+    }
+
+    // supports encryption
+    if (didDocument.verificationMethod && didDocument.keyAgreement.length) {
+      buttons.push(
+        <Grid item>
+          <Button
+            onClick={() => {
+              router.push("/encrypt?recipient=" + resolution.didDocument.id);
+            }}
+            variant="outlined"
+            color={"secondary"}
+            endIcon={<SendIcon />}
+          >
+            Encrypt To
+          </Button>
+        </Grid>
+      );
+    }
+
+    // supports trace api
+    if (
+      didDocument.services &&
+      didDocument.services[0].type === "TraceabilityAPI"
+    ) {
+      buttons.push(
+        <Grid item>
+          <Button
+            onClick={() => {
+              const endpoint = didDocument.services[0].serviceEndpoint;
+              const url = new URL(endpoint);
+              window.location.href = url.origin + "/docs";
+            }}
+            variant="outlined"
+            color={"secondary"}
+            endIcon={<TrackChangesIcon />}
+          >
+            Traceability API
+          </Button>
+        </Grid>
+      );
+    }
+    return buttons;
+  };
+
   return (
     <>
       <div>
@@ -56,33 +121,7 @@ export const ResolutionResult = ({ did }: any) => {
               </Button>
             </Grid>
 
-            <Grid item>
-              <Button
-                onClick={() => {
-                  router.push(
-                    "/encrypt?recipient=" + resolution.didDocument.id
-                  );
-                }}
-                variant="outlined"
-                color={"secondary"}
-                endIcon={<SendIcon />}
-              >
-                Encrypt
-              </Button>
-            </Grid>
-
-            <Grid item>
-              <Button
-                onClick={() => {
-                  router.push("/issue?subject=" + resolution.didDocument.id);
-                }}
-                variant="outlined"
-                color={"secondary"}
-                endIcon={<CreateIcon />}
-              >
-                Issue
-              </Button>
-            </Grid>
+            {didDocumentToButtons(resolution.didDocument)}
           </Grid>
         </div>
       </div>
