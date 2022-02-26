@@ -35,11 +35,16 @@ export const issueCredential = async ({
 
   if (
     proofType === "JsonWebSignature2020" &&
+    format === "vc" &&
     !credential["@context"].includes(
       "https://w3id.org/security/suites/jws-2020/v1"
     )
   ) {
     credential["@context"].push("https://w3id.org/security/suites/jws-2020/v1");
+  }
+
+  if (format === "vc-jwt") {
+    credential["@context"].push("https://www.w3.org/2018/credentials/v1");
   }
   const { items } = await verifiable.credential.create({
     credential,
@@ -91,10 +96,10 @@ export const provePresentation = async ({
   return items[0];
 };
 
-export const verifyCredential = async (
-  { verifiableCredential }: any,
-  format: any = "vc"
-) => {
+export const verifyCredential = async ({
+  verifiableCredential,
+  format,
+}: any) => {
   let suite: any = [new Ed25519Signature2018(), new JsonWebSignature()];
   if (format === "vc-jwt") {
     suite = new JsonWebSignature();
@@ -109,10 +114,11 @@ export const verifyCredential = async (
   return verification;
 };
 
-export const verifyPresentation = async (
-  { verifiablePresentation, options }: any,
-  format: any = "vp"
-) => {
+export const verifyPresentation = async ({
+  verifiablePresentation,
+  format,
+  options,
+}: any) => {
   let suite: any = [new Ed25519Signature2018(), new JsonWebSignature()];
   if (format === "vp-jwt") {
     suite = new JsonWebSignature();

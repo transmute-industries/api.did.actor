@@ -19,6 +19,9 @@ import { compact } from "../core/compact";
 
 import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
 
+import CredentialFormatToggle from "./credential-format-toggle";
+import AdvancedSuiteOptions from "./advanced-suite-options";
+
 const JsonPresentationHolder = ({ value }: any) => {
   const router = useRouter();
   const [text, setText] = React.useState(JSON.stringify(value, null, 2));
@@ -32,6 +35,17 @@ const JsonPresentationHolder = ({ value }: any) => {
   const [proofType, setProofType] = React.useState("Ed25519Signature2018");
   const [domain, setDomain] = React.useState("");
   const [challenge, setChallenge] = React.useState(uuidv4());
+
+  const [advancedConfiguration, setAdvancedConfiguration] = React.useState({
+    hdpath: `m/44'/0'/0'/0/0`,
+    keyType: "ed25519",
+    format: "vp",
+    suite: "Ed25519Signature2018",
+  });
+
+  const handleUpdateToAdvancedConfiguration = (newState: any) => {
+    setAdvancedConfiguration(newState);
+  };
 
   const handleKeyTypeChange = (_e: any, newKeyType: string) => {
     setProofType(
@@ -58,18 +72,20 @@ const JsonPresentationHolder = ({ value }: any) => {
       //
     }
   };
-  const handleIssue = async () => {
+  const handleProve = async () => {
     const vp = await provePresentation({
       presentation: JSON.parse(text),
       options: { domain, challenge },
       mnemonic,
-      keyType,
-      hdpath: `m/44'/0'/0'/0/0`,
-      proofType,
-      format: "vp",
+      keyType: advancedConfiguration.keyType,
+      hdpath: advancedConfiguration.hdpath,
+      proofType: advancedConfiguration.suite,
+      format: advancedConfiguration.format,
     });
-    // console.log(JSON.stringify(vp));
-    router.push("/v/" + compact(vp));
+
+    const pathParam =
+      advancedConfiguration.format !== "vp-jwt" ? compact(vp) : vp;
+    router.push("/v/" + pathParam);
   };
   return (
     <>
@@ -91,7 +107,7 @@ const JsonPresentationHolder = ({ value }: any) => {
             <InputAdornment position="end">
               <IconButton
                 aria-label="sign presentation"
-                onClick={handleIssue}
+                onClick={handleProve}
                 color={"primary"}
               >
                 <CreateIcon />
@@ -125,6 +141,11 @@ const JsonPresentationHolder = ({ value }: any) => {
         fullWidth
       />
 
+      <AdvancedSuiteOptions
+        type={"VerifiablePresentation"}
+        advancedConfiguration={advancedConfiguration}
+        setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
+      />
       <AceEditor
         mode="json"
         theme="pastel_on_dark"

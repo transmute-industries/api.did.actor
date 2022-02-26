@@ -17,7 +17,7 @@ import { compact } from "../core/compact";
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
 import { issueCredential } from "../vc-api";
 
-// import CredentialFormatToggle from "./credential-format-toggle";
+import CredentialFormatToggle from "./credential-format-toggle";
 
 import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
 const JsonCredentialIssuer = ({ value }: any) => {
@@ -79,8 +79,16 @@ const JsonCredentialIssuer = ({ value }: any) => {
       }
 
       if (assertionMethod.controller.startsWith("did:key:zQ3")) {
+        credential["@context"] = [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://w3id.org/security/suites/jws-2020/v1",
+        ];
         delete credential.credentialStatus;
       } else {
+        credential["@context"] = [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://w3id.org/vc-revocation-list-2020/v1",
+        ];
         credential.credentialStatus = {
           id: "https://api.did.actor/revocation-lists/1.json#0",
           type: "RevocationList2020Status",
@@ -114,8 +122,9 @@ const JsonCredentialIssuer = ({ value }: any) => {
       proofType: advancedConfiguration.suite,
       format: advancedConfiguration.format,
     });
-    // console.log(vc);
-    router.push("/v/" + compact(vc));
+
+    const pathParam = vc.issuer ? compact(vc) : vc;
+    router.push("/v/" + pathParam);
   };
   return (
     <>
@@ -147,11 +156,10 @@ const JsonCredentialIssuer = ({ value }: any) => {
         }}
       />
 
-      {/* // TODO: vc-jwt bug in browser prevents this from working. */}
-      {/* <CredentialFormatToggle
+      <CredentialFormatToggle
         advancedConfiguration={advancedConfiguration}
         setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
-      /> */}
+      />
       <AceEditor
         mode="json"
         theme="pastel_on_dark"
