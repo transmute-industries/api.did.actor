@@ -3,7 +3,6 @@ import Head from "next/head";
 import { AppPage } from "../../components/app-page";
 import React from "react";
 import { Box, Grid } from "@mui/material";
-import { useRouter } from "next/router";
 import { ResolutionResult } from "../../components/did-resolution-result";
 import { DIDAsTextField } from "../../components/did-as-textfield";
 export async function getServerSideProps(context: any) {
@@ -15,7 +14,6 @@ export async function getServerSideProps(context: any) {
 }
 
 const Resolve: NextPage = (props: any) => {
-  const router = useRouter();
   const did: any = props.did;
   const title = did ? did.substr(0, 9) + "..." + did.substr(-4) : "unknown";
   return (

@@ -9,12 +9,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VerifiableCredential>
 ) {
-  const { credential } = req.body;
-
+  const { credential, options } = req.body;
   const { mnemonic, hdpath } = req.headers;
-  const format = req.headers["vc-format"];
-  const proofType =
-    req.headers["linked-data-suite-proof-type"] || "Ed25519Signature2018";
+  const proofType = options.type || "Ed25519Signature2018";
+  const format = options.type === "jwt_vc" ? "vc-jwt" : "vc";
   try {
     const verifiableCredential = await issueCredential({
       credential,

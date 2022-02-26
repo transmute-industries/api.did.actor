@@ -9,7 +9,7 @@ info:
     name: API Support
     url: https://github.com/transmute-industries/api.did.actor
 servers:
-  - url: https://api.did.actor
+  # - url: https://api.did.actor
   - url: http://localhost:3000
 
 tags:

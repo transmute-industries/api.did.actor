@@ -5,12 +5,13 @@ import { getSuite } from "./getSuite";
 export const getCredentialSuite = async ({
   credential,
   mnemonic,
+  keyType,
   hdpath,
   proofType,
 }: any) => {
   const issuer = credential.issuer.id || credential.issuer;
-  const { didDocument } = await resolvers.ed25519(issuer);
-  const keys = await getKeysForMnemonic(mnemonic, hdpath);
+  const { didDocument } = await resolvers.resolve(issuer);
+  const keys = await getKeysForMnemonic(keyType, mnemonic, hdpath);
 
   if (didDocument.verificationMethod[0].id !== keys[0].id) {
     throw new Error("mnemonic is not for issuer");

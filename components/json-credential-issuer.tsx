@@ -9,14 +9,17 @@ import { TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useRouter } from "next/router";
+
+import CreateIcon from "@mui/icons-material/Create";
 import { defaultMnemonic } from "../core/defaultMnemonic";
 import { compact } from "../core/compact";
-import CreateIcon from "@mui/icons-material/Create";
+
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
 import { issueCredential } from "../vc-api";
 
 // import CredentialFormatToggle from "./credential-format-toggle";
 
+import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
 const JsonCredentialIssuer = ({ value }: any) => {
   const router = useRouter();
   const [text, setText] = React.useState(JSON.stringify(value, null, 2));
@@ -25,24 +28,67 @@ const JsonCredentialIssuer = ({ value }: any) => {
   };
 
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
+
+  const handleKeyTypeChange = (_e: any, newKeyType: string) => {
+    const newState = {
+      ...advancedConfiguration,
+      keyType: newKeyType,
+      suite:
+        newKeyType === "ed25519"
+          ? "Ed25519Signature2018"
+          : "JsonWebSignature2020",
+    };
+
+    handleUpdateToAdvancedConfiguration(newState);
+  };
+
   const [advancedConfiguration, setAdvancedConfiguration] = React.useState({
     hdpath: `m/44'/0'/0'/0/0`,
+    keyType: "ed25519",
     format: "vc",
     suite: "Ed25519Signature2018",
   });
 
   const handleUpdateToAdvancedConfiguration = (newState: any) => {
     setAdvancedConfiguration(newState);
-    if (newState.hdpath !== advancedConfiguration.hdpath) {
-      handleUpdateIssuer(mnemonic, newState.hdpath);
+    if (
+      newState.keyType !== advancedConfiguration.keyType ||
+      newState.hdpath !== advancedConfiguration.hdpath
+    ) {
+      handleUpdateIssuer(newState.keyType, mnemonic, newState.hdpath);
     }
   };
 
-  const handleUpdateIssuer = async (mnemonic: string, path: string) => {
+  const handleUpdateIssuer = async (
+    keyType: string,
+    mnemonic: string,
+    path: string
+  ) => {
     try {
-      const [assertionMethod] = await getKeysForMnemonic(mnemonic, path);
+      const [assertionMethod] = await getKeysForMnemonic(
+        keyType,
+        mnemonic,
+        path
+      );
       const credential = JSON.parse(text);
-      credential.issuer = assertionMethod.controller;
+
+      if (credential.issuer.id) {
+        credential.issuer.id = assertionMethod.controller;
+      } else {
+        credential.issuer = assertionMethod.controller;
+      }
+
+      if (assertionMethod.controller.startsWith("did:key:zQ3")) {
+        delete credential.credentialStatus;
+      } else {
+        credential.credentialStatus = {
+          id: "https://api.did.actor/revocation-lists/1.json#0",
+          type: "RevocationList2020Status",
+          revocationListIndex: 0,
+          revocationListCredential:
+            "https://api.did.actor/revocation-lists/1.json",
+        };
+      }
       setText(JSON.stringify(credential, null, 2));
     } catch (e) {
       // console.error(e);
@@ -52,13 +98,18 @@ const JsonCredentialIssuer = ({ value }: any) => {
 
   const handleMnemonicChange = async (newMnemonic: string) => {
     setMnemonic(newMnemonic);
-    handleUpdateIssuer(newMnemonic, advancedConfiguration.hdpath);
+    handleUpdateIssuer(
+      advancedConfiguration.keyType,
+      newMnemonic,
+      advancedConfiguration.hdpath
+    );
   };
   const handleIssue = async () => {
     // TODO: vc-jwt bug in browser prevents this from working.
     const vc = await issueCredential({
       credential: JSON.parse(text),
       mnemonic,
+      keyType: advancedConfiguration.keyType,
       hdpath: advancedConfiguration.hdpath,
       proofType: advancedConfiguration.suite,
       format: advancedConfiguration.format,
@@ -68,6 +119,10 @@ const JsonCredentialIssuer = ({ value }: any) => {
   };
   return (
     <>
+      <KeyTypeRadionButtonGroup
+        keyType={advancedConfiguration.keyType}
+        handleKeyTypeChange={handleKeyTypeChange}
+      />
       <TextField
         label="Mnemonic for Issuer"
         multiline
@@ -91,6 +146,7 @@ const JsonCredentialIssuer = ({ value }: any) => {
           ),
         }}
       />
+
       {/* // TODO: vc-jwt bug in browser prevents this from working. */}
       {/* <CredentialFormatToggle
         advancedConfiguration={advancedConfiguration}

@@ -9,26 +9,36 @@ import InputAdornment from "@mui/material/InputAdornment";
 import MemoryIcon from "@mui/icons-material/Memory";
 import * as bip39 from "bip39";
 import * as hdkey from "hdkey";
-import { defaultMnemonic } from "../core/defaultMnemonic";
-export const DID_KEY_BIP44_COIN_TYPE = "0";
-import { generators } from "../core/generators";
+
 import WarningIcon from "@mui/icons-material/Warning";
 import { useRouter } from "next/router";
+
+export const DID_KEY_BIP44_COIN_TYPE = "0";
+
+import { defaultMnemonic } from "../core/defaultMnemonic";
+import { generators } from "../core/generators";
+import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
 
 export const CreateDidForm = () => {
   const router = useRouter();
   const [config, setConfig]: any = React.useState(null);
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
+  const [keyType, setKeyType] = React.useState("ed25519");
   const [key, setKey] = React.useState("");
 
+  const handleKeyTypeChange = (_e: any, newKeyType: string) => {
+    setKeyType(newKeyType);
+    handleUpdateKey(newKeyType, mnemonic);
+  };
+
   const handleUpdateKey = React.useCallback(
-    async (mnemonic: string) => {
+    async (keyType: string, mnemonic: string) => {
       const seed = await bip39.mnemonicToSeed(mnemonic);
       const root = hdkey.fromMasterSeed(seed);
       const hdpath = `m/44'/${DID_KEY_BIP44_COIN_TYPE}'/0'/0/0`;
       const addrNode = root.derive(hdpath);
 
-      const res = await generators.ed25519(addrNode._privateKey);
+      const res = await generators.didKey(keyType, addrNode._privateKey);
       setKey(res.didDocument.id);
 
       setConfig({ key: res.didDocument.id, mnemonic });
@@ -39,17 +49,17 @@ export const CreateDidForm = () => {
   const handleGenerateMnemonic = React.useCallback(async () => {
     const m = bip39.generateMnemonic();
     setMnemonic(m);
-    handleUpdateKey(m);
-  }, [handleUpdateKey]);
+    handleUpdateKey(keyType, m);
+  }, [keyType, handleUpdateKey]);
 
   React.useEffect(() => {
     if (key === "") {
-      handleUpdateKey(mnemonic);
+      handleUpdateKey(keyType, mnemonic);
     }
     if (mnemonic === "") {
       handleGenerateMnemonic();
     }
-  }, [key, handleGenerateMnemonic, handleUpdateKey, mnemonic]);
+  }, [key, keyType, handleGenerateMnemonic, handleUpdateKey, mnemonic]);
 
   const handleCreate = () => {
     router.push("/" + config.key);
@@ -57,7 +67,12 @@ export const CreateDidForm = () => {
 
   return (
     <div style={{ maxWidth: "512px", margin: "auto" }}>
+      <KeyTypeRadionButtonGroup
+        keyType={keyType}
+        handleKeyTypeChange={handleKeyTypeChange}
+      />
       <TextField
+        sx={{ mt: 2 }}
         label="Controller"
         value={key.substring(0, 32) + "..."}
         disabled
