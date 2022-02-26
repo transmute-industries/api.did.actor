@@ -17,9 +17,10 @@ import { compact } from "../core/compact";
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
 import { issueCredential } from "../vc-api";
 
-import CredentialFormatToggle from "./credential-format-toggle";
-
 import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
+
+import AdvancedSuiteOptions from "./advanced-suite-options";
+
 const JsonCredentialIssuer = ({ value }: any) => {
   const router = useRouter();
   const [text, setText] = React.useState(JSON.stringify(value, null, 2));
@@ -156,7 +157,8 @@ const JsonCredentialIssuer = ({ value }: any) => {
         }}
       />
 
-      <CredentialFormatToggle
+      <AdvancedSuiteOptions
+        type={"VerifiableCredential"}
         advancedConfiguration={advancedConfiguration}
         setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
       />

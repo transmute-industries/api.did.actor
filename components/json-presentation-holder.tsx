@@ -19,7 +19,6 @@ import { compact } from "../core/compact";
 
 import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
 
-import CredentialFormatToggle from "./credential-format-toggle";
 import AdvancedSuiteOptions from "./advanced-suite-options";
 
 const JsonPresentationHolder = ({ value }: any) => {
@@ -32,7 +31,6 @@ const JsonPresentationHolder = ({ value }: any) => {
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
 
   const [keyType, setKeyType] = React.useState("ed25519");
-  const [proofType, setProofType] = React.useState("Ed25519Signature2018");
   const [domain, setDomain] = React.useState("");
   const [challenge, setChallenge] = React.useState(uuidv4());
 
@@ -45,12 +43,10 @@ const JsonPresentationHolder = ({ value }: any) => {
 
   const handleUpdateToAdvancedConfiguration = (newState: any) => {
     setAdvancedConfiguration(newState);
+    handleMnemonicChange(keyType, mnemonic);
   };
 
   const handleKeyTypeChange = (_e: any, newKeyType: string) => {
-    setProofType(
-      newKeyType === "ed25519" ? "Ed25519Signature2018" : "JsonWebSignature2020"
-    );
     setKeyType(newKeyType);
     handleMnemonicChange(newKeyType, mnemonic);
   };
@@ -77,7 +73,7 @@ const JsonPresentationHolder = ({ value }: any) => {
       presentation: JSON.parse(text),
       options: { domain, challenge },
       mnemonic,
-      keyType: advancedConfiguration.keyType,
+      keyType: keyType,
       hdpath: advancedConfiguration.hdpath,
       proofType: advancedConfiguration.suite,
       format: advancedConfiguration.format,
