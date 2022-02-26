@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { compact } from "../core/compact";
 
-import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
+import AdvancedKeyType from "./advanced-key-type";
 
 import AdvancedSuiteOptions from "./advanced-suite-options";
 
@@ -29,8 +29,6 @@ const JsonPresentationHolder = ({ value }: any) => {
   };
 
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
-
-  const [keyType, setKeyType] = React.useState("ed25519");
   const [domain, setDomain] = React.useState("");
   const [challenge, setChallenge] = React.useState(uuidv4());
 
@@ -42,19 +40,43 @@ const JsonPresentationHolder = ({ value }: any) => {
   });
 
   const handleUpdateToAdvancedConfiguration = (newState: any) => {
-    setAdvancedConfiguration(newState);
-    handleMnemonicChange(keyType, mnemonic);
+    const updateAdvancedConfig = {
+      ...newState,
+    };
+
+    if (newState.format === "vp-jwt") {
+      updateAdvancedConfig.suite = "JsonWebSignature2020";
+    }
+
+    if (newState.keyType === "secp256k1") {
+      updateAdvancedConfig.suite = "JsonWebSignature2020";
+    }
+
+    setAdvancedConfiguration(updateAdvancedConfig);
+    if (
+      updateAdvancedConfig.keyType !== advancedConfiguration.keyType ||
+      updateAdvancedConfig.hdpath !== advancedConfiguration.hdpath
+    ) {
+      handleMnemonicChange(
+        updateAdvancedConfig.keyType,
+        mnemonic,
+        updateAdvancedConfig.hdpath
+      );
+    }
   };
 
-  const handleKeyTypeChange = (_e: any, newKeyType: string) => {
-    setKeyType(newKeyType);
-    handleMnemonicChange(newKeyType, mnemonic);
-  };
-
-  const handleMnemonicChange = async (keyType: string, newMnemonic: string) => {
+  const handleMnemonicChange = async (
+    keyType: string,
+    newMnemonic: string,
+    hdpath: string
+  ) => {
     setMnemonic(newMnemonic);
     try {
-      const [assertionMethod] = await getKeysForMnemonic(keyType, newMnemonic);
+      const [assertionMethod] = await getKeysForMnemonic(
+        keyType,
+        newMnemonic,
+        hdpath
+      );
       const presentation = JSON.parse(text);
       if (presentation.holder.id) {
         presentation.holder.id = assertionMethod.controller;
@@ -73,7 +95,7 @@ const JsonPresentationHolder = ({ value }: any) => {
       presentation: JSON.parse(text),
       options: { domain, challenge },
       mnemonic,
-      keyType: keyType,
+      keyType: advancedConfiguration.keyType,
       hdpath: advancedConfiguration.hdpath,
       proofType: advancedConfiguration.suite,
       format: advancedConfiguration.format,
@@ -85,16 +107,16 @@ const JsonPresentationHolder = ({ value }: any) => {
   };
   return (
     <>
-      <KeyTypeRadionButtonGroup
-        keyType={keyType}
-        handleKeyTypeChange={handleKeyTypeChange}
-      />
       <TextField
         label="Mnemonic for Holder"
         multiline
         value={mnemonic}
         onChange={(event) => {
-          handleMnemonicChange(keyType, event.target.value);
+          handleMnemonicChange(
+            advancedConfiguration.keyType,
+            event.target.value,
+            advancedConfiguration.hdpath
+          );
         }}
         style={{ marginBottom: "32px", marginTop: "32px" }}
         fullWidth
@@ -136,6 +158,13 @@ const JsonPresentationHolder = ({ value }: any) => {
         style={{ marginBottom: "32px" }}
         fullWidth
       />
+
+      <div style={{ marginBottom: "16px" }}>
+        <AdvancedKeyType
+          advancedConfiguration={advancedConfiguration}
+          setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
+        />
+      </div>
 
       <AdvancedSuiteOptions
         type={"VerifiablePresentation"}

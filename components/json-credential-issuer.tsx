@@ -17,7 +17,7 @@ import { compact } from "../core/compact";
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
 import { issueCredential } from "../vc-api";
 
-import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
+import AdvancedKeyType from "./advanced-key-type";
 
 import AdvancedSuiteOptions from "./advanced-suite-options";
 
@@ -30,19 +30,6 @@ const JsonCredentialIssuer = ({ value }: any) => {
 
   const [mnemonic, setMnemonic] = React.useState(defaultMnemonic);
 
-  const handleKeyTypeChange = (_e: any, newKeyType: string) => {
-    const newState = {
-      ...advancedConfiguration,
-      keyType: newKeyType,
-      suite:
-        newKeyType === "ed25519"
-          ? "Ed25519Signature2018"
-          : "JsonWebSignature2020",
-    };
-
-    handleUpdateToAdvancedConfiguration(newState);
-  };
-
   const [advancedConfiguration, setAdvancedConfiguration] = React.useState({
     hdpath: `m/44'/0'/0'/0/0`,
     keyType: "ed25519",
@@ -51,12 +38,28 @@ const JsonCredentialIssuer = ({ value }: any) => {
   });
 
   const handleUpdateToAdvancedConfiguration = (newState: any) => {
-    setAdvancedConfiguration(newState);
+    const updateAdvancedConfig = {
+      ...newState,
+    };
+
+    if (newState.format === "vc-jwt") {
+      updateAdvancedConfig.suite = "JsonWebSignature2020";
+    }
+
+    if (newState.keyType === "secp256k1") {
+      updateAdvancedConfig.suite = "JsonWebSignature2020";
+    }
+
+    setAdvancedConfiguration(updateAdvancedConfig);
     if (
-      newState.keyType !== advancedConfiguration.keyType ||
-      newState.hdpath !== advancedConfiguration.hdpath
+      updateAdvancedConfig.keyType !== advancedConfiguration.keyType ||
+      updateAdvancedConfig.hdpath !== advancedConfiguration.hdpath
     ) {
-      handleUpdateIssuer(newState.keyType, mnemonic, newState.hdpath);
+      handleUpdateIssuer(
+        updateAdvancedConfig.keyType,
+        mnemonic,
+        updateAdvancedConfig.hdpath
+      );
     }
   };
 
@@ -129,10 +132,6 @@ const JsonCredentialIssuer = ({ value }: any) => {
   };
   return (
     <>
-      <KeyTypeRadionButtonGroup
-        keyType={advancedConfiguration.keyType}
-        handleKeyTypeChange={handleKeyTypeChange}
-      />
       <TextField
         label="Mnemonic for Issuer"
         multiline
@@ -157,8 +156,16 @@ const JsonCredentialIssuer = ({ value }: any) => {
         }}
       />
 
+      <div style={{ marginBottom: "16px" }}>
+        <AdvancedKeyType
+          advancedConfiguration={advancedConfiguration}
+          setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
+        />
+      </div>
+
       <AdvancedSuiteOptions
         type={"VerifiableCredential"}
+        keyType={advancedConfiguration.keyType}
         advancedConfiguration={advancedConfiguration}
         setAdvancedConfiguration={handleUpdateToAdvancedConfiguration}
       />

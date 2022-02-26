@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import _ from "lodash";
+import Grid from "@mui/material/Grid";
 import BiotechIcon from "@mui/icons-material/Biotech";
 import Chip from "@mui/material/Chip";
 import GavelIcon from "@mui/icons-material/Gavel";
@@ -129,34 +130,35 @@ export const PresentationPreview = ({
           </Button>
         </Toolbar>
 
-        {isJwt && (
-          <div style={{ padding: "32px" }}>
-            <Chip
-              label="IANA Registry Compliant"
-              onClick={() => {
-                window.open("https://www.iana.org/assignments/jose/jose.xhtml");
-              }}
-              onDelete={() => {}}
-              deleteIcon={<GavelIcon style={{ color: amber["500"] }} />}
-            />
-          </div>
-        )}
+        <div style={{ padding: "32px" }}>
+          <Grid container spacing={2}>
+            {isJwt && (
+              <Grid item>
+                <Chip
+                  label="IANA Registry Compliant"
+                  onClick={() => {
+                    window.open(
+                      "https://www.iana.org/assignments/jose/jose.xhtml"
+                    );
+                  }}
+                  onDelete={() => {}}
+                  deleteIcon={<GavelIcon style={{ color: amber["500"] }} />}
+                />
+              </Grid>
+            )}
+            {holder && (
+              <Grid item xs={12}>
+                <DIDAsTextField label="Presentation Holder" did={holder} />
+              </Grid>
+            )}
 
-        <div style={{ padding: "0 32px" }}>
-          {holder && (
-            <DIDAsTextField
-              label="Presentation Holder"
-              did={holder}
-              style={{ marginBottom: "32px" }}
-            />
-          )}
-
-          <div style={{ marginBottom: "32px" }}>
-            <Accordion
-              title={"Details"}
-              content={<JsonViewReadOnly value={presentationContent} />}
-            />
-          </div>
+            <Grid item xs={12}>
+              <Accordion
+                title={"Details"}
+                content={<JsonViewReadOnly value={presentationContent} />}
+              />
+            </Grid>
+          </Grid>
         </div>
       </AppBar>
     </>

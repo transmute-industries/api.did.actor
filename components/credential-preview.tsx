@@ -2,6 +2,7 @@ import React from "react";
 
 import { AvatarSpinner } from "./avatar-spinner";
 import AppBar from "@mui/material/AppBar";
+import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -123,42 +124,42 @@ export const CredentialPreview = ({ credential, verifyCredential }: any) => {
           </Button>
         </Toolbar>
 
-        {isJwt && (
-          <div style={{ padding: "32px" }}>
-            <Chip
-              label="IANA Registry Compliant"
-              onClick={() => {
-                window.open("https://www.iana.org/assignments/jose/jose.xhtml");
-              }}
-              onDelete={() => {}}
-              deleteIcon={<GavelIcon style={{ color: amber["500"] }} />}
-            />
-          </div>
-        )}
+        <div style={{ padding: "32px" }}>
+          <Grid container spacing={2}>
+            {isJwt && (
+              <Grid item>
+                <Chip
+                  label="IANA Registry Compliant"
+                  onClick={() => {
+                    window.open(
+                      "https://www.iana.org/assignments/jose/jose.xhtml"
+                    );
+                  }}
+                  onDelete={() => {}}
+                  deleteIcon={<GavelIcon style={{ color: amber["500"] }} />}
+                />
+              </Grid>
+            )}
 
-        <div style={{ padding: "0px 32px" }}>
-          {issuer && (
-            <DIDAsTextField
-              label="Credential Issuer"
-              did={issuer}
-              style={{ marginBottom: "32px" }}
-            />
-          )}
+            {issuer && (
+              <Grid item xs={12}>
+                <DIDAsTextField label="Credential Issuer" did={issuer} />
+              </Grid>
+            )}
 
-          {subject && subject !== "No Subject" && (
-            <DIDAsTextField
-              label="Credential Subject"
-              did={subject}
-              style={{ marginBottom: "32px" }}
-            />
-          )}
+            {subject && subject !== "No Subject" && (
+              <Grid item xs={12}>
+                <DIDAsTextField label="Credential Subject" did={subject} />
+              </Grid>
+            )}
 
-          <div style={{ marginBottom: "32px" }}>
-            <Accordion
-              title={"Details"}
-              content={<JsonViewReadOnly value={credentialContent} />}
-            />
-          </div>
+            <Grid item xs={12}>
+              <Accordion
+                title={"Details"}
+                content={<JsonViewReadOnly value={credentialContent} />}
+              />
+            </Grid>
+          </Grid>
         </div>
       </AppBar>
     </>

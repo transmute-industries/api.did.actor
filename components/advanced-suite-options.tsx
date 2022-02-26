@@ -17,7 +17,7 @@ export default function AdvancedSuiteOptions({
   setAdvancedConfiguration,
 }: any) {
   const [state, setState] = React.useState({
-    advanced: true,
+    advanced: false,
   });
 
   const types =
@@ -56,6 +56,14 @@ export default function AdvancedSuiteOptions({
     });
   };
 
+  const ldSuiteOptions =
+    advancedConfiguration.keyType === "ed25519"
+      ? [
+          { name: "Ed25519Signature2018", value: "Ed25519Signature2018" },
+          { name: "JsonWebSignature2020", value: "JsonWebSignature2020" },
+        ]
+      : [{ name: "JsonWebSignature2020", value: "JsonWebSignature2020" }];
+
   return (
     <Grid container spacing={2} sx={{ mb: 2 }}>
       <Grid item>
@@ -73,7 +81,7 @@ export default function AdvancedSuiteOptions({
                   name="advanced"
                 />
               }
-              label={state.advanced ? "Advanced" : "Basic"}
+              label={state.advanced ? "Custom" : "Default Suite"}
             />
           </FormGroup>
         </FormControl>
@@ -111,16 +119,18 @@ export default function AdvancedSuiteOptions({
                 label="Suite"
                 disabled={
                   advancedConfiguration.format === "vc-jwt" ||
-                  advancedConfiguration.format === "vp-jwt"
+                  advancedConfiguration.format === "vp-jwt" ||
+                  ldSuiteOptions.length === 1
                 }
                 onChange={handleChangeVcSuite}
               >
-                <MenuItem value={"Ed25519Signature2018"}>
-                  Ed25519Signature2018
-                </MenuItem>
-                <MenuItem value={"JsonWebSignature2020"}>
-                  JsonWebSignature2020
-                </MenuItem>
+                {ldSuiteOptions.map((i) => {
+                  return (
+                    <MenuItem key={i.name} value={i.value}>
+                      {i.name}
+                    </MenuItem>
+                  );
+                })}
               </Select>
             </FormControl>
           </Grid>
