@@ -44,7 +44,6 @@
     "react-ace": "^9.5.0",
     "react-dom": "17.0.2",
     "react-tsparticles": "^1.36.0",
-    "react-tweet-embed": "^2.0.0",
     "security-context": "^4.0.0",
     "uuid": "^8.3.2",
     "vc-revocation-list": "^3.0.0"
