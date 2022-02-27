@@ -7,7 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<TwitterData>
 ) {
-  const keywords = ["#did"];
+  const keywords = ["#Etherum", "#SWIFT"];
   const query = keywords.map(encodeURIComponent).join("+");
   const endpoint = `https://api.twitter.com/2/tweets/search/recent?query=${query}`;
   const response = await axios.get(endpoint, {
