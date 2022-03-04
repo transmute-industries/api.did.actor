@@ -2,49 +2,32 @@
 
 🚧 Under development
 
-This API is for testing digital bazaar libraries exposed over http.
+This API is for testing interoperability regarding a few W3C TR and W3C CCG Work items.
 
-There are a lot of security issues with the approach taken here, most of them are for the sake of exposing functionality for testing purposes. This API should not be used outside of a testing / demonstration context.
+There are a lot of security issues with the approach taken here, most of them are for the sake of exposing functionality for testing purposes.
 
-> The Decentralized Identifiers (DIDs) are a new type of globally unique identifier designed to enable individuals and organizations to generate our own identifiers using systems we trust, and to prove control of those identifiers (authenticate) using cryptographic proofs.
+This API should not be used outside of a testing / demonstration context.
 
-- [W3C DID Core Spec](https://www.w3.org/TR/did-core/)
+#### Standards
 
-- [W3C CCG Mailing List Announcement](https://lists.w3.org/Archives/Public/public-credentials/2020Jul/0092.html)
+- [W3C Decentralized Identifiers](https://www.w3.org/TR/did-core/)
+- [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/)
+- [JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519)
+- [JSON Web Key (JWK)](https://datatracker.ietf.org/doc/html/rfc7517)
+- [Bitcoin Improvement Protocol 39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
+- [Bitcoin Improvement Protocol 44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki)
 
-# Boilerplate
+#### Community Drafts
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+- [W3C CCG did:key method spec](https://github.com/w3c-ccg/did-method-key)
+- [W3C CCG did:web method spec](https://github.com/w3c-ccg/did-method-web)
+- [W3C CCG Verifiable Credentials API](https://github.com/w3c-ccg/vc-api)
+- [W3C CCG Traceability Vocabulary](https://w3id.org/traceability)
+- [W3C CCG Traceability Interoperability Profile](https://w3id.org/traceability/interoperability)
 
-## Getting Started
+#### Powered By
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Transmute](https://transmute.industries/)
+- [Material UI](https://mui.com/)
+- [Next.js](https://nextjs.org/)
+- [Vercel](https://vercel.com/)
