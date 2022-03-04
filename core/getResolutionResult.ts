@@ -4,7 +4,7 @@ export const getResolutionResult = async (did: string) => {
   let didDocumentMetadata: any = {};
 
   if (did.startsWith("did:")) {
-    didDocument = await resolvers.resolve(did);
+    ({ didDocument } = await resolvers.resolve(did));
   }
 
   const didUrlComponents = did.split(":");
