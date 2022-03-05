@@ -9,13 +9,15 @@ export const getCredentialSuite = async ({
   hdpath,
   proofType,
 }: any) => {
-  const issuer = credential.issuer.id || credential.issuer;
-  const { didDocument } = await resolvers.resolve(issuer);
   const keys = await getKeysForMnemonic(keyType, mnemonic, hdpath);
-
-  if (didDocument.verificationMethod[0].id !== keys[0].id) {
-    throw new Error("mnemonic is not for issuer");
+  if (credential.issuer) {
+    const issuer = credential.issuer.id || credential.issuer;
+    const { didDocument } = await resolvers.resolve(issuer);
+    if (didDocument.verificationMethod[0].id !== keys[0].id) {
+      throw new Error("mnemonic is not for issuer");
+    }
   }
+
   //   we are exploiting the known structure of did:key here...
   const suite = await getSuite(keys[0], proofType);
   return suite;

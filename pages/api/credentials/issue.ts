@@ -5,6 +5,8 @@ import { issueCredential } from "../../../vc-api";
 
 type VerifiableCredential = any;
 
+import { defaultMnemonic, defaultHdPath } from "../../../core/defaultMnemonic";
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VerifiableCredential>
@@ -19,13 +21,14 @@ export default async function handler(
   try {
     const verifiableCredential = await issueCredential({
       credential,
-      mnemonic,
-      hdpath,
+      mnemonic: mnemonic || defaultMnemonic,
+      hdpath: hdpath || defaultHdPath,
       proofType,
       format,
     });
     res.status(200).json(verifiableCredential);
   } catch (e) {
+    console.log(e);
     res.status(500).json({ message: (e as any).message });
   }
 }
