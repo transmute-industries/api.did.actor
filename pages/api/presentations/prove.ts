@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { provePresentation } from "../../../vc-api";
+import { defaultMnemonic, defaultHdPath } from "../../../core/defaultMnemonic";
 
 type VerifiablePresentation = any;
 
@@ -23,13 +24,14 @@ export default async function handler(
     const verifiablePresentation = await provePresentation({
       presentation,
       options,
-      mnemonic,
-      hdpath,
+      mnemonic: mnemonic || defaultMnemonic,
+      hdpath: hdpath || defaultHdPath,
       proofType,
       format,
     });
     res.status(200).json(verifiablePresentation);
   } catch (e) {
+    console.log(e);
     res.status(500).json({ message: (e as any).message });
   }
 }
