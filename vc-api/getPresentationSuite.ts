@@ -11,13 +11,8 @@ export const getPresentationSuite = async ({
 }: any) => {
   const keys = await getKeysForMnemonic(keyType, mnemonic, hdpath);
 
-  if (presentation.holder) {
-    const holder = presentation.holder.id || presentation.holder;
-    const { didDocument } = await resolvers.resolve(holder);
-
-    if (didDocument.verificationMethod[0].id !== keys[0].id) {
-      throw new Error("mnemonic is not for holder");
-    }
+  if (presentation.holder.id) {
+    presentation.holder.id = keys[0].controller;
   } else {
     presentation.holder = keys[0].controller;
   }
