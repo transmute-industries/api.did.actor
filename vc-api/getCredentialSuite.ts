@@ -1,4 +1,3 @@
-import { resolvers } from "../core/resolvers";
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
 import { getSuite } from "./getSuite";
 
@@ -10,7 +9,7 @@ export const getCredentialSuite = async ({
   proofType,
 }: any) => {
   const keys = await getKeysForMnemonic(keyType, mnemonic, hdpath);
-  if (credential.issuer.id) {
+  if (credential.issuer && credential.issuer.id) {
     credential.issuer.id = keys[0].controller;
   } else {
     credential.issuer = keys[0].controller;
