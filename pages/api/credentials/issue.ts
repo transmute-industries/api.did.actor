@@ -2,10 +2,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { issueCredential } from "../../../vc-api";
+import { defaultMnemonic, defaultHdPath } from "../../../core/defaultMnemonic";
 
 type VerifiableCredential = any;
-
-import { defaultMnemonic, defaultHdPath } from "../../../core/defaultMnemonic";
 
 export default async function handler(
   req: NextApiRequest,
