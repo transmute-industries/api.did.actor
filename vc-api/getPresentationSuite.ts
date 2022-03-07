@@ -1,4 +1,3 @@
-import { resolvers } from "../core/resolvers";
 import { getKeysForMnemonic } from "../core/getKeysForMnemonic";
 import { getSuite } from "./getSuite";
 
@@ -11,7 +10,7 @@ export const getPresentationSuite = async ({
 }: any) => {
   const keys = await getKeysForMnemonic(keyType, mnemonic, hdpath);
 
-  if (presentation.holder.id) {
+  if (presentation.holder && presentation.holder.id) {
     presentation.holder.id = keys[0].controller;
   } else {
     presentation.holder = keys[0].controller;

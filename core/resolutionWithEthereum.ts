@@ -3,6 +3,9 @@ import bs58 from "bs58";
 import publicKeyToAddress from "ethereum-public-key-to-address";
 
 export const resolutionWithEthereum = async (resolution: any) => {
+  if (!resolution.didDocument.verificationMethod) {
+    return resolution;
+  }
   const addresses = await Promise.all(
     resolution.didDocument.verificationMethod
       .map(async (vm: any) => {
