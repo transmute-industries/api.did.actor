@@ -47,7 +47,7 @@ export const Drawer = () => {
           button
           selected={
             router.pathname === "/resolve" ||
-            router.pathname.startsWith("/[did]")
+            router.pathname.startsWith("/identifiers/[did]")
           }
           onClick={() => {
             router.push("/resolve");
