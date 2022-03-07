@@ -8,6 +8,23 @@ There are a lot of security issues with the approach taken here, most of them ar
 
 This API should not be used outside of a testing / demonstration context.
 
+## Testing
+
+```
+curl -s 'http://localhost:3000/identifiers/did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn' \
+--header 'Accept: application/json' | jq
+```
+
+```
+curl -s 'https://api.did.actor/identifiers/did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn' \
+--header 'Accept: application/json' | jq
+```
+
+```
+curl -s 'https://api.did.actor/identifiers/did:key:zQ3shQqJCnb5zs53zNWzVG7CSLhPsYasNbzZq3pvnKVPXRSqw' \
+--header 'Accept: application/json' | jq
+```
+
 #### Standards
 
 - [W3C Decentralized Identifiers](https://www.w3.org/TR/did-core/)
