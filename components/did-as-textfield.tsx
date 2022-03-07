@@ -24,7 +24,7 @@ export const DIDAsTextField = ({ did, onChange, label, style }: any) => {
             <IconButton
               aria-label="resolve did"
               onClick={() => {
-                router.push("/" + did);
+                router.push("/identifiers/" + did);
               }}
             >
               <LaunchIcon />

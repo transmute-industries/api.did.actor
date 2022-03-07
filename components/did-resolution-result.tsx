@@ -115,7 +115,7 @@ export const ResolutionResult = ({ did }: any) => {
             <Grid item>
               <Button
                 onClick={() => {
-                  router.push("/api/" + resolution.didDocument.id);
+                  router.push("/api/identifiers/" + resolution.didDocument.id);
                 }}
                 variant="outlined"
                 color={"primary"}

@@ -21,7 +21,7 @@ tags:
 paths:
   /did.json:
     $ref: "./resources/traceability-api-did-web.yml"
-  /{did}:
+  /identifiers/{did}:
     $ref: "./resources/did.yml"
 
   /api/credentials/issue:
