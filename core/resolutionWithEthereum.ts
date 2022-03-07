@@ -6,7 +6,7 @@ export const resolutionWithEthereum = async (resolution: any) => {
   if (!resolution.didDocument.verificationMethod) {
     return resolution;
   }
-  let addresses = await Promise.all(
+  let addresses: string[] = await Promise.all(
     resolution.didDocument.verificationMethod.map(async (vm: any) => {
       if (vm.publicKeyJwk.crv === "secp256k1") {
         const kp = await didKey.secp256k1.Secp256k1KeyPair.from(vm);
