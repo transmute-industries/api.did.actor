@@ -19,7 +19,7 @@ const Resolve: NextPage = () => {
   );
 
   const handleResolve = () => {
-    router.push("/" + did);
+    router.push("/identifiers/" + did);
   };
 
   return (

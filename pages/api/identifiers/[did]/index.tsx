@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { getResolutionResult } from "../../../core/getResolutionResult";
+import { getResolutionResult } from "../../../../core/getResolutionResult";
 
-import { resolutionWithEthereum } from "../../../core/resolutionWithEthereum";
+import { resolutionWithEthereum } from "../../../../core/resolutionWithEthereum";
 
 type Data = {
   didDocument: any;

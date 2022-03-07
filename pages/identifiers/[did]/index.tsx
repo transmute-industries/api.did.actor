@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { AppPage } from "../../components/app-page";
+import { AppPage } from "../../../components/app-page";
 import React from "react";
 import { Box, Grid } from "@mui/material";
-import { ResolutionResult } from "../../components/did-resolution-result";
-import { DIDAsTextField } from "../../components/did-as-textfield";
+import { ResolutionResult } from "../../../components/did-resolution-result";
+import { DIDAsTextField } from "../../../components/did-as-textfield";
 export async function getServerSideProps(context: any) {
   return {
     props: {
