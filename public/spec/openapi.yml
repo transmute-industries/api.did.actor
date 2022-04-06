@@ -52,3 +52,11 @@ components:
     $ref: "./schemas/_index.yml"
   responses:
     $ref: "./responses/_index.yml"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
