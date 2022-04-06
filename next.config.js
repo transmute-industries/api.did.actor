@@ -5,6 +5,11 @@ module.exports = {
   experimental: {
     outputFileTracing: true,
   },
+  did_config: {
+    aka: process.env.DID_AKA || "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+    did_key: process.env.DID_KEY || "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+    did_key_priv: process.env.DID_KEY_PRIV || ""
+  },
   env_config: {
     config_external: process.env.CONFIG_EXTERNAL || false,
     config_external_path: process.env.CONFIG_EXTERNAL_PATH || "",
