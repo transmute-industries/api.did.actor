@@ -36,24 +36,34 @@ export class LocalStorage extends StorageDriver {
         Object.keys(objs).forEach(key => result.push(objs[key]));
         return result;
     }
-    put(obj: any, type?: string) {
-        const id: string = uuidv4();
-        if (this.cache.set(id, obj)) {
-            return id;
+    put(obj: any, id?: any, type?: string) {
+        var gid: string;
+        if (typeof id !== 'undefined') {
+            gid = id
+        } else {
+            gid = uuidv4();
+        }
+        if (this.cache.set(gid, obj)) {
+            return gid;
         } else {
             throw Error("Could not put data");
         }
     }
-    putMany(obj: [any], type?: string): any[] {
-        var ids = new Array<string>(obj.length);
+    putMany(obj: any[], ids?: any[], type?: string): any[] {
+        var gids = new Array<string>(obj.length);
         var objs: any = {};
-        Object.keys(obj).forEach(o => {
-            const id: string = uuidv4();
-            objs[id] = o;
-            ids.push(id);
+        obj.forEach(function (o, i) {
+            var gid: string;
+            if (typeof ids !== 'undefined') {
+                gid = ids[i];
+            } else {
+                gid = uuidv4();
+            }
+            gids.push(gid);
+            objs[gid] = o;
         });
         this.cache.mset(objs)
-        return ids
+        return gids
     }
     update(id: any, obj: any, type?: string): boolean {
         if (this.cache.set(id, obj)) {

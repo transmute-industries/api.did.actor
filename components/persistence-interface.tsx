@@ -53,19 +53,21 @@ export abstract class StorageDriver {
      * Puts an object into the storage driver
      * @throws {Error}
      * @param obj the opbect to put in the db
+     * @param id the explicit id to use for the object if desired
      * @param type the collection or table to query to/from if applicable
      * @returns the id of the object
      */
-    abstract put(obj: any, type?: string): any | never;
+    abstract put(obj: any, id?: any, type?: string): any | never;
 
     /**
      * Puts one or more objects into the storage driver
      * @throws {Error}
      * @param obj the opbect to put in the db
+     * @param ids the explicit array of matched ids to use for the objects if desired
      * @param type the collection or table to query to/from if applicable
      * @returns an array of the object ids as inserted
      */
-    abstract putMany(obj: [any], type?: string): any[] | never;
+    abstract putMany(obj: any[], ids?: any[], type?: string): any[] | never;
 
     /**
      * Updates data in the storage driver
