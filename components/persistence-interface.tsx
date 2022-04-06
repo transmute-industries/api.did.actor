@@ -47,7 +47,7 @@ export abstract class StorageDriver {
      * @param type the collection or table to query to/from if applicable
      * @returns the object requested
      */
-    abstract get(query: any, type?: string): [any] | never;
+    abstract getMany(query: any, type?: string): any[] | never;
 
     /**
      * Puts an object into the storage driver
@@ -65,7 +65,7 @@ export abstract class StorageDriver {
      * @param type the collection or table to query to/from if applicable
      * @returns an array of the object ids as inserted
      */
-    abstract put(obj: [any], type?: string): [any] | never;
+    abstract putMany(obj: [any], type?: string): any[] | never;
 
     /**
      * Updates data in the storage driver
