@@ -6,7 +6,7 @@ export const verifyJwt = NextJwtVerifier({
     audience: process.env.AUTH0_AUDIENCE || "https://example.org/"
 });
 
-export const WithApiAuthRequired = (apiRoute: NextApiHandler, scope?: string[]) =>
+export const WithApiBearerAuthRequired = (apiRoute: NextApiHandler, scope?: string[]) =>
     verifyJwt(async (req: NextApiRequest, res: NextApiResponse) => {
         const { claims } = (req as any).identityContext;
         if (!claims) {
