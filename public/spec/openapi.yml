@@ -7,7 +7,7 @@ info:
     name: Apache.20
   contact:
     name: API Support
-    url: https://github.com/transmute-industries/api.did.actor
+    url: https://github.com/w3c-ccg/traceability-interop/
 servers:
   - url: https://vc.mesur.io
   - url: https://api.did.actor
