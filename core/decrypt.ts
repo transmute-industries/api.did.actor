@@ -27,7 +27,8 @@ export const decryptWith = async (
   mnemonic: string,
   hdpath: string = `m/44'/${DID_KEY_BIP44_COIN_TYPE}'/0'/0/0`
 ) => {
-  const cipher = new JWE.Cipher(X25519KeyPair);
+  const cipher = new JWE.Cipher();
+
   const seed = await bip39.mnemonicToSeed(mnemonic);
   const root = hdkey.fromMasterSeed(seed);
   const addrNode = root.derive(hdpath);

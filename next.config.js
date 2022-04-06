@@ -3,8 +3,8 @@ module.exports = {
   reactStrictMode: true,
   webpack5: true,
   experimental: {
-    outputFileTracing: true,
     outputStandalone: true,
+    outputFileTracing: true,
   },
   headers: async () => {
     return [
