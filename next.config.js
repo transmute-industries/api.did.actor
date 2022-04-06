@@ -5,6 +5,17 @@ module.exports = {
   experimental: {
     outputFileTracing: true,
   },
+  env_config: {
+    auth_enabled: process.env.VC_AUTH_ENABLED || false,
+    auth0_enabled: process.env.VC_AUTH0_ENABLED || false,
+    auth_prefix: process.env.VC_AUTH_PREFIX || null,
+    allow_unauthenticated: process.env.VC_ALLOW_UNAUTH || false,
+    auth_skip: process.env.VC_AUTH_SKIP || [],
+    domain: process.env.VC_AUTH_DOMAIN || "",
+    audience: process.env.VC_AUTH_AUDIENCE || "",
+    client: process.env.VC_AUTH_CLIENT || "",
+    secret: process.env.VC_AUTH_SECRET || "",
+  },
   headers: async () => {
     return [
       {
