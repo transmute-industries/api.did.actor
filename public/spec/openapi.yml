@@ -2,7 +2,7 @@ openapi: "3.0.0"
 info:
   version: 1.0.0
   title: DID Actor API
-  description: Identifier and Credentials APIs for DID.
+  description: Identifier and Credentials APIs for DIDs and VCs
   license:
     name: Apache.20
   contact:
