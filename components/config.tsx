@@ -30,6 +30,7 @@ export const config = {
         font: process.env.THEME_FONT || 'Rajdhani',
         mono: process.env.THEME_MONO || 'Lato',
         bg: process.env.THEME_BG || 'rgb(51, 51, 51)',
+        bg_nav: process.env.THEME_BG_NAV || 'rgb(51, 51, 51)',
         fg: process.env.THEME_FG || 'rgb(187, 187, 187)',
         primary: process.env.THEME_PRIMARY || '#FCB373',
         secondary: process.env.THEME_SECONDARY || '#ED8E85',
@@ -37,7 +38,9 @@ export const config = {
         primary_d: process.env.THEME_PRIMARY_D || '#C3FCF1',
         secondary_d: process.env.THEME_SECONDARY_D || '#4C8077',
         accent_d: process.env.THEME_ACCENT_D || '#8A6992',
-        footer: process.env.THEME_FOOTER || '© 2022 Transmute Industries, Inc. All rights reserved.'
+        footer: process.env.THEME_FOOTER || '© 2022 Transmute Industries, Inc. All rights reserved.',
+        font_link: "https://fonts.googleapis.com/css2?family=" + process.env.THEME_FONT || 'Rajdhani' + ":wght@500&display=swap",
+        font_link_mono: "https://fonts.googleapis.com/css2?family=" + process.env.THEME_FONT || 'Lato' + ":wght@500&display=swap"
     },
     storage: {
         enabled: process.env.VC_STORAGE_ENABLED || false,

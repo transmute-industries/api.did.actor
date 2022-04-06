@@ -7,8 +7,12 @@ import React from "react";
 import { config } from "../components/config";
 
 export async function getServerSideProps(context: any) {
+  var props = {
+    config
+  };
+  // DEBUG: console.log(props);
   return {
-    props: {}, // will be passed to the page component as props
+    props, // will be passed to the page component as props
   };
 }
 
@@ -31,11 +35,11 @@ const ApidDocs: NextPage = (props: any) => {
           crossOrigin="anonymous"
         ></link>
         <link
-          href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap"
+          href={props.config.theme_config.font_link}
           rel="stylesheet"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap"
+          href={props.config.theme_config.font_link_mono}
           rel="stylesheet"
         />
       </Head>
@@ -43,27 +47,28 @@ const ApidDocs: NextPage = (props: any) => {
         <rapi-doc
           spec-url="/spec/openapi.yml"
           schema-style="table"
-          show-header={config.theme_config.header_show}
+          show-header={props.config.theme_config.header_show}
           show-info="true"
           allow-authentication="true"
           allow-server-selection="true"
           allow-api-list-style-selection="true"
           render-style="read"
-          nav-bg-color={config.theme_config.bg}
-          header-color={config.theme_config.header_color}
-          primary-color={config.theme_config.primary}
-          regular-font={config.theme_config.font}
-          mono-font={config.theme_config.mono}
-          theme={config.theme_config.theme}
+          bg-color={props.config.theme_config.bg}
+          nav-bg-color={props.config.theme_config.bg_nav}
+          header-color={props.config.theme_config.header_color}
+          primary-color={props.config.theme_config.primary}
+          regular-font={props.config.theme_config.font}
+          mono-font={props.config.theme_config.mono}
+          theme={props.config.theme_config.theme}
         >
           <img
             alt="brand"
-            src={config.theme_config.logo}
+            src={props.config.theme_config.logo}
             style={{ maxWidth: "256px", marginLeft: "64px" }}
           />
 
           <p slot="footer">
-            {config.theme_config.footer}
+            {props.config.theme_config.footer}
           </p>
         </rapi-doc>
       </>
