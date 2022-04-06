@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.7.0",
     "@digitalbazaar/ed25519-signature-2018": "^2.1.0",
     "@digitalbazaar/ed25519-verification-key-2018": "^3.1.2",
     "@digitalbazaar/vc": "^2.1.0",
@@ -19,6 +20,7 @@
     "@mui/lab": "^5.0.0-alpha.76",
     "@mui/material": "^5.6.0",
     "@mui/styles": "^5.6.0",
+    "@serverless-jwt/next": "^0.2.1",
     "@transmute/credentials-context": "^0.7.0-unstable.58",
     "@transmute/did-key-ed25519": "^0.3.0-unstable.8",
     "@transmute/did-key.js": "^0.3.0-unstable.8",

@@ -7,7 +7,7 @@ import { config } from "./config";
 
 const warning = yellow;
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     mode: "dark",
     primary: {

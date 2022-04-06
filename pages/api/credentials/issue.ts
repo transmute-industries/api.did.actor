@@ -1,15 +1,17 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
 
 import { issueCredential } from "../../../vc-api";
 import { defaultMnemonic, defaultHdPath } from "../../../core/defaultMnemonic";
 
 type VerifiableCredential = any;
 
-export default async function handler(
+export default withApiAuthRequired(async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VerifiableCredential>
 ) {
+  const session = getSession(req, res);
   const { credential, options } = req.body;
   const { mnemonic, hdpath } = req.headers;
   const proofType =
@@ -30,4 +32,4 @@ export default async function handler(
     console.log(e);
     res.status(500).json({ message: (e as any).message });
   }
-}
+})
