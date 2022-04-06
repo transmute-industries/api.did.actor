@@ -6,6 +6,8 @@ module.exports = {
     outputFileTracing: true,
   },
   env_config: {
+    config_external: process.env.CONFIG_EXTERNAL || false,
+    config_external_path: process.env.CONFIG_EXTERNAL_PATH || "",
     auth_enabled: process.env.VC_AUTH_ENABLED || false,
     auth0_enabled: process.env.VC_AUTH0_ENABLED || false,
     auth_prefix: process.env.VC_AUTH_PREFIX || null,
@@ -15,6 +17,22 @@ module.exports = {
     audience: process.env.VC_AUTH_AUDIENCE || "",
     client: process.env.VC_AUTH_CLIENT || "",
     secret: process.env.VC_AUTH_SECRET || "",
+  },
+  theme_config: {
+    logo: process.env.THEME_LOGO || 'transmute-white.svg',
+    theme: process.env.THEME || 'dark',
+    header_show: process.env.THEME_HEADER_SHOW || false,
+    header_color: process.env.THEME_HEADER_COLOR || '#594aa8',
+    font: process.env.THEME_FONT || 'Rajdhani',
+    mono: process.env.THEME_MONO || 'Lato',
+    bg: process.env.THEME_BG || 'rgb(51, 51, 51)',
+    fg: process.env.THEME_FG || 'rgb(187, 187, 187)',
+    primary: process.env.THEME_PRIMARY || '#FCB373',
+    secondary: process.env.THEME_SECONDARY || '#ED8E85',
+    accent: process.env.THEME_ACCENT || '#C37794',
+    primary_d: process.env.THEME_PRIMARY_D || '#C3FCF1',
+    secondary_d: process.env.THEME_SECONDARY_D || '#4C8077',
+    accent_d: process.env.THEME_ACCENT_D || '#8A6992'
   },
   headers: async () => {
     return [
