@@ -6,6 +6,7 @@ export const config = {
         did_key_priv: process.env.DID_KEY_PRIV || ""
     },
     env_config: {
+        playground: process.env.VC_PLAYGROUND || true,
         domain: process.env.VC_DOMAIN || "api.did.actor",
         config_external: process.env.CONFIG_EXTERNAL || false,
         config_external_path: process.env.CONFIG_EXTERNAL_PATH || "",
