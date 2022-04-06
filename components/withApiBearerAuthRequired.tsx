@@ -6,7 +6,7 @@ export const verifyJwt = NextJwtVerifier({
     audience: process.env.AUTH0_AUDIENCE || "https://example.org/"
 });
 
-export const WithApiAuthRequired = (scope: string, apiRoute: NextApiHandler) =>
+export const WithApiAuthRequired = (apiRoute: NextApiHandler, scope?: string[]) =>
     verifyJwt(async (req: NextApiRequest, res: NextApiResponse) => {
         const { claims } = (req as any).identityContext;
         if (!claims) {
@@ -16,11 +16,26 @@ export const WithApiAuthRequired = (scope: string, apiRoute: NextApiHandler) =>
             });
             return;
         }
-        if (!claims.scope || claims.scope.indexOf(scope) === -1) {
-            return res.status(403).json({
-                error: 'access_denied',
-                error_description: `Token does not contain the required '${scope}' scope`
-            });
+        if (scope !== undefined) {
+            if (!claims.scope) {
+                return res.status(403).json({
+                    error: 'access_denied',
+                    error_description: 'Token does not contain a scope, which is required for this call'
+                });
+            } else {
+                var scopeFound = false;
+                scope.forEach((s, idx) => {
+                    if (claims.scope.includes(s)) {
+                        scopeFound = true
+                    }
+                });
+                if (!scopeFound) {
+                    return res.status(403).json({
+                        error: 'access_denied',
+                        error_description: 'Token contains a scope, but not one that is required for this call'
+                    });
+                }
+            }
         }
 
         return apiRoute(req, res);
