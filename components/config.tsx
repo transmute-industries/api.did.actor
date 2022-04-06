@@ -34,7 +34,8 @@ export const config = {
         accent_d: process.env.THEME_ACCENT_D || '#8A6992'
     },
     storage: {
-        diver: process.env.VC_STORAGE_DRIVER || "local-storage",
+        enabled: process.env.VC_STORAGE_ENABLED || false,
+        driver: process.env.VC_STORAGE_DRIVER || "local-storage",
         connection_string: process.env.VC_STORAGE_CONNECTION_STRING || "",
     }
 }
