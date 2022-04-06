@@ -1,10 +1,12 @@
 export const config = {
     did_config: {
+        mnemonic: process.env.DID_MNEMONIC || "sell antenna drama rule twenty cement mad deliver you push derive hybrid",
         aka: process.env.DID_AKA || "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
         did_key: process.env.DID_KEY || "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
         did_key_priv: process.env.DID_KEY_PRIV || ""
     },
     env_config: {
+        domain: process.env.VC_DOMAIN || "api.did.actor",
         config_external: process.env.CONFIG_EXTERNAL || false,
         config_external_path: process.env.CONFIG_EXTERNAL_PATH || "",
         auth_enabled: process.env.VC_AUTH_ENABLED || false,
@@ -12,10 +14,10 @@ export const config = {
         auth_prefix: process.env.VC_AUTH_PREFIX || null,
         allow_unauthenticated: process.env.VC_ALLOW_UNAUTH || false,
         auth_skip: process.env.VC_AUTH_SKIP || [],
-        domain: process.env.VC_AUTH_DOMAIN || "",
-        audience: process.env.VC_AUTH_AUDIENCE || "",
-        client: process.env.VC_AUTH_CLIENT || "",
-        secret: process.env.VC_AUTH_SECRET || "",
+        auth_domain: process.env.VC_AUTH_DOMAIN || "",
+        auth_audience: process.env.VC_AUTH_AUDIENCE || "",
+        auth_client: process.env.VC_AUTH_CLIENT || "",
+        auth_secret: process.env.VC_AUTH_SECRET || "",
     },
     theme_config: {
         logo: process.env.THEME_LOGO || 'transmute-white.svg',
