@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
-  webpack5: false,
+  webpack5: true,
   experimental: {
     outputFileTracing: true,
+    outputStandalone: true,
   },
   headers: async () => {
     return [

@@ -21,7 +21,9 @@ export const config = {
         auth_secret: process.env.VC_AUTH_SECRET || "",
     },
     theme_config: {
+        title: process.env.THEME_TITLE || 'api.did.actor',
         logo: process.env.THEME_LOGO || 'transmute-white.svg',
+        logo_dark: process.env.THEME_LOGO_DARK || 'transmute-purple.svg',
         theme: process.env.THEME || 'dark',
         header_show: process.env.THEME_HEADER_SHOW || false,
         header_color: process.env.THEME_HEADER_COLOR || '#594aa8',
@@ -34,7 +36,8 @@ export const config = {
         accent: process.env.THEME_ACCENT || '#C37794',
         primary_d: process.env.THEME_PRIMARY_D || '#C3FCF1',
         secondary_d: process.env.THEME_SECONDARY_D || '#4C8077',
-        accent_d: process.env.THEME_ACCENT_D || '#8A6992'
+        accent_d: process.env.THEME_ACCENT_D || '#8A6992',
+        footer: process.env.THEME_FOOTER || '© 2022 Transmute Industries, Inc. All rights reserved.'
     },
     storage: {
         enabled: process.env.VC_STORAGE_ENABLED || false,

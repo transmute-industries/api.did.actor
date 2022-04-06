@@ -4,6 +4,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
+import { config } from "../components/config";
 
 export async function getServerSideProps(context: any) {
   return {
@@ -12,7 +13,7 @@ export async function getServerSideProps(context: any) {
 }
 
 const ApidDocs: NextPage = (props: any) => {
-  const title = "API";
+  const title = config.theme_config.title;
   return (
     <>
       <Head>
@@ -42,26 +43,27 @@ const ApidDocs: NextPage = (props: any) => {
         <rapi-doc
           spec-url="/spec/openapi.yml"
           schema-style="table"
-          show-header="false"
+          show-header={config.theme_config.header_show}
           show-info="true"
           allow-authentication="true"
           allow-server-selection="true"
           allow-api-list-style-selection="true"
           render-style="read"
-          header-color="#594aa8"
-          primary-color="#fcb373"
-          regular-font="Rajdhani"
-          mono-font="Lato"
-          theme="dark"
+          nav-bg-color={config.theme_config.bg}
+          header-color={config.theme_config.header_color}
+          primary-color={config.theme_config.primary}
+          regular-font={config.theme_config.font}
+          mono-font={config.theme_config.mono}
+          theme={config.theme_config.theme}
         >
           <img
             alt="brand"
-            src="https://www.transmute.industries/svg/Logo-Transmute-WHT.svg"
+            src={config.theme_config.logo}
             style={{ maxWidth: "256px", marginLeft: "64px" }}
           />
 
           <p slot="footer">
-            © 2022 Transmute Industries, Inc. All rights reserved.
+            {config.theme_config.footer}
           </p>
         </rapi-doc>
       </>
