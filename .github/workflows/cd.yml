@@ -1,5 +1,9 @@
-name: deploy api-did-actor to vercel
-on: [pull_request]
+name: api.did.actor
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
 jobs:
   vercel:
     runs-on: ubuntu-latest
