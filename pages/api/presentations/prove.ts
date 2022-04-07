@@ -3,10 +3,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { provePresentation } from "../../../vc-api";
 import { defaultMnemonic, defaultHdPath } from "../../../core/defaultMnemonic";
+import { WithApiBearerAuthRequired } from "../../../components/withApiBearerAuthRequired";
 
 type VerifiablePresentation = any;
 
-export default async function handler(
+export default WithApiBearerAuthRequired(async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VerifiablePresentation>
 ) {
@@ -34,4 +35,4 @@ export default async function handler(
     console.log(e);
     res.status(500).json({ message: (e as any).message });
   }
-}
+});

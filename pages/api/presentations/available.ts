@@ -1,9 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import { WithApiBearerAuthRequired } from "../../../components/withApiBearerAuthRequired";
 
 type Query = any;
 
-export default async function handler(
+export default WithApiBearerAuthRequired(async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Query>
 ) {
@@ -30,4 +31,4 @@ export default async function handler(
   } catch (e) {
     res.status(500).json({ message: (e as any).message });
   }
-}
+});

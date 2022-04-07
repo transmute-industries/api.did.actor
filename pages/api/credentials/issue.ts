@@ -30,4 +30,4 @@ export default WithApiBearerAuthRequired(async function handler(
     console.log(e);
     res.status(500).json({ message: (e as any).message });
   }
-})
+});
