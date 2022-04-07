@@ -7,9 +7,9 @@ export const verifyJwt = NextJwtVerifier({
     audience: process.env.AUTH0_AUDIENCE || "https://example.org/"
 });
 
-export const WithApiBearerAuthRequired = (apiRoute: NextApiHandler, scope?: string[]) => {
-    if (config.env_config.auth_enabled) {
-        verifyJwt(async (req: NextApiRequest, res: NextApiResponse) => {
+export const WithApiBearerAuthRequired = (apiRoute: NextApiHandler, scope?: string[]) =>
+    verifyJwt(async (req: NextApiRequest, res: NextApiResponse) => {
+        if (config.env_config.auth_enabled) {
             const { claims } = (req as any).identityContext;
             if (!claims) {
                 res.status(401).json({
@@ -39,10 +39,6 @@ export const WithApiBearerAuthRequired = (apiRoute: NextApiHandler, scope?: stri
                     }
                 }
             }
-            return apiRoute(req, res);
-        });
-    }
-}
-
-
-// export type WithApiAuthRequired = (apiRoute: NextApiHandler) => NextApiHandler;
+        }
+        return apiRoute(req, res);
+    });
