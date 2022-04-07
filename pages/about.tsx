@@ -87,6 +87,20 @@ const About: NextPage = () => {
                   />
                 </a>
               </Grid>
+              <Grid item>
+                <a
+                  href="https://mesur.io/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Image
+                    src="/mesur_logo.png"
+                    alt="mesur.io Logo"
+                    width={128}
+                    height={51}
+                  />
+                </a>
+              </Grid>
             </Grid>
           </Box>
         </ParticlesBlock>

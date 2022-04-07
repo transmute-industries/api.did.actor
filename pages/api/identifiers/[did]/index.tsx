@@ -12,10 +12,17 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<any>
 ) {
-  const { did } = req.query;
-  const result = await getResolutionResult(did as string);
-  const withEthereum = await resolutionWithEthereum(result);
-  res.status(200).json(withEthereum);
+  if (req.method === "GET") {
+    const { did } = req.query;
+    console.log("/identifiers/ DID: ", did);
+    const result = await getResolutionResult(did as string);
+    console.log("/identifiers/ result: ", result);
+    const withEthereum = await resolutionWithEthereum(result);
+    console.log("/identifiers/ withEth: ", withEthereum);
+    res.status(200).json(withEthereum);
+  } else {
+    res.status(405).json({ "error": "method not allowed" });
+  }
 }

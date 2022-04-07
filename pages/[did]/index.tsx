@@ -5,6 +5,8 @@ import React from "react";
 import { Box, Grid } from "@mui/material";
 import { ResolutionResult } from "../../components/did-resolution-result";
 import { DIDAsTextField } from "../../components/did-as-textfield";
+import { config } from "../../components/config";
+
 export async function getServerSideProps(context: any) {
   return {
     props: {
@@ -15,7 +17,9 @@ export async function getServerSideProps(context: any) {
 
 const Resolve: NextPage = (props: any) => {
   const did: any = props.did;
-  const title = did ? did.substr(0, 9) + "..." + did.substr(-4) : "unknown";
+  const title = config.env_config.domain; // did ? did.substr(0, 9) + "..." + did.substr(-4) : "unknown";
+
+  // DEBUG:
   return (
     <>
       <Head>

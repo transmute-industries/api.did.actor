@@ -7,7 +7,7 @@ import { resolvers } from "../core/resolvers";
 export const encryptTo = async (recipient: string, document: any) => {
   const { didDocument } = await resolvers.resolve(recipient);
   const keyAgreementKey = didDocument.verificationMethod[1];
-  const cipher = new JWE.Cipher(X25519KeyPair);
+  const cipher = new JWE.Cipher();
   const recipients = [
     {
       header: {

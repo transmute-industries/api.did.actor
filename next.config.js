@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
-  webpack5: false,
+  webpack5: true,
   experimental: {
+    outputStandalone: true,
     outputFileTracing: true,
   },
   headers: async () => {
@@ -43,6 +44,21 @@ module.exports = {
             key: "accept",
             value: `application/json`,
           },
+          {
+            type: "header",
+            key: "accept",
+            value: `application/did+json`,
+          },
+          {
+            type: "header",
+            key: "accept",
+            value: `application/did+ld+json`,
+          },
+          {
+            type: "header",
+            key: "accept",
+            value: `application/ld+json`,
+          }
         ],
       },
     ];

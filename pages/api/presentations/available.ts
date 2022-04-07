@@ -1,9 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import { config } from "../../../components/config";
+import { WithApiBearerAuthRequired } from "../../../components/withApiBearerAuthRequired";
+import { v4 as uuidv4 } from "uuid";
 
 type Query = any;
 
-export default async function handler(
+export default WithApiBearerAuthRequired(async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Query>
 ) {
@@ -20,14 +23,13 @@ export default async function handler(
           },
         },
       ],
-      // For demonstation purposes, these values are hard coded
-      // Normally, these would be retrieved from a database
-      // The current configuration is vulnerable to replay attacks.
-      domain: "api.did.actor",
-      challenge: "replay-vulnerable-3182bdea-63d9-11ea-b6de-3b7c1404d57f",
+      // For demonstation purposes, these values are set from config
+      // and from uuid that would be exchanged safely
+      domain: config.env_config.domain,
+      challenge: "replay-uuid-" + uuidv4(),
     };
     res.status(200).json(query);
   } catch (e) {
     res.status(500).json({ message: (e as any).message });
   }
-}
+});
