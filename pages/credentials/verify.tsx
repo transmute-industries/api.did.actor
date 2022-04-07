@@ -3,7 +3,7 @@ import Head from "next/head";
 import { AppPage } from "../../components/app-page";
 import React from "react";
 import { Box } from "@mui/material";
-
+import { v4 as uuidv4 } from "uuid";
 import dynamic from "next/dynamic";
 const JsonVerifier = dynamic(() => import("../../components/json-verifier"), {
   ssr: false,
@@ -11,7 +11,7 @@ const JsonVerifier = dynamic(() => import("../../components/json-verifier"), {
 
 const example = {
   "@context": ["https://www.w3.org/2018/credentials/v1"],
-  id: "urn:uuid:07aa969e-b40d-4c1b-ab46-ded252003ded",
+  id: "urn:uuid:" + uuidv4(),
   type: ["VerifiableCredential"],
   issuer: { id: "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn" },
   issuanceDate: "2010-01-01T19:23:24Z",

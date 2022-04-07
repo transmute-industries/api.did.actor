@@ -1,7 +1,5 @@
-// "" // uncomment to debug without wasting ipfs time...
-export const defaultMnemonic =
-  "sell antenna drama rule twenty cement mad deliver you push derive hybrid";
+import { config } from "../components/config";
 
-// export const defaultMnemonic = "";
+export const defaultMnemonic = config.did_config.mnemonic
 
 export const defaultHdPath = `m/44'/0'/0'/0/0`;
