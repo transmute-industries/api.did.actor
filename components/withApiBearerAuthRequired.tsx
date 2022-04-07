@@ -2,14 +2,17 @@ import { NextApiResponse, NextApiRequest, NextApiHandler } from 'next';
 import { NextJwtVerifier } from '@serverless-jwt/next';
 import { config } from './config';
 
+const defaultConfig = config
 export const verifyJwt = NextJwtVerifier({
     issuer: process.env.AUTH0_ISSUER_BASE_URL || "https://example.org/",
     audience: process.env.AUTH0_AUDIENCE || "https://example.org/"
 });
 
-export const WithApiBearerAuthRequired = (apiRoute: NextApiHandler, scope?: string[]) =>
-    verifyJwt(async (req: NextApiRequest, res: NextApiResponse) => {
-        if (config.env_config.auth_enabled) {
+export const WithApiBearerAuthRequired = (apiRoute: NextApiHandler, config?: any = defaultConfig, scope?: string[]) => {
+    if (!config.env_config.auth_enabled) {
+        return async (req: NextApiRequest, res: NextApiResponse) => apiRoute(req, res);
+    } else {
+        return verifyJwt(async (req: NextApiRequest, res: NextApiResponse) => {
             const { claims } = (req as any).identityContext;
             if (!claims) {
                 res.status(401).json({
@@ -39,6 +42,10 @@ export const WithApiBearerAuthRequired = (apiRoute: NextApiHandler, scope?: stri
                     }
                 }
             }
+
+            return apiRoute(req, res);
+
         }
-        return apiRoute(req, res);
-    });
+    }
+}
+
