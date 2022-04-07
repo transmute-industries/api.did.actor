@@ -26,11 +26,8 @@ export default async function handler(
     //retry once
     console.log('Likely timeout on resolution, attempting retry');
     const { did } = req.query;
-    // console.log("/identifiers/ DID: ", did);
     const result = await getResolutionResult(did as string);
-    // console.log("/identifiers/ result: ", result);
     const withEthereum = await resolutionWithEthereum(result);
-    // console.log("/identifiers/ withEth: ", withEthereum);
     res.status(200).json(withEthereum);
   }
 
