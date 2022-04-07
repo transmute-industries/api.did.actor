@@ -1,6 +1,6 @@
 ## [did actor api](https://api.did.actor)
 
-[![api.did.actor](https://github.com/transmute-industries/api.did.actor/actions/workflows/cd.yml/badge.svg)](https://github.com/transmute-industries/api.did.actor/actions/workflows/cd.yml)
+[![CI](https://github.com/transmute-industries/api.did.actor/actions/workflows/ci.yml/badge.svg)](https://github.com/transmute-industries/api.did.actor/actions/workflows/ci.yml) [![api.did.actor](https://github.com/transmute-industries/api.did.actor/actions/workflows/cd.yml/badge.svg)](https://github.com/transmute-industries/api.did.actor/actions/workflows/cd.yml)
 
 🚧 Under development
 
