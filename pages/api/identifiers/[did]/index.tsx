@@ -14,15 +14,24 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  if (req.method === "GET") {
+  try {
     const { did } = req.query;
-    console.log("/identifiers/ DID: ", did);
+    // console.log("/identifiers/ DID: ", did);
     const result = await getResolutionResult(did as string);
-    console.log("/identifiers/ result: ", result);
+    // console.log("/identifiers/ result: ", result);
     const withEthereum = await resolutionWithEthereum(result);
-    console.log("/identifiers/ withEth: ", withEthereum);
+    // console.log("/identifiers/ withEth: ", withEthereum);
     res.status(200).json(withEthereum);
-  } else {
-    res.status(405).json({ "error": "method not allowed" });
+  } catch (error) {
+    //retry once
+    console.log('Likely timeout on resolution, attempting retry');
+    const { did } = req.query;
+    // console.log("/identifiers/ DID: ", did);
+    const result = await getResolutionResult(did as string);
+    // console.log("/identifiers/ result: ", result);
+    const withEthereum = await resolutionWithEthereum(result);
+    // console.log("/identifiers/ withEth: ", withEthereum);
+    res.status(200).json(withEthereum);
   }
+
 }

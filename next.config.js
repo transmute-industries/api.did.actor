@@ -31,6 +31,10 @@ module.exports = {
   rewrites: async () => {
     return [
       {
+        source: '/:path*',
+        destination: '/:path*',
+      },
+      {
         source: "/:path*",
         destination: "/api/:path*",
         has: [
@@ -44,21 +48,21 @@ module.exports = {
             key: "accept",
             value: `application/json`,
           },
-          {
-            type: "header",
-            key: "accept",
-            value: `application/did+json`,
-          },
-          {
-            type: "header",
-            key: "accept",
-            value: `application/did+ld+json`,
-          },
-          {
-            type: "header",
-            key: "accept",
-            value: `application/ld+json`,
-          }
+          // {
+          //   type: "header",
+          //   key: "accept",
+          //   value: `application/did+json`,
+          // },
+          // {
+          //   type: "header",
+          //   key: "accept",
+          //   value: `application/did+ld+json`,
+          // },
+          // {
+          //   type: "header",
+          //   key: "accept",
+          //   value: `application/ld+json`,
+          // }
         ],
       },
     ];
