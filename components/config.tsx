@@ -22,8 +22,8 @@ export const config = {
     },
     theme_config: {
         title: process.env.THEME_TITLE || 'api.did.actor',
-        logo: process.env.THEME_LOGO || 'transmute-white.svg',
-        logo_dark: process.env.THEME_LOGO_DARK || 'transmute-purple.svg',
+        logo: process.env.THEME_LOGO || 'did_actor_logo.svg',
+        logo_dark: process.env.THEME_LOGO_DARK || 'did_actor_logo.svg',
         theme: process.env.THEME || 'dark',
         header_show: process.env.THEME_HEADER_SHOW || false,
         header_color: process.env.THEME_HEADER_COLOR || '#594aa8',
