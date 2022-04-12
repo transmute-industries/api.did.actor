@@ -84,14 +84,14 @@ export const ResolutionResult = ({ did }: any) => {
 
     // supports trace api
     if (
-      didDocument.services &&
-      didDocument.services[0].type === "TraceabilityAPI"
+      didDocument.service &&
+      didDocument.service[0].type === "TraceabilityAPI"
     ) {
       buttons.push(
         <Grid item>
           <Button
             onClick={() => {
-              const endpoint = didDocument.services[0].serviceEndpoint;
+              const endpoint = didDocument.service[0].serviceEndpoint;
               const url = new URL(endpoint);
               window.location.href = url.origin + "/docs";
             }}
