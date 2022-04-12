@@ -1,12 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-
+import { WithApiBearerAuthRequired } from "../../../components/withApiBearerAuthRequired";
 import { issueCredential } from "../../../vc-api";
 import { defaultMnemonic, defaultHdPath } from "../../../core/defaultMnemonic";
 
 type VerifiableCredential = any;
 
-export default async function handler(
+export default WithApiBearerAuthRequired(async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VerifiableCredential>
 ) {
@@ -25,9 +25,9 @@ export default async function handler(
       proofType,
       format,
     });
-    res.status(200).json(verifiableCredential);
+    res.status(201).json(verifiableCredential);
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: (e as any).message });
   }
-}
+});

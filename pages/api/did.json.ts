@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { defaultHdPath, defaultMnemonic } from "../../core/defaultMnemonic";
 
 import DIDWeb from "../../core/DIDWeb";
+import { getKeysForMnemonic } from "../../core/getKeysForMnemonic";
 
 type TraceabilityAPIDIDWebDocument = {
   "@context": Array<any>;
@@ -17,6 +19,7 @@ export default async function handler(
   const endpoint = `${protocol}://${req.headers.host}/api/did.json`;
   const vcApiBaseURl = endpoint.replace("/did.json", "");
   const did = DIDWeb.convertEndpointToDid(endpoint);
+  const keys = (<Array<any>>await getKeysForMnemonic("ed25519", defaultMnemonic, defaultHdPath))[0]
 
   const didDocument = {
     "@context": [
@@ -26,13 +29,13 @@ export default async function handler(
     id: did,
     alsoKnownAs: [
       vcApiBaseURl,
-      "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+      keys['controller'],
     ],
     assertionMethod: [
-      "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+      keys['id'],
     ],
     authentication: [
-      "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+      keys['id'],
     ],
     services: [
       {

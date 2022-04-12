@@ -1,30 +1,27 @@
 import * as React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { indigo, purple, yellow, blueGrey, grey } from "@mui/material/colors";
+import { yellow } from "@mui/material/colors";
 
-const primary = purple;
-const secondary = indigo;
+import { config } from "./config";
+
 const warning = yellow;
-const background = grey;
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      light: primary[50],
-      main: primary["A100"],
+      main: config.theme_config.primary
     },
     secondary: {
-      light: secondary[50],
-      main: secondary["A100"],
+      main: config.theme_config.secondary,
     },
     warning: {
       main: warning[700],
     },
     background: {
-      default: background[800],
-      paper: background[800],
+      default: config.theme_config.bg,
+      paper: config.theme_config.bg,
     },
   },
 });

@@ -4,15 +4,20 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
+import { config } from "../components/config";
 
 export async function getServerSideProps(context: any) {
+  var props = {
+    config
+  };
+  // DEBUG: console.log(props);
   return {
-    props: {}, // will be passed to the page component as props
+    props, // will be passed to the page component as props
   };
 }
 
 const ApidDocs: NextPage = (props: any) => {
-  const title = "API";
+  const title = config.theme_config.title;
   return (
     <>
       <Head>
@@ -30,11 +35,11 @@ const ApidDocs: NextPage = (props: any) => {
           crossOrigin="anonymous"
         ></link>
         <link
-          href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap"
+          href={props.config.theme_config.font_link}
           rel="stylesheet"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap"
+          href={props.config.theme_config.font_link_mono}
           rel="stylesheet"
         />
       </Head>
@@ -42,26 +47,28 @@ const ApidDocs: NextPage = (props: any) => {
         <rapi-doc
           spec-url="/spec/openapi.yml"
           schema-style="table"
-          show-header="false"
+          show-header={props.config.theme_config.header_show}
           show-info="true"
           allow-authentication="true"
           allow-server-selection="true"
           allow-api-list-style-selection="true"
           render-style="read"
-          header-color="#594aa8"
-          primary-color="#fcb373"
-          regular-font="Rajdhani"
-          mono-font="Lato"
-          theme="dark"
+          bg-color={props.config.theme_config.bg}
+          nav-bg-color={props.config.theme_config.bg_nav}
+          header-color={props.config.theme_config.header_color}
+          primary-color={props.config.theme_config.primary}
+          regular-font={props.config.theme_config.font}
+          mono-font={props.config.theme_config.mono}
+          theme={props.config.theme_config.theme}
         >
           <img
             alt="brand"
-            src="https://www.transmute.industries/svg/Logo-Transmute-WHT.svg"
+            src={props.config.theme_config.logo}
             style={{ maxWidth: "256px", marginLeft: "64px" }}
           />
 
           <p slot="footer">
-            © 2022 Transmute Industries, Inc. All rights reserved.
+            {props.config.theme_config.footer}
           </p>
         </rapi-doc>
       </>

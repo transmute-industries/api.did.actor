@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { AppPage } from "../components/app-page";
 import React from "react";
-
+import { v4 as uuidv4 } from "uuid";
 import { Box } from "@mui/material";
 
 import dynamic from "next/dynamic";
@@ -16,7 +16,7 @@ const JsonPresentationHolder = dynamic(
 
 const example = {
   "@context": ["https://www.w3.org/2018/credentials/v1"],
-  id: "urn:uuid:07aa969e-b40d-4c1b-ab46-ded252003ded",
+  id: "urn:uuid:" + uuidv4(),
   type: ["VerifiablePresentation"],
   holder: "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
 };
