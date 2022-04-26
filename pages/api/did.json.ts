@@ -8,7 +8,7 @@ type TraceabilityAPIDIDWebDocument = {
   "@context": Array<any>;
   id: string;
   alsoKnownAs: Array<string>;
-  services: Array<{ id: string; type: string; serviceEndpoint: string }>;
+  service: Array<{ id: string; type: string; serviceEndpoint: string }>;
 };
 
 export default async function handler(
@@ -37,7 +37,7 @@ export default async function handler(
     authentication: [
       keys['id'],
     ],
-    services: [
+    service: [
       {
         id: `${did}#traceability-api`,
         type: "TraceabilityAPI", // Todo: define this service type in the trace-vocab.
