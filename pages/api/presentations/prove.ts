@@ -30,7 +30,7 @@ export default WithApiBearerAuthRequired(async function handler(
       proofType,
       format,
     });
-    res.status(200).json(verifiablePresentation);
+    res.status(201).json(verifiablePresentation);
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: (e as any).message });
