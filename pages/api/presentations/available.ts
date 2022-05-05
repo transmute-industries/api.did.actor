@@ -26,7 +26,7 @@ export default WithApiBearerAuthRequired(async function handler(
       // For demonstation purposes, these values are set from config
       // and from uuid that would be exchanged safely
       domain: config.env_config.domain,
-      challenge: "replay-uuid-" + uuidv4(),
+      challenge: uuidv4(),
     };
     res.status(200).json(query);
   } catch (e) {
