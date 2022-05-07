@@ -9,7 +9,7 @@ allOf:
 example:
   {
     "@context": ["https://www.w3.org/2018/credentials/v1"],
-    "id": "urn:uuid:07aa969e-b40d-4c1b-ab46-ded252003ded",
+    "id": "urn:uuid:c09b2a40-2b7e-4f8b-9cad-706f05e30be2",
     "type": ["VerifiablePresentation"],
     "holder": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
     "verifiableCredential":
@@ -20,7 +20,7 @@ example:
               "https://www.w3.org/2018/credentials/v1",
               "https://w3id.org/vc-revocation-list-2020/v1",
             ],
-          "id": "urn:uuid:07aa969e-b40d-4c1b-ab46-ded252003ded",
+          "id": "urn:uuid:4f1eabd0-76b7-4c8b-be72-a125b8bb9c48",
           "type": ["VerifiableCredential"],
           "issuer": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
           "issuanceDate": "2010-01-01T19:23:24Z",
@@ -35,20 +35,20 @@ example:
           "proof":
             {
               "type": "Ed25519Signature2018",
-              "created": "2021-10-31T19:14:41Z",
+              "created": "2022-05-07T15:30:56Z",
               "verificationMethod": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
               "proofPurpose": "assertionMethod",
-              "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..zH7YvO8ihoDO4NWgzPu4kvvdQJjWAPOUlz7D1551U4uSMqOGjRmEGef6NSbIdxqCy5FxXwOD49KyPRU66LpwBA",
+              "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..GgO_6jlepqqhXbeSqLCfp4NEnzqi4JTmwNCDQT2hi9TR2nhQ8NhY9CTjssXrsxTSYNPED1MVmCll7Hsj33KYDQ",
             },
         },
       ],
     "proof":
       {
         "type": "Ed25519Signature2018",
-        "created": "2021-10-31T19:15:10Z",
+        "created": "2022-05-07T15:31:54Z",
         "verificationMethod": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
         "proofPurpose": "authentication",
-        "challenge": "e42ab41a-06c3-45f5-878a-b27928aab8bd",
-        "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..QdPVT5CramMhVx09RJ57IZD2WA4i2Hw0oG9_-i8r4BEyMS36bWSsrnwNd9ERyLEqeo4-6mwUD-swu3Bxsj7lDg",
+        "challenge": "ff3d22dd-861e-47ff-889b-643ccfa00e78",
+        "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..2qcuskeQvoK3Rjf55SzP_N_r0v-0T2lDwHKb5umvvT0QlhgqgATLx2V8M3C_eiI40NWGjdVh34NbJ7QfNOhAAQ",
       },
   }
