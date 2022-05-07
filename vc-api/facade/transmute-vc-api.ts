@@ -87,6 +87,7 @@ export const provePresentation = async ({
       "https://w3id.org/security/suites/jws-2020/v1"
     );
   }
+
   const { items } = await verifiable.presentation.create({
     presentation,
     domain:
@@ -98,6 +99,7 @@ export const provePresentation = async ({
     format: [format],
     documentLoader,
   });
+
   return items[0];
 };
 
@@ -128,6 +130,7 @@ export const verifyPresentation = async ({
   if (format === "vp-jwt") {
     suite = new JsonWebSignature();
   }
+
   const result = await verifiable.presentation.verify({
     presentation: verifiablePresentation,
     domain: options.domain,
@@ -137,5 +140,6 @@ export const verifyPresentation = async ({
     format: [format],
     documentLoader,
   } as any);
+
   return result;
 };

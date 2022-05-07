@@ -8,10 +8,11 @@ import { config } from "./config";
 const warning = yellow;
 
 export const theme = createTheme({
+  favicon: config.theme_config.favicon_path,
   palette: {
     mode: "dark",
     primary: {
-      main: config.theme_config.primary
+      main: config.theme_config.primary,
     },
     secondary: {
       main: config.theme_config.secondary,
@@ -24,7 +25,7 @@ export const theme = createTheme({
       paper: config.theme_config.bg,
     },
   },
-});
+} as any);
 
 export const Theme = ({ children }: any) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;

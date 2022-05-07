@@ -8,7 +8,7 @@ import { config } from "../components/config";
 
 export async function getServerSideProps(context: any) {
   var props = {
-    config
+    config,
   };
   // DEBUG: console.log(props);
   return {
@@ -34,10 +34,7 @@ const ApidDocs: NextPage = (props: any) => {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         ></link>
-        <link
-          href={props.config.theme_config.font_link}
-          rel="stylesheet"
-        />
+        <link href={props.config.theme_config.font_link} rel="stylesheet" />
         <link
           href={props.config.theme_config.font_link_mono}
           rel="stylesheet"
@@ -64,12 +61,10 @@ const ApidDocs: NextPage = (props: any) => {
           <img
             alt="brand"
             src={props.config.theme_config.logo}
-            style={{ maxWidth: "256px", marginLeft: "64px" }}
+            style={{ maxWidth: "256px", marginLeft: "72px", marginTop: "24px" }}
           />
 
-          <p slot="footer">
-            {props.config.theme_config.footer}
-          </p>
+          <p slot="footer">{props.config.theme_config.footer}</p>
         </rapi-doc>
       </>
     </>
