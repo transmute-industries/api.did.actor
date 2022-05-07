@@ -5,7 +5,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  postman:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Check out git repository
