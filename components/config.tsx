@@ -1,5 +1,6 @@
 const font = process.env.THEME_FONT || "Rajdhani";
 const font_mono = process.env.THEME_MONO || "Lato";
+// this is not a component....
 export const config = {
   did_config: {
     mnemonic:

@@ -9,7 +9,7 @@ export default class MyDocument extends Document {
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
-          <link rel="shortcut icon" href={theme.palette.favicon} />
+          <link rel="shortcut icon" href={(theme as any).favicon} />
         </Head>
         <body>
           <Theme>

@@ -8,9 +8,9 @@ import { config } from "./config";
 const warning = yellow;
 
 export const theme = createTheme({
+  favicon: config.theme_config.favicon_path,
   palette: {
     mode: "dark",
-    favicon: config.theme_config.favicon_path,
     primary: {
       main: config.theme_config.primary,
     },
