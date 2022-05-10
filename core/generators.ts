@@ -6,7 +6,13 @@ import crypto from "crypto";
 import * as didKey from "@transmute/did-key.js";
 
 export const generators = {
-  didKey: async (type: string, seed: Uint8Array) => {
+  didKey: async (
+    type: string,
+    seed: Uint8Array,
+    options = {
+      accept: "application/did+ld+json",
+    }
+  ) => {
     return (didKey as any)[type].generate(
       {
         secureRandom: () => {
@@ -17,9 +23,7 @@ export const generators = {
           return random;
         },
       },
-      {
-        accept: "application/did+ld+json",
-      }
+      options
     );
   },
   ed25519: async (seed: Uint8Array) => {

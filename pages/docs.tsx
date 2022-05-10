@@ -10,7 +10,7 @@ export async function getServerSideProps(context: any) {
   var props = {
     config,
   };
-  // DEBUG: console.log(props);
+
   return {
     props, // will be passed to the page component as props
   };

@@ -42,8 +42,23 @@ const Decrypt: NextPage = (props: any) => {
 
   const handleDecryptMessage = async () => {
     try {
-      const plaintext = await decryptWith(message, mnemonic);
-      setPlaintext(plaintext);
+      const endpoint = "/api/ciphers/decrypt";
+      const data = {
+        message: message,
+      };
+      const response = await fetch(endpoint, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          hdpath: `m/44'/0'/0'/0/0`,
+          mnemonic: mnemonic,
+        },
+        cache: "no-cache",
+        body: JSON.stringify(data),
+      });
+      const plaintext = await response.text();
+      setPlaintext(JSON.parse(plaintext));
     } catch (e) {
       alert("decryption failed.");
     }
