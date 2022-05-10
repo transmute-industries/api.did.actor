@@ -11,7 +11,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { useRouter } from "next/router";
 
 import CreateIcon from "@mui/icons-material/Create";
-import { encryptTo } from "../core/encrypt";
 
 const JsonMessageEncrypter = ({ value, recipient }: any) => {
   const router = useRouter();
@@ -20,8 +19,22 @@ const JsonMessageEncrypter = ({ value, recipient }: any) => {
   const [messageRecipient, setMessageRecipient] = React.useState(recipient);
 
   const handleEncrypt = async () => {
-    const message = await encryptTo(messageRecipient, JSON.parse(text));
-    router.push("/d/" + message);
+    const endpoint = "/api/ciphers/encrypt";
+    const data = {
+      recipient: messageRecipient,
+      message: JSON.parse(text),
+    };
+    const response = await fetch(endpoint, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-cache",
+      body: JSON.stringify(data),
+    });
+    const token = await response.text();
+    router.push("/d/" + token);
   };
 
   const handleChange = (newText: any) => {

@@ -16,19 +16,18 @@ export default async function handler(
 ) {
   try {
     const { did } = req.query;
-    // console.log("/identifiers/ DID: ", did);
+    // console.info("/identifiers/ DID: ", did);
     const result = await getResolutionResult(did as string);
-    // console.log("/identifiers/ result: ", result);
+    // console.info("/identifiers/ result: ", result);
     const withEthereum = await resolutionWithEthereum(result);
-    // console.log("/identifiers/ withEth: ", withEthereum);
+    // console.info("/identifiers/ withEth: ", withEthereum);
     res.status(200).json(withEthereum);
   } catch (error) {
     //retry once
-    console.log('Likely timeout on resolution, attempting retry');
+    console.warn("Likely timeout on resolution, attempting retry");
     const { did } = req.query;
     const result = await getResolutionResult(did as string);
     const withEthereum = await resolutionWithEthereum(result);
     res.status(200).json(withEthereum);
   }
-
 }

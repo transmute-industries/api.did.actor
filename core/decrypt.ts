@@ -3,22 +3,16 @@ import * as bip39 from "bip39";
 import * as hdkey from "hdkey";
 export const DID_KEY_BIP44_COIN_TYPE = "0";
 
-import { X25519KeyPair } from "@transmute/x25519-key-pair";
+import * as jose from "jose";
 
-import { JWE } from "@transmute/jose-ld";
-
-import pako from "pako";
-
-const expand = (message: string) => {
-  const expanded = pako.inflate(Buffer.from(message, "base64"));
-  return JSON.parse(Buffer.from(expanded).toString());
-};
+const alg = "ECDH-ES+A256KW";
 
 export const getRecipient = (message: string) => {
-  const expandedMessage = expand(message);
+  const decoded = Buffer.from(message.split(".")[0], "base64").toString();
+  const parsed = JSON.parse(decoded);
   return {
-    id: expandedMessage.recipients[0].header.kid,
-    controller: expandedMessage.recipients[0].header.kid.split("#")[0],
+    id: parsed.kid,
+    controller: parsed.kid.split("#")[0],
   };
 };
 
@@ -27,24 +21,18 @@ export const decryptWith = async (
   mnemonic: string,
   hdpath: string = `m/44'/${DID_KEY_BIP44_COIN_TYPE}'/0'/0/0`
 ) => {
-  const cipher = new JWE.Cipher();
-
   const seed = await bip39.mnemonicToSeed(mnemonic);
   const root = hdkey.fromMasterSeed(seed);
   const addrNode = root.derive(hdpath);
-
-  const { keys } = await generators.ed25519(addrNode._privateKey);
-  const keyAgreementKey = keys[1];
-
-  const expandedMessage = expand(message);
-
-  keyAgreementKey.id = expandedMessage.recipients[0].header.kid;
-  keyAgreementKey.controller = keyAgreementKey.id.split("#")[0];
-
-  const plaintext = await cipher.decrypt({
-    jwe: expandedMessage,
-    keyAgreementKey: await X25519KeyPair.from(keyAgreementKey),
+  const { keys } = await generators.didKey("ed25519", addrNode._privateKey, {
+    accept: "application/did+json",
   });
-
-  return JSON.parse(Buffer.from(plaintext).toString("utf-8"));
+  const keyAgreementKey = keys[1];
+  const privateKeyJwk = {
+    ...keyAgreementKey.privateKeyJwk,
+    alg,
+  };
+  const privateKey = await jose.importJWK(privateKeyJwk);
+  const { plaintext } = await jose.compactDecrypt(message, privateKey);
+  return new TextDecoder().decode(plaintext);
 };
