@@ -96,11 +96,11 @@ Should respond with
 This example API has been built with [Next.js](https://nextjs.org/) and [Material UI](https://mui.com/).
 This repository is set up for deployment on either [Vercel](https://vercel.com/) or as a [Docker](https://docker.com/) container.
 
-### Vercel
+#### Vercel
 
 For deployment on Vercel, the app deploys as a normal nextjs app and can be deployed by following the [Vercel documentation](https://nextjs.org/docs/deployment)
 
-### Docker Container
+#### Docker Container
 
 To build a container, the following steps should be taken:
 
@@ -146,7 +146,7 @@ Config values listed below are in the format of `application variable name` | `e
 - `accent` | `THEME_ACCENT`: Accent color
 - `footer` | `THEME_FOOTER`: What footer to use on pages that have it present
 
-#### storage
+### storage
 
 - `enabled` | `VC_STORAGE_ENABLED`: Is a storage backend enabled or not?
 - `driver` | `VC_STORAGE_DRIVER`: what driver to use for storage?
