@@ -3,8 +3,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 
-import { AppPage } from "../../components/app-page";
-import { Stack, Button } from "@mui/material";
+import { ChapiPage } from "../../components/ChapiPage";
+import { Stack, Button, Typography } from "@mui/material";
 
 export async function getServerSideProps(context: any) {
   var props = {
@@ -48,17 +48,19 @@ const ChapiWallet: NextPage = (props: any) => {
       <Head>
         <title>{"CHAPI SET"}</title>
         <link rel="icon" href="/favicon.ico" />
-        <script src="https://unpkg.com/credential-handler-polyfill@2.1.0/dist/credential-handler-polyfill.min.js"></script>
         <script src="https://unpkg.com/web-credential-handler@2.0.0/dist/web-credential-handler.min.js"></script>
       </Head>
-      <AppPage>
+      <ChapiPage>
         <Stack sx={{ mt: 8 }}>
+          <Typography>
+            TODO: Implement /presentations/verify ui here.
+          </Typography>
           <Button variant={"contained"} onClick={handleStoreCredential}>
             Save Credentials
           </Button>
           <pre>{JSON.stringify(chapiState, null, 2)}</pre>
         </Stack>
-      </AppPage>
+      </ChapiPage>
     </>
   );
 };

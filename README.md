@@ -9,6 +9,7 @@ This API is for testing interoperability regarding a related W3C TR and W3C CCG 
 - [W3C Decentralized Identifiers](https://www.w3.org/TR/did-core/)
 - [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/)
 - [W3C CCG Verifiable Credentials API](https://github.com/w3c-ccg/vc-api)
+- [W3C CCG Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/)
 
 ### 🚨🚧🚧🚧🚨 WARNING 🚨🚧🚧🚧🚧🚨
 

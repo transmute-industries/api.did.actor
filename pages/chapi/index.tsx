@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 
-import { AppPage } from "../../components/app-page";
+import { ChapiPage } from "../../components/ChapiPage";
 import { Stack, Button } from "@mui/material";
 declare var window: any;
 export async function getServerSideProps(context: any) {
@@ -53,6 +53,8 @@ const ChapiWallet: NextPage = (props: any) => {
       } else {
         setWalletIsInitialized(true);
       }
+    } else {
+      setWalletIsInitialized(true);
     }
   };
 
@@ -127,7 +129,7 @@ const ChapiWallet: NextPage = (props: any) => {
         <link rel="icon" href="/favicon.ico" />
         <script src="https://unpkg.com/credential-handler-polyfill@2.1.0/dist/credential-handler-polyfill.min.js"></script>
       </Head>
-      <AppPage>
+      <ChapiPage>
         <Stack sx={{ mt: 8 }} spacing={2}>
           <Button
             variant={"contained"}
@@ -140,7 +142,7 @@ const ChapiWallet: NextPage = (props: any) => {
           <Button
             variant={"contained"}
             onClick={handleReceivePresentationFromChapi}
-            disabled={isPresentationReceived}
+            disabled={!isWalletInitialized || isPresentationReceived}
           >
             Import Credentials from Wallet
           </Button>
@@ -148,12 +150,12 @@ const ChapiWallet: NextPage = (props: any) => {
           <Button
             variant={"contained"}
             onClick={handleChapiSet}
-            disabled={isCredentialReceived}
+            disabled={!isWalletInitialized || isCredentialReceived}
           >
             Export Credential to Wallet
           </Button>
         </Stack>
-      </AppPage>
+      </ChapiPage>
     </>
   );
 };

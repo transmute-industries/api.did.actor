@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import CreateIcon from "@mui/icons-material/Create";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 export const Drawer = () => {
@@ -27,6 +28,21 @@ export const Drawer = () => {
   return (
     <div>
       <Toolbar />
+      <Divider />
+      <List subheader={<ListSubheader component="div">Wallets</ListSubheader>}>
+        <ListItem
+          button
+          selected={router.pathname === "/chapi"}
+          onClick={() => {
+            router.push("/chapi");
+          }}
+        >
+          <ListItemIcon>
+            <AccountBalanceWalletIcon />
+          </ListItemIcon>
+          <ListItemText primary={"CHAPI"} />
+        </ListItem>
+      </List>
       <Divider />
       <List
         subheader={<ListSubheader component="div">Identifiers</ListSubheader>}
