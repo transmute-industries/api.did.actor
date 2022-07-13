@@ -1,0 +1,15 @@
+{
+  "icons": [
+    {
+      "sizes": "373x452",
+      "src": "assets/logo.png",
+      "type": "image/png"
+    }
+  ],
+  "name": "API DID Actor Wallet",
+  "short_name": "API DID Actor Wallet",
+  "credential_handler": {
+    "url": "/wallet-worker.html",
+    "enabledTypes": ["VerifiablePresentation"]
+  }
+}
