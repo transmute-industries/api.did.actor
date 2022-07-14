@@ -11,6 +11,8 @@ declare module "@digitalbazaar/ed25519-signature-2018";
 
 declare module "ethereum-public-key-to-address";
 
+declare module "credential-handler-polyfill";
+
 declare namespace JSX {
   interface IntrinsicElements {
     "rapi-doc": any;
