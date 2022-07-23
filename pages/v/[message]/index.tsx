@@ -8,7 +8,13 @@ import { Box } from "@mui/material";
 
 import { expand } from "../../../core/expand";
 
-import MessagePayloadPreview from "../../../components/message-payload-preview";
+import dynamic from "next/dynamic";
+const MessagePayloadPreview = dynamic(
+  () => import("../../../components/message-payload-preview"),
+  {
+    ssr: false,
+  }
+);
 
 export async function getServerSideProps(context: any) {
   return {
@@ -21,6 +27,9 @@ export async function getServerSideProps(context: any) {
 
 const Verify: NextPage = (props: any) => {
   const message: any = props.message;
+  if (!message || ["worker.js", "favicon.ico"].includes(message)) {
+    return <></>;
+  }
   const title = "verify:..." + message.substr(-4);
   const payload = message.includes(".") ? message : expand(message);
 

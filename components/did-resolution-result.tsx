@@ -8,6 +8,7 @@ import SendIcon from "@mui/icons-material/Send";
 import SourceIcon from "@mui/icons-material/Source";
 
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import { resolvers } from "../core/resolvers";
 
 import CreateIcon from "@mui/icons-material/Create";
@@ -41,7 +42,22 @@ export const ResolutionResult = ({ did }: any) => {
   }
 
   const didDocumentToButtons = (didDocument: any) => {
-    const buttons = [];
+    const buttons = [
+      <Grid item key={0}>
+        <Button
+          onClick={() => {
+            window.open(
+              "https://lucid.did.cards/identifiers/" + resolution.didDocument.id
+            );
+          }}
+          variant="outlined"
+          color={"secondary"}
+          endIcon={<AccountTreeIcon />}
+        >
+          Linked Data
+        </Button>
+      </Grid>,
+    ];
     // supports credential issuance
     if (didDocument.verificationMethod && didDocument.assertionMethod.length) {
       buttons.push(
