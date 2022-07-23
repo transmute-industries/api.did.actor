@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 import { AvatarSpinner } from "./avatar-spinner";
 import AppBar from "@mui/material/AppBar";
@@ -11,7 +12,7 @@ import _ from "lodash";
 import BiotechIcon from "@mui/icons-material/Biotech";
 import Chip from "@mui/material/Chip";
 import GavelIcon from "@mui/icons-material/Gavel";
-
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import { amber } from "@mui/material/colors";
 import { DIDAsTextField } from "./did-as-textfield";
 import Accordion from "./accordion";
@@ -21,6 +22,7 @@ const JsonViewReadOnly = dynamic(() => import("./json-view-read-only"), {
 });
 
 export const CredentialPreview = ({ credential, verifyCredential }: any) => {
+  const router = useRouter();
   const isJwt = typeof credential === "string";
 
   const [status, setStatus]: any = React.useState(null);
@@ -140,6 +142,20 @@ export const CredentialPreview = ({ credential, verifyCredential }: any) => {
                 />
               </Grid>
             )}
+
+            <Grid item>
+              <Chip
+                label="Linked Data"
+                onClick={() => {
+                  window.open(
+                    "https://lucid.did.cards/credentials/" +
+                      router.query.message
+                  );
+                }}
+                onDelete={() => {}}
+                deleteIcon={<AccountTreeIcon style={{ color: amber["500"] }} />}
+              />
+            </Grid>
 
             {issuer && (
               <Grid item xs={12}>
