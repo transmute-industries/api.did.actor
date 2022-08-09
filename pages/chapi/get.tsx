@@ -93,8 +93,7 @@ const ChapiWallet: NextPage = (props: any) => {
       body: JSON.stringify(signPresentationRequest),
     });
     const data = await response.json();
-
-    chapiState.event.respondWith(
+    chapiState.respondWith(
       new Promise((resolve) => {
         return resolve({
           dataType: "VerifiablePresentation",

@@ -11,7 +11,7 @@ export default WithApiBearerAuthRequired(async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VerifiablePresentation>
 ) {
-  const { presentation, options } = JSON.parse(req.body);
+  const { presentation, options } = req.body;
   const { mnemonic, hdpath } = req.headers;
 
   const format = options.type === "jwt_vp" ? "vp-jwt" : "vp";
