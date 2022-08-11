@@ -6,9 +6,21 @@ import { PresentationPreview } from "./presentation-preview";
 
 const MessagePayloadPreview = ({ payload }: any) => {
   if (typeof payload === "string") {
-    const parsedJwtPayload = JSON.parse(
-      Buffer.from(payload.split(".")[1], "base64").toString()
-    );
+    let parsedJwtPayload = null;
+    try {
+      const payloadString = Buffer.from(
+        payload.split(".")[1],
+        "base64"
+      ).toString();
+
+      parsedJwtPayload = JSON.parse(payloadString);
+      // console.log(payload);
+      // console.log(payloadString);
+      // console.log(parsedJwtPayload);
+    } catch (e) {
+      console.error(e);
+      return <></>;
+    }
 
     if (parsedJwtPayload.vc) {
       return (

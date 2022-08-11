@@ -2,7 +2,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-
+import { defaultMnemonic } from "../../core/defaultMnemonic";
 import { ChapiPage } from "../../components/ChapiPage";
 import { Stack, Button, Typography } from "@mui/material";
 
@@ -44,43 +44,60 @@ const verifiablePresentation = {
           "https://api.did.actor/revocation-lists/1.json",
       },
       credentialSubject: { id: "did:example:123" },
-      proof: {
-        type: "Ed25519Signature2018",
-        created: "2022-05-07T15:30:56Z",
-        verificationMethod:
-          "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
-        proofPurpose: "assertionMethod",
-        jws: "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..GgO_6jlepqqhXbeSqLCfp4NEnzqi4JTmwNCDQT2hi9TR2nhQ8NhY9CTjssXrsxTSYNPED1MVmCll7Hsj33KYDQ",
-      },
     },
-  ],
-  proof: {
-    type: "JsonWebSignature2020",
-    created: "2022-07-12T19:24:18Z",
-    verificationMethod:
-      "did:key:zQ3shrnCZq3R7vLvDeWQFnxz5HMKqP9JoiMonzYJB4TGYnftL#zQ3shrnCZq3R7vLvDeWQFnxz5HMKqP9JoiMonzYJB4TGYnftL",
-    proofPurpose: "authentication",
-    challenge: "3ae2e18d-6d4f-42b3-a8b6-60981eac11cb",
-    jws: "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..DxTbBf0eMiSl-kRnqobMCc7ftJ_f6QKKdb4o23P4-ONiSRdHjFo9Zu3ZfVNivFt-iSfT6SYP2yZ-aqcx3T27eQ",
-  },
+  ]
 };
 
 const ChapiWallet: NextPage = (props: any) => {
   const [chapiState, setChapiState]: any = useState({});
+  const [mnemonic] = React.useState(defaultMnemonic);
+  const queryVp: any =
+  chapiState && chapiState.credentialRequestOptions
+      ? chapiState.credentialRequestOptions.web.VerifiablePresentation
+      : null;
+  let query: any = null;
+  let domain: any = null;
+  let challenge: any = null;
+  if (queryVp) {
+    query = (Array.isArray(queryVp.query) ? queryVp.query[0] : queryVp.query) as any;
+    domain = queryVp.domain;
+    challenge = queryVp.challenge;
+  }
   useEffect(() => {
     (async () => {
       const { WebCredentialHandler } = window;
       const event = await WebCredentialHandler.receiveCredentialEvent();
-      setChapiState({ event });
+      setChapiState(event);
     })();
   }, []);
 
   const handleSubmitPresenstation = async () => {
-    chapiState.event.respondWith(
+    const signPresentationRequest = {
+      presentation: verifiablePresentation,
+      options: {
+        proofPurpose: 'authentication',
+        domain: domain as string,
+        challenge: challenge as string,
+      },
+    };
+    const endpoint = "/api/presentations/prove";
+    const response = await fetch(endpoint, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        hdpath: `m/44'/0'/0'/0/0`,
+        mnemonic: mnemonic,
+      },
+      cache: "no-cache",
+      body: JSON.stringify(signPresentationRequest),
+    });
+    const data = await response.json();
+    chapiState.respondWith(
       new Promise((resolve) => {
         return resolve({
           dataType: "VerifiablePresentation",
-          data: verifiablePresentation,
+          data: data,
         });
       })
     );
