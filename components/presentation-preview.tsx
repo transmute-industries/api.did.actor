@@ -121,8 +121,8 @@ export const PresentationPreview = ({
             </Link>
           </div>
           <Button
-            color="primary"
-            variant={"outlined"}
+            color="secondary"
+            variant={"contained"}
             endIcon={<BiotechIcon />}
             onClick={handleVerifyMessage}
           >

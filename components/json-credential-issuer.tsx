@@ -6,7 +6,7 @@ import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-pastel_on_dark";
 
 import { TextField } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useRouter } from "next/router";
 
@@ -144,13 +144,13 @@ const JsonCredentialIssuer = ({ value }: any) => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton
-                aria-label="issue credential"
-                onClick={handleIssue}
-                color={"primary"}
+              <Button
+                color="secondary"
+                variant="contained"
+                endIcon={<CreateIcon />}
               >
-                <CreateIcon />
-              </IconButton>
+                Issue Credential
+              </Button>
             </InputAdornment>
           ),
         }}

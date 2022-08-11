@@ -43,7 +43,7 @@ export const config = {
     bg_nav: process.env.THEME_BG_NAV || "rgb(51, 51, 51)",
     fg: process.env.THEME_FG || "rgb(187, 187, 187)",
     primary: process.env.THEME_PRIMARY || "#FFF",
-    secondary: process.env.THEME_SECONDARY || "#FFF",
+    secondary: process.env.THEME_SECONDARY || "#FFA726",
     accent: process.env.THEME_ACCENT || "#C37794",
     primary_d: process.env.THEME_PRIMARY_D || "#C3FCF1",
     secondary_d: process.env.THEME_SECONDARY_D || "#4C8077",

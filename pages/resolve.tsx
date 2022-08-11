@@ -55,7 +55,7 @@ const Resolve: NextPage = () => {
                   <IconButton
                     aria-label="Resolve DID"
                     onClick={handleResolve}
-                    color={"primary"}
+                    color={"secondary"}
                   >
                     <SearchIcon />
                   </IconButton>

@@ -6,7 +6,7 @@ import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-pastel_on_dark";
 
 import { TextField } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useRouter } from "next/router";
 import { defaultMnemonic } from "../core/defaultMnemonic";
@@ -123,13 +123,14 @@ const JsonPresentationHolder = ({ value }: any) => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton
-                aria-label="sign presentation"
+              <Button
+                color="secondary"
                 onClick={handleProve}
-                color={"primary"}
+                variant="contained"
+                endIcon={<CreateIcon />}
               >
-                <CreateIcon />
-              </IconButton>
+                Sign Presentation
+              </Button>
             </InputAdornment>
           ),
         }}
