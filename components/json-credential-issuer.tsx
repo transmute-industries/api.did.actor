@@ -147,6 +147,7 @@ const JsonCredentialIssuer = ({ value }: any) => {
               <Button
                 color="secondary"
                 variant="contained"
+                onClick={handleIssue}
                 endIcon={<CreateIcon />}
               >
                 Issue Credential
