@@ -11,11 +11,12 @@ import Grid from "@mui/material/Grid";
 import BiotechIcon from "@mui/icons-material/Biotech";
 import Chip from "@mui/material/Chip";
 import GavelIcon from "@mui/icons-material/Gavel";
-
+import { useRouter } from "next/router";
 import { amber } from "@mui/material/colors";
 import { DIDAsTextField } from "./did-as-textfield";
 import Accordion from "./accordion";
 import dynamic from "next/dynamic";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
 const JsonViewReadOnly = dynamic(() => import("./json-view-read-only"), {
   ssr: false,
 });
@@ -24,6 +25,7 @@ export const PresentationPreview = ({
   presentation,
   verifyPresentation,
 }: any) => {
+  const router = useRouter();
   const isJwt = typeof presentation === "string";
   const [status, setStatus]: any = React.useState(null);
   const [holder, setHolder] = React.useState("");
@@ -121,8 +123,8 @@ export const PresentationPreview = ({
             </Link>
           </div>
           <Button
-            color="primary"
-            variant={"outlined"}
+            color="secondary"
+            variant={"contained"}
             endIcon={<BiotechIcon />}
             onClick={handleVerifyMessage}
           >
@@ -146,6 +148,21 @@ export const PresentationPreview = ({
                 />
               </Grid>
             )}
+
+            <Grid item>
+              <Chip
+                label="Linked Data"
+                onClick={() => {
+                  window.open(
+                    "https://lucid.did.cards/presentations/" +
+                      router.query.message
+                  );
+                }}
+                onDelete={() => {}}
+                deleteIcon={<AccountTreeIcon style={{ color: amber["500"] }} />}
+              />
+            </Grid>
+
             {holder && (
               <Grid item xs={12}>
                 <DIDAsTextField label="Presentation Holder" did={holder} />

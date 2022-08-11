@@ -26,11 +26,11 @@ const DecryptWith = ({ value }: any) => {
           <Button
             endIcon={<LockOpenIcon />}
             onClick={handleDecrypt}
-            variant={"outlined"}
-            color={"primary"}
+            variant={"contained"}
+            color={"secondary"}
             style={{ marginTop: "16px" }}
           >
-            Decrypt
+            Decrypt with Mnemonic
           </Button>
         </Grid>
       </Grid>

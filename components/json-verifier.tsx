@@ -32,8 +32,8 @@ const JsonVerifier = ({ value }: any) => {
           <Button
             endIcon={<BiotechIcon />}
             onClick={handleVerify}
-            variant={"outlined"}
-            color={"primary"}
+            variant={"contained"}
+            color={"secondary"}
             style={{ marginTop: "16px" }}
           >
             Verify

@@ -19,6 +19,9 @@ import { defaultMnemonic } from "../core/defaultMnemonic";
 import { generators } from "../core/generators";
 import KeyTypeRadionButtonGroup from "./key-type-radio-button-group";
 import AdvancedKeyType from "./advanced-key-type";
+
+import CreateIcon from "@mui/icons-material/Create";
+
 export const CreateDidForm = () => {
   const router = useRouter();
   const [config, setConfig]: any = React.useState(null);
@@ -145,11 +148,12 @@ export const CreateDidForm = () => {
 
       <Button
         sx={{ marginTop: "32px" }}
-        variant={"outlined"}
-        color={"primary"}
+        variant={"contained"}
+        color={"secondary"}
+        endIcon={<CreateIcon />}
         onClick={handleCreate}
       >
-        Create
+        Create Identifier
       </Button>
     </div>
   );
