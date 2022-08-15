@@ -2,20 +2,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-
+import { addToWallet } from "../../core/wallet";
 import { ChapiPage } from "../../components/ChapiPage";
 import { Stack, Button, Typography } from "@mui/material";
-
-export async function getServerSideProps(context: any) {
-  var props = {
-    //    server side props here.
-  };
-
-  return {
-    props, // will be passed to the page component as props
-  };
-}
-
 declare var window: any;
 
 const ChapiWallet: NextPage = (props: any) => {
@@ -34,7 +23,9 @@ const ChapiWallet: NextPage = (props: any) => {
       },
     } = chapiState;
     console.log("wallet stored data ", data);
-    // TODO: save local storage
+    for(const credential of data.verifiableCredential) {
+      addToWallet(credential);
+    }
     chapiState.event.respondWith(
       new Promise((resolve) => {
         return data
@@ -53,12 +44,12 @@ const ChapiWallet: NextPage = (props: any) => {
       <ChapiPage>
         <Stack sx={{ mt: 8 }}>
           <Typography>
-            TODO: Implement /presentations/verify ui here.
+            Below is the credential you are going to save to your CHAPI Wallet
           </Typography>
           <Button variant={"contained"} onClick={handleStoreCredential}>
             Save Credentials
           </Button>
-          <pre>{JSON.stringify(chapiState, null, 2)}</pre>
+          <pre>{JSON.stringify(chapiState?.event?.credential?.data?.verifiableCredential[0], null, 2)}</pre>
         </Stack>
       </ChapiPage>
     </>
