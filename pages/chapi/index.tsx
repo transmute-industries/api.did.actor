@@ -2,19 +2,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-
+import { initWalletContent, getWalletContents, addToWallet, removeFromWallet } from "../../core/wallet";
 import { ChapiPage } from "../../components/ChapiPage";
-import { Stack, Button } from "@mui/material";
+import { Stack, Button, Box } from "@mui/material";
 declare var window: any;
-export async function getServerSideProps(context: any) {
-  var props = {
-    //    server side props here.
-  };
-
-  return {
-    props, // will be passed to the page component as props
-  };
-}
 
 const testCredential = {
   "@context": [
@@ -40,6 +31,7 @@ const ChapiWallet: NextPage = (props: any) => {
   const [isWalletInitialized, setWalletIsInitialized] = useState(false);
   const [isPresentationReceived, setIsPresentationReceived] = useState(false);
   const [isCredentialReceived, setIsCredentialReceived] = useState(false);
+  const [walletContents, setWalletContents] = useState([]);
 
   const handleChapiWalletInit = async () => {
     if (!window.__hasWallet) {
@@ -51,10 +43,12 @@ const ChapiWallet: NextPage = (props: any) => {
       if (result !== "granted") {
         throw new Error("Permission denied.");
       } else {
+        initWalletContent();
         setWalletIsInitialized(true);
       }
     } else {
       setWalletIsInitialized(true);
+      setWalletContents(getWalletContents())
     }
   };
 
@@ -93,18 +87,31 @@ const ChapiWallet: NextPage = (props: any) => {
       console.log("no credentials received");
     } else {
       console.log(chapiVerifiablePresentationResponse);
+      try {
+        const credentials = (chapiVerifiablePresentationResponse as any).data.verifiableCredential;
+        for (const d of credentials) {
+          addToWallet(d);
+          setWalletContents(getWalletContents())
+        }
+      } catch(ex) {
+        console.log("Failed to add presented credentials to wallet", ex);
+      }
       setIsPresentationReceived(true);
     }
   };
 
-  const handleChapiSet = async () => {
+  const handleChapiSet = async (credential: any) => {
     console.log("invoke chapi set");
     const polyfill = await window.credentialHandlerPolyfill.load();
     const { WebCredential } = polyfill;
     const credentialType = "VerifiablePresentation";
     const webCredentialWrapper = new WebCredential(
       credentialType,
-      testCredential,
+      {
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: 'VerifiablePresentation',
+        verifiableCredential: [credential],
+      },
       {
         recommendedHandlerOrigins: ["https://api.did.actor/chapi"],
       }
@@ -114,6 +121,8 @@ const ChapiWallet: NextPage = (props: any) => {
       console.log("no credentials stored");
     } else {
       console.log(result);
+      addToWallet((result as any).data);
+      setWalletContents(getWalletContents())
       setIsCredentialReceived(true);
     }
   };
@@ -142,18 +151,42 @@ const ChapiWallet: NextPage = (props: any) => {
           <Button
             variant={"contained"}
             onClick={handleReceivePresentationFromChapi}
-            disabled={!isWalletInitialized || isPresentationReceived}
+            disabled={!isWalletInitialized}
           >
             Import Credentials from Wallet
           </Button>
 
-          <Button
-            variant={"contained"}
-            onClick={handleChapiSet}
-            disabled={!isWalletInitialized || isCredentialReceived}
-          >
-            Export Credential to Wallet
-          </Button>
+          <Box>
+            <p>Wallet Contents</p>
+            {
+              walletContents.length > 0 &&
+              <div>
+                {walletContents.map((c: any, index: any) => 
+                  <div key={index}>
+                    Item {index + 1} <Button variant="contained" onClick={() => handleChapiSet(c)}>Export</Button> <Button color="error" variant={"outlined"} onClick={() => {
+                      removeFromWallet(index)
+                      setWalletContents(getWalletContents())
+                      alert("Credential deleted!");
+                    }}>Delete</Button>
+                    <pre>{JSON.stringify(c, null, 2)}</pre>
+                  </div>
+                )}
+              </div>
+            }
+            {
+              walletContents.length === 0 &&
+              <div>
+                Your wallet is empty.
+              </div>
+            } 
+          </Box>
+          <Box>
+            <p>Test Credentials:</p>
+            <div>
+              Item 1 <Button variant="contained" onClick={() => handleChapiSet(testCredential)}>Export</Button>
+              <pre>{JSON.stringify(testCredential, null, 2)}</pre>
+            </div>
+          </Box>
         </Stack>
       </ChapiPage>
     </>

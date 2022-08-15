@@ -7,18 +7,27 @@ import { ChapiPage } from "../../components/ChapiPage";
 import { Stack, Button, Typography } from "@mui/material";
 import { config } from '../../components/config';
 import { v4 as uuidv4 } from "uuid";
-export async function getServerSideProps(context: any) {
-  var props = {
-    //    server side props here.
-  };
-
-  return {
-    props, // will be passed to the page component as props
-  };
-}
-
+import { getWalletContents } from "../../core/wallet";
 declare var window: any;
 
+const defaultVerifiableCredential = {
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://w3id.org/vc-revocation-list-2020/v1",
+  ],
+  id: "urn:uuid:4f1eabd0-76b7-4c8b-be72-a125b8bb9c48",
+  type: ["VerifiableCredential"],
+  issuer: "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+  issuanceDate: "2010-01-01T19:23:24Z",
+  credentialStatus: {
+    id: "https://api.did.actor/revocation-lists/1.json#0",
+    type: "RevocationList2020Status",
+    revocationListIndex: 0,
+    revocationListCredential:
+      "https://api.did.actor/revocation-lists/1.json",
+  },
+  credentialSubject: { id: "did:example:123" },
+}
 const verifiablePresentation = {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -28,30 +37,14 @@ const verifiablePresentation = {
   type: ["VerifiablePresentation"],
   holder: "did:key:zQ3shrnCZq3R7vLvDeWQFnxz5HMKqP9JoiMonzYJB4TGYnftL",
   verifiableCredential: [
-    {
-      "@context": [
-        "https://www.w3.org/2018/credentials/v1",
-        "https://w3id.org/vc-revocation-list-2020/v1",
-      ],
-      id: "urn:uuid:4f1eabd0-76b7-4c8b-be72-a125b8bb9c48",
-      type: ["VerifiableCredential"],
-      issuer: "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
-      issuanceDate: "2010-01-01T19:23:24Z",
-      credentialStatus: {
-        id: "https://api.did.actor/revocation-lists/1.json#0",
-        type: "RevocationList2020Status",
-        revocationListIndex: 0,
-        revocationListCredential:
-          "https://api.did.actor/revocation-lists/1.json",
-      },
-      credentialSubject: { id: "did:example:123" },
-    },
+    defaultVerifiableCredential,
   ]
 };
 
 const ChapiWallet: NextPage = (props: any) => {
   const [chapiState, setChapiState]: any = useState({});
   const [mnemonic] = React.useState(defaultMnemonic);
+  const [walletContents, setWalletContents] = useState([])
   const queryVp: any =
   chapiState && chapiState.credentialRequestOptions
       ? chapiState.credentialRequestOptions.web.VerifiablePresentation
@@ -65,6 +58,7 @@ const ChapiWallet: NextPage = (props: any) => {
     challenge = queryVp.challenge ? queryVp.challenge : uuidv4();
   }
   useEffect(() => {
+    setWalletContents(getWalletContents());
     (async () => {
       const { WebCredentialHandler } = window;
       const event = await WebCredentialHandler.receiveCredentialEvent();
@@ -72,9 +66,12 @@ const ChapiWallet: NextPage = (props: any) => {
     })();
   }, []);
 
-  const handleSubmitPresenstation = async () => {
+  const handleSubmitPresenstation = async (credential: any) => {
     const signPresentationRequest = {
-      presentation: verifiablePresentation,
+      presentation: { 
+        ...verifiablePresentation,
+        verifiableCredential: [credential]
+      },
       options: {
         proofPurpose: 'authentication',
         domain: domain as string,
@@ -113,11 +110,19 @@ const ChapiWallet: NextPage = (props: any) => {
       </Head>
       <ChapiPage>
         <Stack sx={{ mt: 8 }}>
-          <Typography>TODO: Implement /present ui here.</Typography>
-          <Button variant={"contained"} onClick={handleSubmitPresenstation}>
-            Present Credentials
+          <Typography>Select the credential you want to present</Typography>
+          {walletContents.length > 0 &&
+            <div>
+              {walletContents.map((c: any, index: any) => <div key={index}>
+              <Button variant={"contained"} onClick={() => handleSubmitPresenstation(c)}>Present The Credentail Below</Button>
+              <pre>{JSON.stringify(c, null, 2)}</pre>
+              </div>)}
+            </div>
+          }
+          <Button variant={"contained"} onClick={() => handleSubmitPresenstation(defaultVerifiableCredential)}>
+            Present The Credential Below
           </Button>
-          <pre>{JSON.stringify(chapiState, null, 2)}</pre>
+          <pre>{JSON.stringify(defaultVerifiableCredential, null, 2)}</pre>
         </Stack>
       </ChapiPage>
     </>
