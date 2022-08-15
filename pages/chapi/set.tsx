@@ -23,8 +23,8 @@ const ChapiWallet: NextPage = (props: any) => {
       },
     } = chapiState;
     console.log("wallet stored data ", data);
-    for(const credential of data.verifiableCredential) {
-      addToWallet(credential);
+    for(let i = 0; i < data.verifiableCredential.length; i += 1) {
+      addToWallet(data.verifiableCredential[i]);
     }
     chapiState.event.respondWith(
       new Promise((resolve) => {
