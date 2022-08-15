@@ -50,12 +50,12 @@ const ChapiWallet: NextPage = (props: any) => {
       ? chapiState.credentialRequestOptions.web.VerifiablePresentation
       : null;
   let query: any = null;
-  let domain: any = null;
-  let challenge: any = null;
+  let domain: any = config.env_config.domain;
+  let challenge: any = uuidv4();
   if (queryVp) {
     query = (Array.isArray(queryVp.query) ? queryVp.query[0] : queryVp.query) as any;
     domain = queryVp.domain ? queryVp.domain : config.env_config.domain;
-    challenge = queryVp.challenge ? queryVp.challenge : uuidv4();
+    challenge = queryVp.challenge ? queryVp.challenge : challenge;
   }
   useEffect(() => {
     setWalletContents(getWalletContents());
