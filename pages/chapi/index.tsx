@@ -125,8 +125,6 @@ const ChapiWallet: NextPage = (props: any) => {
       console.log("no credentials stored");
     } else {
       console.log(result);
-      addToWallet((result as any).data.verifiableCredential[0]);
-      setWalletContents(getWalletContents())
       setIsCredentialReceived(true);
     }
   };

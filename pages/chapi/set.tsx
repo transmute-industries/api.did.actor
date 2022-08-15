@@ -2,7 +2,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-
+import { addToWallet } from "../../core/wallet";
 import { ChapiPage } from "../../components/ChapiPage";
 import { Stack, Button, Typography } from "@mui/material";
 declare var window: any;
@@ -23,7 +23,9 @@ const ChapiWallet: NextPage = (props: any) => {
       },
     } = chapiState;
     console.log("wallet stored data ", data);
-    // TODO: save local storage
+    for(const credential of data.verifiableCredential) {
+      addToWallet(credential);
+    }
     chapiState.event.respondWith(
       new Promise((resolve) => {
         return data
