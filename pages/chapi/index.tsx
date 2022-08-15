@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { initWalletContent, getWalletContents, addToWallet, removeFromWallet } from "../../core/wallet";
 import { ChapiPage } from "../../components/ChapiPage";
 import { Stack, Button, Box } from "@mui/material";
+import { config } from '../../components/config';
+import { v4 as uuidv4 } from "uuid";
 declare var window: any;
 
 const testCredential = {
@@ -76,6 +78,8 @@ const ChapiWallet: NextPage = (props: any) => {
               },
             },
           ],
+          domain: config.env_config.domain,
+          challenge: uuidv4()
         },
         recommendedHandlerOrigins: ["https://api.did.actor/chapi"],
       },
@@ -121,7 +125,7 @@ const ChapiWallet: NextPage = (props: any) => {
       console.log("no credentials stored");
     } else {
       console.log(result);
-      addToWallet((result as any).data);
+      addToWallet((result as any).data.verifiableCredential[0]);
       setWalletContents(getWalletContents())
       setIsCredentialReceived(true);
     }
