@@ -5,7 +5,8 @@ import React, { useEffect, useState } from "react";
 import { defaultMnemonic } from "../../core/defaultMnemonic";
 import { ChapiPage } from "../../components/ChapiPage";
 import { Stack, Button, Typography } from "@mui/material";
-
+import { config } from '../../components/config';
+import { v4 as uuidv4 } from "uuid";
 export async function getServerSideProps(context: any) {
   var props = {
     //    server side props here.
@@ -60,8 +61,8 @@ const ChapiWallet: NextPage = (props: any) => {
   let challenge: any = null;
   if (queryVp) {
     query = (Array.isArray(queryVp.query) ? queryVp.query[0] : queryVp.query) as any;
-    domain = queryVp.domain;
-    challenge = queryVp.challenge;
+    domain = queryVp.domain ? queryVp.domain : config.env_config.domain;
+    challenge = queryVp.challenge ? queryVp.challenge : uuidv4();
   }
   useEffect(() => {
     (async () => {
