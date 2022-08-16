@@ -93,10 +93,10 @@ const ChapiWallet: NextPage = (props: any) => {
       console.log(chapiVerifiablePresentationResponse);
       try {
         const credentials = (chapiVerifiablePresentationResponse as any).data.verifiableCredential;
-        for (const d of credentials) {
-          addToWallet(d);
-          setWalletContents(getWalletContents())
+        for (let i = 0; i < credentials.length; i += 1) {
+          addToWallet(credentials[i]);
         }
+        setWalletContents(getWalletContents())
       } catch(ex) {
         console.log("Failed to add presented credentials to wallet", ex);
       }
