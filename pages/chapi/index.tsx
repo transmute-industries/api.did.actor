@@ -36,6 +36,7 @@ const ChapiWallet: NextPage = (props: any) => {
   const [walletContents, setWalletContents] = useState([]);
 
   const handleChapiWalletInit = async () => {
+    initWalletContent();
     if (!window.__hasWallet) {
       console.log("invoke chapi wallet init");
       window.__hasWallet = true;
@@ -45,13 +46,12 @@ const ChapiWallet: NextPage = (props: any) => {
       if (result !== "granted") {
         throw new Error("Permission denied.");
       } else {
-        initWalletContent();
         setWalletIsInitialized(true);
       }
     } else {
       setWalletIsInitialized(true);
-      setWalletContents(getWalletContents())
     }
+    setWalletContents(getWalletContents())
   };
 
   const handleReceivePresentationFromChapi = async () => {
@@ -101,6 +101,7 @@ const ChapiWallet: NextPage = (props: any) => {
         console.log("Failed to add presented credentials to wallet", ex);
       }
       setIsPresentationReceived(true);
+      setWalletContents(getWalletContents())
     }
   };
 
@@ -128,6 +129,7 @@ const ChapiWallet: NextPage = (props: any) => {
       setWalletContents(getWalletContents())
       setIsCredentialReceived(true);
     }
+    setWalletContents(getWalletContents())
   };
 
   useEffect(() => {
