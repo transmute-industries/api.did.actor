@@ -13,21 +13,32 @@ declare var window: any;
 const defaultVerifiableCredential = {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://w3id.org/vc-revocation-list-2020/v1",
+    "https://w3id.org/vc-revocation-list-2020/v1"
   ],
-  id: "urn:uuid:4f1eabd0-76b7-4c8b-be72-a125b8bb9c48",
-  type: ["VerifiableCredential"],
-  issuer: "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
-  issuanceDate: "2010-01-01T19:23:24Z",
-  credentialStatus: {
-    id: "https://api.did.actor/revocation-lists/1.json#0",
-    type: "RevocationList2020Status",
-    revocationListIndex: 0,
-    revocationListCredential:
-      "https://api.did.actor/revocation-lists/1.json",
+  "id": "urn:uuid:6d7919fa-916c-406d-8f9a-9afc327b91b3",
+  "type": [
+    "VerifiableCredential"
+  ],
+  "issuer": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  "credentialStatus": {
+    "id": "https://api.did.actor/revocation-lists/1.json#0",
+    "type": "RevocationList2020Status",
+    "revocationListIndex": 0,
+    "revocationListCredential": "https://api.did.actor/revocation-lists/1.json"
   },
-  credentialSubject: { id: "did:example:123" },
+  "credentialSubject": {
+    "id": "did:example:123"
+  },
+  "proof": {
+    "type": "Ed25519Signature2018",
+    "created": "2022-09-20T17:00:06Z",
+    "verificationMethod": "did:key:z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn#z6MktiSzqF9kqwdU8VkdBKx56EYzXfpgnNPUAGznpicNiWfn",
+    "proofPurpose": "assertionMethod",
+    "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..u8_1DoAPlbtmmQzH-cT57sYTBSngWS4WBtnsUtkQkJGEqoVhIgBrQguUBPEvVmKdfgF-BMjdxtfhmYAtpVQiCA"
+  }
 }
+
 const verifiablePresentation = {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
