@@ -91,7 +91,7 @@ const JsonPresentationHolder = ({ value }: any) => {
     }
   };
   const handleProve = async () => {
-    const vp = await provePresentation({
+    const { verifiablePresentation: vp } = await provePresentation({
       presentation: JSON.parse(text),
       options: { domain, challenge },
       mnemonic,
