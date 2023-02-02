@@ -118,7 +118,7 @@ const JsonCredentialIssuer = ({ value }: any) => {
   };
   const handleIssue = async () => {
     // TODO: vc-jwt bug in browser prevents this from working.
-    const vc = await issueCredential({
+    const { verifiableCredential: vc } = await issueCredential({
       credential: JSON.parse(text),
       mnemonic,
       keyType: advancedConfiguration.keyType,

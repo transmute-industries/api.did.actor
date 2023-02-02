@@ -57,7 +57,7 @@ export const issueCredential = async ({
     documentLoader,
     format: [format],
   });
-  return items[0];
+  return { verifiableCredential: items[0] };
 };
 
 export const provePresentation = async ({
@@ -100,7 +100,7 @@ export const provePresentation = async ({
     documentLoader,
   });
 
-  return items[0];
+  return { verifiablePresentation: items[0] };
 };
 
 export const verifyCredential = async ({
